@@ -12,21 +12,20 @@
 
 // In this way, the integral representation could be seen
 // as part of a scheme to calculate real-valued Airy functions
-// on the real axis for medium to large argument, whereby
-// a Taylor series or hypergeometric function could be used
-// for smaller arguments.
+// on the positive axis for medium to large argument.
+// A Taylor series or hypergeometric function (not part
+// of this example) could be used for smaller arguments.
 
 // This example has been tested with decimal digits counts
-// ranging from 21...201, via the parameter local::my_digits10.
+// ranging from 21...301, by adjusting the parameter
+// local::my_digits10 at compile time.
 
-// The quadrature integral representaion of airy_ai(x) used in
-// this example can be found in:
+// The quadrature integral representaion of airy_ai(x) used
+// in this example can be found in:
 
 // A. Gil, J. Segura, N.M. Temme, "Numerical Methods for Special
 // Functions" (SIAM Press 2007), Sect. 5.3.3, in particular Eq. 5.110,
-// page 145.
-
-// This book cites the another work:
+// page 145. Subsequently, Gil et al's book cites the another work:
 // W. Gautschi, "Computation of Bessel and Airy functions and of
 // related Gaussian quadrature formulae", BIT, 42 (2002), pp. 110-118.
 
@@ -466,7 +465,7 @@ namespace detail
 
 struct local
 {
-  BOOST_STATIC_CONSTEXPR unsigned int my_digits10 = 101U;
+  BOOST_STATIC_CONSTEXPR unsigned int my_digits10 = 21U;
 
   typedef boost::multiprecision::number<boost::multiprecision::cpp_dec_float<my_digits10>,
                                         boost::multiprecision::et_off>
@@ -478,11 +477,16 @@ BOOST_STATIC_ASSERT_MSG(local::my_digits10 > 20U,
 
 int main()
 {
-  // Use Gauss-Laguerre integration to compute airy_ai(120 / 7).
-  // We empirically find factors to relate the number of Gauss-Laguerre
-  // coefficients needed for convergence when using varying base-10 digits.
+  // Use Gauss-Laguerre quadrature integration to compute airy_ai(x / 7)
+  // with 7 <= x <= 120 and where x is incremented in steps of 1.
 
-  // Calibrate the number of coefficients needed at the point x = 1.
+  // During development of this example, we have empirically found 
+  // the numbers of Gauss-Laguerre coefficients needed for convergence
+  // when using varyious counts of base-10 digits.
+
+  // Let's calibrate, for instance, the number of coefficients needed
+  // at the point x = 1.
+
   // Empirical data lead to:
   // Fit[{{21.0, 3.5}, {51.0, 11.1}, {101.0, 22.5}, {201.0, 46.8}}, {1, d, d^2}, d]
   // FullSimplify[%]
@@ -525,7 +529,7 @@ int main()
                          local::float_type(0U),
                          std::plus<local::float_type>(),
                          [&the_airy_ai_object](const local::float_type& this_abscissa,
-                                               const local::float_type& this_weight) BOOST_NOEXCEPT -> local::float_type
+                                               const local::float_type& this_weight) -> local::float_type
                          {
                            return the_airy_ai_object(this_abscissa) * this_weight;
                          });
