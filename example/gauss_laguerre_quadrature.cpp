@@ -465,7 +465,7 @@ namespace detail
 
 struct local
 {
-  BOOST_STATIC_CONSTEXPR unsigned int my_digits10 = 21U;
+  BOOST_STATIC_CONSTEXPR unsigned int my_digits10 = 101U;
 
   typedef boost::multiprecision::number<boost::multiprecision::cpp_dec_float<my_digits10>,
                                         boost::multiprecision::et_off>
