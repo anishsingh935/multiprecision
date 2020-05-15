@@ -487,6 +487,11 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
   const float lgx_over_lg2 = xx.exponent() / std::log(2.0F); // std::log(static_cast<float>(xx)) / std::log(2.0F)
 
+  // TBD: Using exponent is not quite right because that could
+  // be either base 10 or base 2 exponent depending on the
+  // backend type. We can make it independent. However,
+  // this parameter is not very significant anyway.
+
   std::int32_t m = static_cast<std::int32_t>(n_times_factor - lgx_over_lg2);
 
   // Ensure that the resulting power is non-negative.
@@ -505,13 +510,27 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   using std::sqrt;
 
   // Determine the requested precision of the upcoming iteration in units of digits10.
-  T eps = std::numeric_limits<number<T, et_on> >::epsilon().backend();
+
+  // TBD: I would like to find a better, more efficient way of
+  // figuring out the tolerance. It is inefficient to perform a
+  // square root here. In fact, even a simple string manipulation
+  // with "1." + half as many zeros (0's) as digits 10 with
+  // lexical_cast would do the trick.
+
+  T eps = std::numeric_limits<number<T> >::epsilon().backend();
   T target_tolerance;
   eval_sqrt(eps, target_tolerance);
   eval_divide(target_tolerance, 100.0);
 
   for (std::int32_t k = static_cast<std::int32_t>(0); k < static_cast<std::int32_t>(64); ++k) {
     using std::fabs;
+
+    // TBD: Here we are basically checking the closeness of
+    // the iteration variables ak and bk. We should try to
+    // find a more efficient way of testing this closeness.
+    // Avoid the division and possibly the subtraction.
+    // Consider frexp maybe as a choice, assuming k is above,
+    // say 3 or 4.
 
     T cp_ak = ak;
     eval_divide(cp_ak, bk);
