@@ -484,7 +484,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
 
   T ak(1.0);
 
-  const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<T>::digits10) * 1.67F);
+  const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
   const float lgx_over_lg2 = xx.exponent() / std::log(2.0F); // std::log(static_cast<float>(xx)) / std::log(2.0F)
 
   std::int32_t m = static_cast<std::int32_t>(n_times_factor - lgx_over_lg2);
