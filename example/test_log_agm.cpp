@@ -57,16 +57,21 @@ int main()
   // Compare with N[Log[31/3], 10000]
   my_stopwatch.reset();
 
-  boost_gsoc2020::big_float_type y = log(x);
+  const boost_gsoc2020::big_float_type log_value = log(x);
+  const boost_gsoc2020::big_float_type log_cntrl { boost_gsoc2020::str_log_thirtyone_thirds_10k };
 
   const auto execution_time =
     std::chrono::duration_cast<std::chrono::duration<float>>(my_stopwatch.elapsed()).count();
 
   std::cout << std::setprecision(std::numeric_limits<boost_gsoc2020::big_float_type>::digits10)
-            << y
+            << log_value
             << std::endl;
 
   std::cout << "execution_time: " << std::setprecision(3) << execution_time << "s" << std::endl;
+
+  const boost_gsoc2020::big_float_type closeness = fabs(1 - fabs(log_value / log_cntrl));
+
+  std::cout << "closeness: " << std::setprecision(3) << closeness << std::endl;
 }
 
 const std::string boost_gsoc2020::str_log_thirtyone_thirds_10k
