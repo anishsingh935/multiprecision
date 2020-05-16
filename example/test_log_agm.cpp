@@ -50,6 +50,8 @@ namespace boost_gsoc2020
 
 int main()
 {
+  const boost_gsoc2020::big_float_type dummy_ln2 = boost::math::constants::ln_two<boost_gsoc2020::big_float_type>();
+
   boost_gsoc2020::stopwatch_type my_stopwatch;
 
   boost_gsoc2020::big_float_type x = 10 + boost::math::constants::third<boost_gsoc2020::big_float_type>();
