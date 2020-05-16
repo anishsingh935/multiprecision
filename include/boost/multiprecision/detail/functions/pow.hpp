@@ -466,6 +466,15 @@ template <class T>
 typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x, const T& x) {
   // Use an AGM method to compute the logarithm of x.
 
+  // TBD: Preliminary first benchmarks show that the caching
+  // of the constants pi and ln_two (which occurs prior
+  // to the call of main) are real bottlenecks.
+  // The call to ln_two, in fact, ends up calling this
+  // exact subroutine and running all 64 iterations of
+  // the for-loop. We should rather sooner look into
+  // improving efficiency of calculations of the cached
+  // constants pi and ln_two.
+
   // For values less than 1 invert the argument and
   // remember (in this case) to negate the result below.
   const bool b_negate = (x.compare(1.0) < 0);
@@ -568,7 +577,8 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   // Note at this time that (ak = bk) = AGM(...)
 
   // Retrieve the value of pi, divide by (2 * a) and subtract (m * ln2).
-  
+
+
   eval_multiply(ak, 2.0);
   T p = get_constant_pi<T>();
   eval_divide(p, ak);
