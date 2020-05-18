@@ -460,7 +460,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   T ak(1.0);
 
   const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
-  const float lgx_over_lg_radix = xx.exponent() / std::log(std::numeric_limits<number<T> >::radix);
+  const float lgx_over_lg_radix = xx.exponent() / std::log(float(std::numeric_limits<number<T> >::radix));
 
   // TBD: Using exponent is not quite right because that could
   // be either base 10 or base 2 exponent depending on the
