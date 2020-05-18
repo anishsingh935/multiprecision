@@ -494,14 +494,14 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   T ak(1.0);
 
   const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
-  const float lgx_over_lg2 = xx.exponent() / std::log(2.0F);
+  const float lgx_over_lg_radix = xx.exponent() / std::log(std::numeric_limits<number<T> >::radix);
 
   // TBD: Using exponent is not quite right because that could
   // be either base 10 or base 2 exponent depending on the
   // backend type. We can make it independent. However,
   // this parameter is not very significant anyway.
 
-  std::int32_t m = static_cast<std::int32_t>(n_times_factor - lgx_over_lg2);
+  std::int32_t m = static_cast<std::int32_t>(n_times_factor - lgx_over_lg_radix);
 
   // Ensure that the resulting power is non-negative.
   // Also enforce that m >= 8.
@@ -577,7 +577,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   result_x = get_constant_pi<T>();
   eval_divide(result_x, ak);
 
-  T m_ln2 = get_constant_ln2<T>();;
+  T m_ln2 = get_constant_ln2<T>();
   eval_multiply(m_ln2, m);
   eval_subtract(result_x, m_ln2);
 
