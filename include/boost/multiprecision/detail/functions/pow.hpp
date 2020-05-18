@@ -494,7 +494,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   T ak(1.0);
 
   const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
-  const float lgx_over_lg2 = xx.exponent() / std::log(2.0F); // std::log(static_cast<float>(xx)) / std::log(2.0F)
+  const float lgx_over_lg2 = xx.exponent() / std::log(2.0F);
 
   // TBD: Using exponent is not quite right because that could
   // be either base 10 or base 2 exponent depending on the
@@ -528,9 +528,9 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
 
   T eps = std::numeric_limits<number<T> >::epsilon().backend();
   T target_tolerance;
-  eval_sqrt(eps, target_tolerance);
+  eval_sqrt(target_tolerance, eps);
   eval_divide(target_tolerance, 100.0);
-
+  
   for (std::int32_t k = static_cast<std::int32_t>(0); k < static_cast<std::int32_t>(64); ++k) {
     using std::fabs;
 
@@ -557,6 +557,8 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
     // then break after the upcoming iteration.
     const bool break_after_this_iteration = ((k > static_cast<std::int32_t>(4))
       && (one.compare(target_tolerance) < 0.0));
+
+    std::cout << "Iteration : " << k << std::endl;
 
     ak_tmp = ak;
     eval_add(ak, bk);
