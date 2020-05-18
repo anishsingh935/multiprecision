@@ -554,7 +554,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
 
     ak_tmp = ak;
     eval_add(ak, bk);
-    eval_divide(ak, 2.0);
+    eval_divide(ak, 2);
     if (break_after_this_iteration) {
       break;
     }
@@ -573,18 +573,17 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   // Retrieve the value of pi, divide by (2 * a) and subtract (m * ln2).
 
 
-  eval_multiply(ak, 2.0);
-  T p = get_constant_pi<T>();
-  eval_divide(p, ak);
+  eval_multiply(ak, 2);
+  result_x = get_constant_pi<T>();
+  eval_divide(result_x, ak);
 
-  T mm(0.0 + m);
-  eval_multiply(mm, get_constant_ln2<T>());
-  eval_subtract(p, mm);
+  T m_ln2 = get_constant_ln2<T>();;
+  eval_multiply(m_ln2, m);
+  eval_subtract(result_x, m_ln2);
 
   if (b_negate) {
-    p.negate();
+    result_x.negate();
   }
-  result_x = p;
 }
 
 template <class T>
