@@ -567,7 +567,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
 
   // We are now finished with the AGM iteration for log(x).
 
-  // Compute log(x) = {pi / [2 * AGM(1, 4 / 2^m)]} - (m * ln2)
+  // Compute log(x) = {pi / [2 * AGM(1, 4 / (x * 2^m) )]} - (m * ln2)
   // Note at this time that (ak = bk) = AGM(...)
 
   // Retrieve the value of pi, divide by (2 * a) and subtract (m * ln2).
