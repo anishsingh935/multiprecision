@@ -514,10 +514,6 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   eval_divide(four, bk);
   bk = four;
 
-  T ak_tmp(0.0);
-
-  using std::sqrt;
-
   // Determine the requested precision of the upcoming iteration in units of digits10.
 
   // TBD: I would like to find a better, more efficient way of
@@ -527,12 +523,14 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   // lexical_cast would do the trick.
 
   T eps = std::numeric_limits<number<T> >::epsilon().backend();
-  T target_tolerance;
-  eval_sqrt(target_tolerance, eps);
-  eval_divide(target_tolerance, 100.0);
-  
+  long eps_exponent;
+  T ignore_result;
+  eval_frexp(ignore_result, eps, &eps_exponent);
+  // Tolerance ~ sqrt(eps) / 100.
+  long target_tolerance_exponent = (eps_exponent / 2 - 8);
+
+  T ak_tmp(0.0);
   for (std::int32_t k = static_cast<std::int32_t>(0); k < static_cast<std::int32_t>(64); ++k) {
-    using std::fabs;
 
     // TBD: Here we are basically checking the closeness of
     // the iteration variables ak and bk. We should try to
@@ -542,23 +540,17 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
     // say 3 or 4.
 
     T cp_ak = ak;
-    eval_divide(cp_ak, bk);
-    if (x.compare(0.0) < 0) {
-      cp_ak.negate();
-    }
-    T one(1.0);
-    eval_subtract(one, cp_ak);
-    if (one.compare(1.0) < 0) {
-      one.negate();
-    }
+    eval_subtract(cp_ak, bk);
+    int diff_exponent;
+    eval_frexp(ignore_result, cp_ak, &diff_exponent);
+    
+
     // Check for the number of significant digits to be
     // at least half of the requested digits. If at least
     // half of the requested digits have been achieved,
     // then break after the upcoming iteration.
-    const bool break_after_this_iteration = ((k > static_cast<std::int32_t>(4))
-      && (one.compare(target_tolerance) < 0.0));
-
-    std::cout << "Iteration : " << k << std::endl;
+    const bool break_after_this_iteration = (k > static_cast<std::int32_t>(4))
+      && diff_exponent < target_tolerance_exponent;
 
     ak_tmp = ak;
     eval_add(ak, bk);
