@@ -178,7 +178,7 @@ void calc_log2(T& num, unsigned digits) {
   // Set b0 = 4 / (2^(m+1)) = 2^(-(m - 1))
 
   const float n_times_factor = static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F;
-  const float lgx_over_lg_radix = -1.0F * std::log(2.0F) / static_cast<float>(std::log(std::numeric_limits<number<T> >::radix));
+  const float lgx_over_lg_radix = -1.0F * std::log(2.0F) / std::log(static_cast<float>(std::numeric_limits<number<T> >::radix));
 
   std::int32_t m = static_cast<std::int32_t>(n_times_factor - lgx_over_lg_radix);
 
