@@ -428,40 +428,6 @@ typename std::enable_if<should_use_log_series<T>::value>::type eval_log(T& resul
   } while (lim.compare(t2) < 0);
 }
 
-template<typename FloatingPointType,
-  typename UnsignedIntegralType>
-  FloatingPointType pown(const FloatingPointType& b, const UnsignedIntegralType& p) {
-  // Calculate (b ^ p).
-
-  using local_floating_point_type = FloatingPointType;
-  using local_unsigned_integral_type = UnsignedIntegralType;
-
-  local_floating_point_type result;
-
-  if (p == local_unsigned_integral_type(0U)) { 
-    result = local_floating_point_type(1.0); 
-  } else if (p == local_unsigned_integral_type(1U)) { 
-    result = b; 
-  } else if (p == local_unsigned_integral_type(2U)) { 
-    result = b; 
-    eval_multiply(result, b);
-  } else {
-    result = local_floating_point_type(1.0);
-
-    local_floating_point_type y(b);
-
-    for (local_unsigned_integral_type p_local(p); p_local != local_unsigned_integral_type(0U); p_local >>= 1U) {
-      if ((static_cast<unsigned>(p_local) & 1U) != 0U) {
-        eval_multiply(result, y); // result *= y;
-      }
-      local_floating_point_type cp_y = y;
-      eval_multiply(y, cp_y);
-    }
-  }
-
-  return result;
-}
-
 template <class T>
 typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x, const T& x) {
   // Use an AGM method to compute the logarithm of x.
@@ -507,7 +473,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   // Also enforce that m >= 8.
   m = (std::max)(m, static_cast<std::int32_t>(8));
 
-  T bk = pown(T(2.0), static_cast<std::uint32_t>(m));
+  T bk = eval_pown(T(2.0), static_cast<std::uint32_t>(m));
 
   eval_multiply(bk, xx);
   T four = 4.0;

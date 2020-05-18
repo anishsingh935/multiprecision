@@ -118,6 +118,40 @@ eval_multiply(T& result, V const& v)
 template <class T, class U, class V>
 BOOST_MP_CXX14_CONSTEXPR void eval_multiply(T& t, const U& u, const V& v);
 
+template<typename FloatingPointType,
+  typename UnsignedIntegralType>
+  FloatingPointType eval_pown(const FloatingPointType& b, const UnsignedIntegralType& p) {
+  // Calculate (b ^ p).
+
+  using local_floating_point_type = FloatingPointType;
+  using local_unsigned_integral_type = UnsignedIntegralType;
+
+  local_floating_point_type result;
+
+  if (p == local_unsigned_integral_type(0U)) {
+    result = local_floating_point_type(1.0);
+  } else if (p == local_unsigned_integral_type(1U)) {
+    result = b;
+  } else if (p == local_unsigned_integral_type(2U)) {
+    result = b;
+    eval_multiply(result, b);
+  } else {
+    result = local_floating_point_type(1.0);
+
+    local_floating_point_type y(b);
+
+    for (local_unsigned_integral_type p_local(p); p_local != local_unsigned_integral_type(0U); p_local >>= 1U) {
+      if ((static_cast<unsigned>(p_local) & 1U) != 0U) {
+        eval_multiply(result, y); // result *= y;
+      }
+      local_floating_point_type cp_y = y;
+      eval_multiply(y, cp_y);
+    }
+  }
+
+  return result;
+}
+
 template <class T, class U, class V>
 inline BOOST_MP_CXX14_CONSTEXPR typename disable_if_c<!is_same<T, U>::value && is_same<T, V>::value>::type eval_multiply_add(T& t, const U& u, const V& v)
 {
