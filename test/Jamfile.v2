@@ -441,6 +441,14 @@ test-suite conversions :
            : # command line
            : # input files
            : # requirements
+           <define>TEST_CPP_BIN_FLOAT
+           <debug-symbols>off
+           : test_constants_cpp_bin_float ]
+
+   [ run test_constants.cpp no_eh_support
+           : # command line
+           : # input files
+           : # requirements
            <define>TEST_CPP_DEC_FLOAT
            : test_constants_cpp_dec_float ]
 
