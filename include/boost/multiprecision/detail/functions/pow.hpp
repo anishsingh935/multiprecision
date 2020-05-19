@@ -456,15 +456,6 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
     return;
   }
 
-  // TBD: Preliminary first benchmarks show that the caching
-  // of the constants pi and ln_two (which occurs prior
-  // to the call of main) are real bottlenecks.
-  // The call to ln_two, in fact, ends up calling this
-  // exact subroutine and running all 64 iterations of
-  // the for-loop. We should rather sooner look into
-  // improving efficiency of calculations of the cached
-  // constants pi and ln_two.
-
   // For values less than 1 invert the argument and
   // remember (in this case) to negate the result below.
   const int cmp_one = arg.compare(1.0);
@@ -472,8 +463,8 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
     result = 0.0;
     return;
   }
-  const bool b_negate = (cmp_one < 0);
 
+  const bool b_negate = (cmp_one < 0);
 
   T xx;
   if (!b_negate) {
@@ -495,11 +486,6 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
   eval_frexp(ignore_xx_result, xx, &xx_exponent);
   const float lgx_over_lg_radix = xx_exponent / std::log(float(std::numeric_limits<number<T> >::radix));
 
-  // TBD: Using exponent is not quite right because that could
-  // be either base 10 or base 2 exponent depending on the
-  // backend type. We can make it independent. However,
-  // this parameter is not very significant anyway.
-
   std::int32_t m = static_cast<std::int32_t>(n_times_factor - lgx_over_lg_radix);
 
   // Ensure that the resulting power is non-negative.
@@ -515,41 +501,36 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
 
   // Determine the requested precision of the upcoming iteration in units of digits10.
 
-  // TBD: I would like to find a better, more efficient way of
-  // figuring out the tolerance. It is inefficient to perform a
-  // square root here. In fact, even a simple string manipulation
-  // with "1." + half as many zeros (0's) as digits 10 with
-  // lexical_cast would do the trick.
-
   T eps = std::numeric_limits<number<T> >::epsilon().backend();
   long eps_exponent;
   T ignore_result;
   eval_frexp(ignore_result, eps, &eps_exponent);
   // Tolerance ~ sqrt(eps) / 100.
+  // TBD: Not quite sure how to deal with the tolerance here.
+  // Using epsilon assumes that the answer is on the order of
+  // unity. But we might be taking the logarithm of a very
+  // large argument.
   long target_tolerance_exponent = (eps_exponent / 2 - 15);
 
-  T ak_tmp(0.0);
+  T cp_ak;
+  T ak_tmp;
+
   for (std::int32_t k = static_cast<std::int32_t>(0); k < static_cast<std::int32_t>(64); ++k) {
 
-    // TBD: Here we are basically checking the closeness of
-    // the iteration variables ak and bk. We should try to
-    // find a more efficient way of testing this closeness.
-    // Avoid the division and possibly the subtraction.
-    // Consider frexp maybe as a choice, assuming k is above,
-    // say 3 or 4.
+    // Checking the closeness of the iteration variables ak and bk.
+    // C
 
-    T cp_ak = ak;
-    eval_subtract(cp_ak, bk);
+    eval_subtract(cp_ak, ak, bk);
+
     int diff_exponent;
     eval_frexp(ignore_result, cp_ak, &diff_exponent);
-    
 
     // Check for the number of significant digits to be
     // at least half of the requested digits. If at least
     // half of the requested digits have been achieved,
     // then break after the upcoming iteration.
-    const bool break_after_this_iteration = (k > static_cast<std::int32_t>(4))
-      && diff_exponent < target_tolerance_exponent;
+    const bool break_after_this_iteration = (   (k > static_cast<std::int32_t>(4))
+                                             && (diff_exponent < target_tolerance_exponent));
 
     ak_tmp = ak;
     eval_add(ak, bk);
@@ -559,9 +540,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
     }
 
     eval_multiply(bk, ak_tmp);
-    T new_bk;
-    eval_sqrt(new_bk, bk);
-    bk = new_bk;
+    eval_sqrt(bk, bk);
   }
 
   // We are now finished with the AGM iteration for log(x).
