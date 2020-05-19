@@ -429,8 +429,32 @@ typename std::enable_if<should_use_log_series<T>::value>::type eval_log(T& resul
 }
 
 template <class T>
-typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x, const T& x) {
-  // Use an AGM method to compute the logarithm of x.
+typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, const T& arg) {
+  BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The log function is only valid for floating point types.");
+
+  // Use an AGM method to compute the logarithm of arg.
+  int s = eval_signbit(arg);
+  switch (eval_fpclassify(arg)) {
+  case FP_NAN:
+    result = arg;
+    errno = EDOM;
+    return;
+  case FP_INFINITE:
+    if (s)
+      break;
+    result = arg;
+    return;
+  case FP_ZERO:
+    result = std::numeric_limits<number<T> >::has_infinity ? std::numeric_limits<number<T> >::infinity().backend() : (std::numeric_limits<number<T> >::max)().backend();
+    result.negate();
+    errno = ERANGE;
+    return;
+  }
+  if (s) {
+    result = std::numeric_limits<number<T> >::quiet_NaN().backend();
+    errno = EDOM;
+    return;
+  }
 
   // TBD: Preliminary first benchmarks show that the caching
   // of the constants pi and ln_two (which occurs prior
@@ -443,15 +467,20 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
 
   // For values less than 1 invert the argument and
   // remember (in this case) to negate the result below.
-  const bool b_negate = (x.compare(1.0) < 0);
+  const int cmp_one = arg.compare(1.0);
+  if (cmp_one == 0) {
+    result = 0.0;
+    return;
+  }
+  const bool b_negate = (cmp_one < 0);
 
 
   T xx;
   if (!b_negate) {
-    xx = x;
+    xx = arg;
   } else {
     xx = 1;
-    eval_divide(xx, x);
+    eval_divide(xx, arg);
   }
 
   // Set a0 = 1
@@ -460,7 +489,11 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   T ak(1.0);
 
   const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
-  const float lgx_over_lg_radix = xx.exponent() / std::log(float(std::numeric_limits<number<T> >::radix));
+  
+  long xx_exponent;
+  T ignore_xx_result;
+  eval_frexp(ignore_xx_result, xx, &xx_exponent);
+  const float lgx_over_lg_radix = xx_exponent / std::log(float(std::numeric_limits<number<T> >::radix));
 
   // TBD: Using exponent is not quite right because that could
   // be either base 10 or base 2 exponent depending on the
@@ -493,7 +526,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
   T ignore_result;
   eval_frexp(ignore_result, eps, &eps_exponent);
   // Tolerance ~ sqrt(eps) / 100.
-  long target_tolerance_exponent = (eps_exponent / 2 - 8);
+  long target_tolerance_exponent = (eps_exponent / 2 - 15);
 
   T ak_tmp(0.0);
   for (std::int32_t k = static_cast<std::int32_t>(0); k < static_cast<std::int32_t>(64); ++k) {
@@ -540,15 +573,15 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result_x
 
 
   eval_multiply(ak, 2);
-  result_x = get_constant_pi<T>();
-  eval_divide(result_x, ak);
+  result = get_constant_pi<T>();
+  eval_divide(result, ak);
 
   T m_ln2 = get_constant_ln2<T>();
   eval_multiply(m_ln2, m);
-  eval_subtract(result_x, m_ln2);
+  eval_subtract(result, m_ln2);
 
   if (b_negate) {
-    result_x.negate();
+    result.negate();
   }
 }
 
