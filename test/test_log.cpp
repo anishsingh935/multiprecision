@@ -248,6 +248,8 @@ int main()
    // Check low multiprecision digit counts.
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<9> > >();
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<18> > >();
+   // Check high multiprecision digit counts.
+   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<1000> > >();
 #endif
 #endif
 #ifdef TEST_FLOAT128

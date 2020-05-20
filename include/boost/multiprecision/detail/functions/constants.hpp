@@ -206,12 +206,15 @@ void calc_log2(T& num, unsigned digits) {
     eval_frexp(ignore_result, cp_ak, &diff_exponent);
 
 
+    int bk_exponent;
+    eval_frexp(ignore_result, bk, &bk_exponent);
+
     // Check for the number of significant digits to be
     // at least half of the requested digits. If at least
     // half of the requested digits have been achieved,
     // then break after the upcoming iteration.
-    const bool break_after_this_iteration = (k > static_cast<std::int32_t>(4))
-      && diff_exponent < target_tolerance_exponent;
+    const bool break_after_this_iteration = ((k > static_cast<std::int32_t>(4))
+      && (diff_exponent < bk_exponent + target_tolerance_exponent));
 
     ak_tmp = ak;
     eval_add(ak, bk);

@@ -133,6 +133,15 @@ inline bool is_mpfr(const boost::multiprecision::number<boost::multiprecision::m
 }
 #endif
 
+template<class T>
+void test_ln2()   {
+   typedef typename T::backend_type backend_type;
+   T                                num, expect;
+   num.backend() = boost::multiprecision::default_ops::get_constant_ln2<backend_type>();
+   expect        = static_cast<T>(correct_ln2);
+   BOOST_CHECK_CLOSE_FRACTION(num, expect, std::numeric_limits<T>::epsilon() * (is_mpfr(num) ? 30 : 1));
+}
+
 template <class T>
 void test()
 {
@@ -141,9 +150,7 @@ void test()
    num.backend() = boost::multiprecision::default_ops::get_constant_pi<backend_type>();
    expect        = static_cast<T>(correct_pi);
    BOOST_CHECK_CLOSE_FRACTION(num, expect, std::numeric_limits<T>::epsilon() * (is_mpfr(num) ? 1200 : 2));
-   num.backend() = boost::multiprecision::default_ops::get_constant_ln2<backend_type>();
-   expect        = static_cast<T>(correct_ln2);
-   BOOST_CHECK_CLOSE_FRACTION(num, expect, std::numeric_limits<T>::epsilon() * (is_mpfr(num) ? 30 : 1));
+   test_ln2<T>();
    num.backend() = boost::multiprecision::default_ops::get_constant_e<backend_type>();
    expect        = static_cast<T>(correct_e);
    BOOST_CHECK_CLOSE_FRACTION(num, expect, std::numeric_limits<T>::epsilon() * (is_mpfr(num) ? 2 : 1));
@@ -155,12 +162,14 @@ int main()
    test<boost::multiprecision::number<boost::multiprecision::mpfr_float_backend<2000> > >();
 #endif
 #ifdef TEST_CPP_BIN_FLOAT
-   test<boost::multiprecision::number<boost::multiprecision::cpp_bin_float<2000> > >();
+   test<boost::multiprecision::number<boost::multiprecision::cpp_bin_float<1000> > >();
    // Check high multiprecision digit counts.
-   test<boost::multiprecision::number<boost::multiprecision::cpp_bin_float<5000> > >();
+   test_ln2<boost::multiprecision::number<boost::multiprecision::cpp_bin_float<5000> > >();
 #endif
 #ifdef TEST_CPP_DEC_FLOAT
-   // test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<2000> > >();
+   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<2000> > >();
+   // Check high multiprecision digit counts.
+   test_ln2<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<5000> > >();
 #endif
 #ifdef TEST_MPF_50
    test<boost::multiprecision::number<boost::multiprecision::gmp_float<2000> > >();
