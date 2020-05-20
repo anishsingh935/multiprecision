@@ -511,26 +511,27 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
   // unity. But we might be taking the logarithm of a very
   // large argument.
   long target_tolerance_exponent = (eps_exponent / 2 - 15);
-
+  
   T cp_ak;
   T ak_tmp;
 
   for (std::int32_t k = static_cast<std::int32_t>(0); k < static_cast<std::int32_t>(64); ++k) {
 
     // Checking the closeness of the iteration variables ak and bk.
-    // C
-
     eval_subtract(cp_ak, ak, bk);
 
     int diff_exponent;
     eval_frexp(ignore_result, cp_ak, &diff_exponent);
 
+    int bk_exponent;
+    eval_frexp(ignore_result, bk, &bk_exponent);
+
     // Check for the number of significant digits to be
     // at least half of the requested digits. If at least
     // half of the requested digits have been achieved,
     // then break after the upcoming iteration.
-    const bool break_after_this_iteration = (   (k > static_cast<std::int32_t>(4))
-                                             && (diff_exponent < target_tolerance_exponent));
+    const bool break_after_this_iteration = (  (k > static_cast<std::int32_t>(4))
+                                             && (diff_exponent < bk_exponent + target_tolerance_exponent));
 
     ak_tmp = ak;
     eval_add(ak, bk);
