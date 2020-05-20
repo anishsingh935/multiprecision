@@ -470,7 +470,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
   if (!b_negate) {
     xx = arg;
   } else {
-    xx = 1;
+    xx = 1.0;
     eval_divide(xx, arg);
   }
 
@@ -481,7 +481,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
 
   const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
   
-  long xx_exponent;
+  int xx_exponent;
   T ignore_xx_result;
   eval_frexp(ignore_xx_result, xx, &xx_exponent);
   const float lgx_over_lg_radix = xx_exponent / std::log(float(std::numeric_limits<number<T> >::radix));
@@ -502,7 +502,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
   // Determine the requested precision of the upcoming iteration in units of digits10.
 
   T eps = std::numeric_limits<number<T> >::epsilon().backend();
-  long eps_exponent;
+  int eps_exponent;
   T ignore_result;
   eval_frexp(ignore_result, eps, &eps_exponent);
   // Tolerance ~ sqrt(eps) / 100.
