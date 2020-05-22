@@ -279,6 +279,23 @@
     <ClCompile Include="mpfr-4.1.0\zeta_ui.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="mpfr-4.1.0\fits_s.h" />
+    <ClInclude Include="mpfr-4.1.0\fits_u.h" />
+    <ClInclude Include="mpfr-4.1.0\gen_inverse.h" />
+    <ClInclude Include="mpfr-4.1.0\ieee_floats.h" />
+    <ClInclude Include="mpfr-4.1.0\invert_limb.h" />
+    <ClInclude Include="mpfr-4.1.0\invsqrt_limb.h" />
+    <ClInclude Include="mpfr-4.1.0\mpf2mpfr.h" />
+    <ClInclude Include="mpfr-4.1.0\mpfr-cvers.h" />
+    <ClInclude Include="mpfr-4.1.0\mpfr-gmp.h" />
+    <ClInclude Include="mpfr-4.1.0\mpfr-impl.h" />
+    <ClInclude Include="mpfr-4.1.0\mpfr-intmax.h" />
+    <ClInclude Include="mpfr-4.1.0\mpfr-longlong.h" />
+    <ClInclude Include="mpfr-4.1.0\mpfr-mini-gmp.h" />
+    <ClInclude Include="mpfr-4.1.0\mpfr-sassert.h" />
+    <ClInclude Include="mpfr-4.1.0\mpfr-thread.h" />
+    <ClInclude Include="mpfr-4.1.0\mpfr.h" />
+    <ClInclude Include="mpfr-4.1.0\random_deviate.h" />
     <ClInclude Include="mpfr-4.1.0\x86_64\corei5\config.h" />
     <ClInclude Include="mpfr-4.1.0\x86_64\corei5\gmp-impl.h" />
     <ClInclude Include="mpfr-4.1.0\x86_64\corei5\gmp-mparam.h" />

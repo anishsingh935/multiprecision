@@ -765,5 +765,56 @@
     <ClInclude Include="mpfr-4.1.0\x86_64\corei5\mparam.h">
       <Filter>Source Files\mpfr-4.1.0\x86_64\corei5</Filter>
     </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\fits_s.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\fits_u.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\gen_inverse.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\ieee_floats.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\invert_limb.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\invsqrt_limb.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpf2mpfr.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpfr.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpfr-cvers.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpfr-gmp.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpfr-impl.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpfr-intmax.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpfr-longlong.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpfr-mini-gmp.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpfr-sassert.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\mpfr-thread.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\random_deviate.h">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
