@@ -1,1 +1,7 @@
-# /boost/libs/multiprecision/.gitignore# Use of manifest is unclear, so add to .gitignore./doc/html/standalone_HTML.manifest
+# /boost/libs/multiprecision/.gitignore
+# Use of manifest is unclear, so add to .gitignore.
+/doc/html/standalone_HTML.manifest
+example/mpfr-4.1.0/mpfr-4.1.0.vcxproj.user
+example/mpfr-4.1.0/.vs/mpfr-4.1.0/v16/.suo
+example/mpfr-4.1.0/x64/Release/abort_prec_max.obj
+example/mpfr-4.1.0/x64/
