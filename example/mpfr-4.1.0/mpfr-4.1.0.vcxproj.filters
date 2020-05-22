@@ -1,0 +1,769 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\mpfr-4.1.0">
+      <UniqueIdentifier>{34f026cd-c838-406e-8e6f-a87d8fc6e150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mpfr-4.1.0\x86_64">
+      <UniqueIdentifier>{a9c6ae9a-c31a-4c7c-85cd-1ab91ce6ab10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mpfr-4.1.0\x86_64\corei5">
+      <UniqueIdentifier>{c1d95238-d1f0-4792-baeb-0cb692b799b6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="mpfr-4.1.0\abort_prec_max.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\acos.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\acosh.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\add.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\add_d.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\add_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\add1.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\add1sp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\agm.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\ai.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\asin.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\asinh.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\atan.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\atan2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\atanh.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\bernoulli.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\buildopt.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cache.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cbrt.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\check.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\clear.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\clears.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cmp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cmp_d.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cmp_ld.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cmp_si.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cmp_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cmp2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\comparisons.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\const_catalan.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\const_euler.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\const_log2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\const_pi.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\constant.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\copysign.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cos.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cosh.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cot.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\coth.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\csc.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\csch.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\d_div.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\d_sub.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\digamma.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\dim.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\div.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\div_2exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\div_2si.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\div_2ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\div_d.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\div_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\dump.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\eint.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\eq.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\erf.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\erfc.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\exceptions.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\exp_2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\exp2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\exp3.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\exp10.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\expm1.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\extract.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\factorial.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fits_intmax.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fits_sint.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fits_slong.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fits_sshort.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fits_uint.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fits_uintmax.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fits_ulong.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fits_ushort.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fma.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fms.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\frac.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\free_cache.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\frexp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\gamma.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\gammaonethird.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_d.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_d64.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_f.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_flt.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_ld.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_si.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_sj.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_str.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_uj.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_z.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_z_exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\gmp_op.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\grandom.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\hypot.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\init.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\init2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\inits.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\inits2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\inp_str.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\int_ceil_log2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\isinf.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\isinteger.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\isnan.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\isnum.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\isqrt.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\isregular.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\iszero.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\jn.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\jyn_asympt.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\li2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\lngamma.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\log.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\log1p.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\log2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\log10.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\logging.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\min_prec.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\minmax.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\modf.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mp_clz_tab.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mpfr-gmp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mpn_exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mul.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mul_2exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mul_2si.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mul_2ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mul_d.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mul_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mulders.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\neg.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\next.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\out_str.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\pow.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\pow_si.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\pow_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\pow_z.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\powerof2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\print_raw.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\print_rnd_mode.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\printf.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\rec_sqrt.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\reldiff.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\rem1.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\rint.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\root.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\round_near_x.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\round_p.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\round_prec.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\round_raw_generic.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\scale2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sec.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sech.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_d.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_d64.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_dfl_prec.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_f.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_inf.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_ld.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_nan.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_prc_raw.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_prec.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_q.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_rnd.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_si.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_si_2exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_sj.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_str.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_str_raw.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_ui_2exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_uj.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_z.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_z_exp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_zero.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\setmax.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\setmin.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\setsign.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sgn.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\si_op.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\signbit.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sin.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sin_cos.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sinh.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sinh_cosh.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sqr.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sqrt.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sqrt_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\stack_interface.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\strtofr.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sub.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sub_d.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sub_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sub1.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sub1sp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\subnormal.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\sum.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\swap.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\tan.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\tanh.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\uceil_exp2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\uceil_log2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\ufloor_log2.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\ui_div.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\ui_pow.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\ui_pow_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\ui_sub.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\urandom.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\urandomb.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\vasprintf.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\version.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\volatile.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\yn.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\zeta.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\zeta_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\beta.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cmpabs.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\cmpabs_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\dot.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\erandom.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fmma.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\fpif.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\gamma_inc.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_d128.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_float128.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_q.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mpfr-mini-gmp.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\nbits_ulong.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\nrandom.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\odd_p.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\random_deviate.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\rndna.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_d128.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_float128.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\get_patches.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\log_ui.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\pool.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\set_flt.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\total_order.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\ubf.c">
+      <Filter>Source Files\mpfr-4.1.0</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\config.h">
+      <Filter>Source Files\mpfr-4.1.0\x86_64\corei5</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\gmp.h">
+      <Filter>Source Files\mpfr-4.1.0\x86_64\corei5</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\gmp-impl.h">
+      <Filter>Source Files\mpfr-4.1.0\x86_64\corei5</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\gmp-mparam.h">
+      <Filter>Source Files\mpfr-4.1.0\x86_64\corei5</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\longlong.h">
+      <Filter>Source Files\mpfr-4.1.0\x86_64\corei5</Filter>
+    </ClInclude>
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\mparam.h">
+      <Filter>Source Files\mpfr-4.1.0\x86_64\corei5</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

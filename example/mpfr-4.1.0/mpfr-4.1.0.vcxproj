@@ -1,0 +1,452 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="mpfr-4.1.0\abort_prec_max.c" />
+    <ClCompile Include="mpfr-4.1.0\acos.c" />
+    <ClCompile Include="mpfr-4.1.0\acosh.c" />
+    <ClCompile Include="mpfr-4.1.0\add.c" />
+    <ClCompile Include="mpfr-4.1.0\add1.c" />
+    <ClCompile Include="mpfr-4.1.0\add1sp.c" />
+    <ClCompile Include="mpfr-4.1.0\add_d.c" />
+    <ClCompile Include="mpfr-4.1.0\add_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\agm.c" />
+    <ClCompile Include="mpfr-4.1.0\ai.c" />
+    <ClCompile Include="mpfr-4.1.0\asin.c" />
+    <ClCompile Include="mpfr-4.1.0\asinh.c" />
+    <ClCompile Include="mpfr-4.1.0\atan.c" />
+    <ClCompile Include="mpfr-4.1.0\atan2.c" />
+    <ClCompile Include="mpfr-4.1.0\atanh.c" />
+    <ClCompile Include="mpfr-4.1.0\bernoulli.c" />
+    <ClCompile Include="mpfr-4.1.0\beta.c" />
+    <ClCompile Include="mpfr-4.1.0\buildopt.c" />
+    <ClCompile Include="mpfr-4.1.0\cache.c" />
+    <ClCompile Include="mpfr-4.1.0\cbrt.c" />
+    <ClCompile Include="mpfr-4.1.0\check.c" />
+    <ClCompile Include="mpfr-4.1.0\clear.c" />
+    <ClCompile Include="mpfr-4.1.0\clears.c" />
+    <ClCompile Include="mpfr-4.1.0\cmp.c" />
+    <ClCompile Include="mpfr-4.1.0\cmp2.c" />
+    <ClCompile Include="mpfr-4.1.0\cmpabs.c" />
+    <ClCompile Include="mpfr-4.1.0\cmpabs_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\cmp_d.c" />
+    <ClCompile Include="mpfr-4.1.0\cmp_ld.c" />
+    <ClCompile Include="mpfr-4.1.0\cmp_si.c" />
+    <ClCompile Include="mpfr-4.1.0\cmp_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\comparisons.c" />
+    <ClCompile Include="mpfr-4.1.0\constant.c" />
+    <ClCompile Include="mpfr-4.1.0\const_catalan.c" />
+    <ClCompile Include="mpfr-4.1.0\const_euler.c" />
+    <ClCompile Include="mpfr-4.1.0\const_log2.c" />
+    <ClCompile Include="mpfr-4.1.0\const_pi.c" />
+    <ClCompile Include="mpfr-4.1.0\copysign.c" />
+    <ClCompile Include="mpfr-4.1.0\cos.c" />
+    <ClCompile Include="mpfr-4.1.0\cosh.c" />
+    <ClCompile Include="mpfr-4.1.0\cot.c" />
+    <ClCompile Include="mpfr-4.1.0\coth.c" />
+    <ClCompile Include="mpfr-4.1.0\csc.c" />
+    <ClCompile Include="mpfr-4.1.0\csch.c" />
+    <ClCompile Include="mpfr-4.1.0\digamma.c" />
+    <ClCompile Include="mpfr-4.1.0\dim.c" />
+    <ClCompile Include="mpfr-4.1.0\div.c" />
+    <ClCompile Include="mpfr-4.1.0\div_2exp.c" />
+    <ClCompile Include="mpfr-4.1.0\div_2si.c" />
+    <ClCompile Include="mpfr-4.1.0\div_2ui.c" />
+    <ClCompile Include="mpfr-4.1.0\div_d.c" />
+    <ClCompile Include="mpfr-4.1.0\div_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\dot.c" />
+    <ClCompile Include="mpfr-4.1.0\dump.c" />
+    <ClCompile Include="mpfr-4.1.0\d_div.c" />
+    <ClCompile Include="mpfr-4.1.0\d_sub.c" />
+    <ClCompile Include="mpfr-4.1.0\eint.c" />
+    <ClCompile Include="mpfr-4.1.0\eq.c" />
+    <ClCompile Include="mpfr-4.1.0\erandom.c" />
+    <ClCompile Include="mpfr-4.1.0\erf.c" />
+    <ClCompile Include="mpfr-4.1.0\erfc.c" />
+    <ClCompile Include="mpfr-4.1.0\exceptions.c" />
+    <ClCompile Include="mpfr-4.1.0\exp.c" />
+    <ClCompile Include="mpfr-4.1.0\exp10.c" />
+    <ClCompile Include="mpfr-4.1.0\exp2.c" />
+    <ClCompile Include="mpfr-4.1.0\exp3.c" />
+    <ClCompile Include="mpfr-4.1.0\expm1.c" />
+    <ClCompile Include="mpfr-4.1.0\exp_2.c" />
+    <ClCompile Include="mpfr-4.1.0\extract.c" />
+    <ClCompile Include="mpfr-4.1.0\factorial.c" />
+    <ClCompile Include="mpfr-4.1.0\fits_intmax.c" />
+    <ClCompile Include="mpfr-4.1.0\fits_sint.c" />
+    <ClCompile Include="mpfr-4.1.0\fits_slong.c" />
+    <ClCompile Include="mpfr-4.1.0\fits_sshort.c" />
+    <ClCompile Include="mpfr-4.1.0\fits_uint.c" />
+    <ClCompile Include="mpfr-4.1.0\fits_uintmax.c" />
+    <ClCompile Include="mpfr-4.1.0\fits_ulong.c" />
+    <ClCompile Include="mpfr-4.1.0\fits_ushort.c" />
+    <ClCompile Include="mpfr-4.1.0\fma.c" />
+    <ClCompile Include="mpfr-4.1.0\fmma.c" />
+    <ClCompile Include="mpfr-4.1.0\fms.c" />
+    <ClCompile Include="mpfr-4.1.0\fpif.c" />
+    <ClCompile Include="mpfr-4.1.0\frac.c" />
+    <ClCompile Include="mpfr-4.1.0\free_cache.c" />
+    <ClCompile Include="mpfr-4.1.0\frexp.c" />
+    <ClCompile Include="mpfr-4.1.0\gamma.c" />
+    <ClCompile Include="mpfr-4.1.0\gammaonethird.c" />
+    <ClCompile Include="mpfr-4.1.0\gamma_inc.c" />
+    <ClCompile Include="mpfr-4.1.0\get_d.c" />
+    <ClCompile Include="mpfr-4.1.0\get_d128.c" />
+    <ClCompile Include="mpfr-4.1.0\get_d64.c" />
+    <ClCompile Include="mpfr-4.1.0\get_exp.c" />
+    <ClCompile Include="mpfr-4.1.0\get_f.c" />
+    <ClCompile Include="mpfr-4.1.0\get_float128.c" />
+    <ClCompile Include="mpfr-4.1.0\get_flt.c" />
+    <ClCompile Include="mpfr-4.1.0\get_ld.c" />
+    <ClCompile Include="mpfr-4.1.0\get_patches.c" />
+    <ClCompile Include="mpfr-4.1.0\get_q.c" />
+    <ClCompile Include="mpfr-4.1.0\get_si.c" />
+    <ClCompile Include="mpfr-4.1.0\get_sj.c" />
+    <ClCompile Include="mpfr-4.1.0\get_str.c" />
+    <ClCompile Include="mpfr-4.1.0\get_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\get_uj.c" />
+    <ClCompile Include="mpfr-4.1.0\get_z.c" />
+    <ClCompile Include="mpfr-4.1.0\get_z_exp.c" />
+    <ClCompile Include="mpfr-4.1.0\gmp_op.c" />
+    <ClCompile Include="mpfr-4.1.0\grandom.c" />
+    <ClCompile Include="mpfr-4.1.0\hypot.c" />
+    <ClCompile Include="mpfr-4.1.0\init.c" />
+    <ClCompile Include="mpfr-4.1.0\init2.c" />
+    <ClCompile Include="mpfr-4.1.0\inits.c" />
+    <ClCompile Include="mpfr-4.1.0\inits2.c" />
+    <ClCompile Include="mpfr-4.1.0\inp_str.c" />
+    <ClCompile Include="mpfr-4.1.0\int_ceil_log2.c" />
+    <ClCompile Include="mpfr-4.1.0\isinf.c" />
+    <ClCompile Include="mpfr-4.1.0\isinteger.c" />
+    <ClCompile Include="mpfr-4.1.0\isnan.c" />
+    <ClCompile Include="mpfr-4.1.0\isnum.c" />
+    <ClCompile Include="mpfr-4.1.0\isqrt.c" />
+    <ClCompile Include="mpfr-4.1.0\isregular.c" />
+    <ClCompile Include="mpfr-4.1.0\iszero.c" />
+    <ClCompile Include="mpfr-4.1.0\jn.c" />
+    <ClCompile Include="mpfr-4.1.0\jyn_asympt.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\li2.c" />
+    <ClCompile Include="mpfr-4.1.0\lngamma.c" />
+    <ClCompile Include="mpfr-4.1.0\log.c" />
+    <ClCompile Include="mpfr-4.1.0\log10.c" />
+    <ClCompile Include="mpfr-4.1.0\log1p.c" />
+    <ClCompile Include="mpfr-4.1.0\log2.c" />
+    <ClCompile Include="mpfr-4.1.0\logging.c" />
+    <ClCompile Include="mpfr-4.1.0\log_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\minmax.c" />
+    <ClCompile Include="mpfr-4.1.0\min_prec.c" />
+    <ClCompile Include="mpfr-4.1.0\modf.c" />
+    <ClCompile Include="mpfr-4.1.0\mpfr-gmp.c" />
+    <ClCompile Include="mpfr-4.1.0\mpfr-mini-gmp.c" />
+    <ClCompile Include="mpfr-4.1.0\mpn_exp.c" />
+    <ClCompile Include="mpfr-4.1.0\mp_clz_tab.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\mul.c" />
+    <ClCompile Include="mpfr-4.1.0\mulders.c" />
+    <ClCompile Include="mpfr-4.1.0\mul_2exp.c" />
+    <ClCompile Include="mpfr-4.1.0\mul_2si.c" />
+    <ClCompile Include="mpfr-4.1.0\mul_2ui.c" />
+    <ClCompile Include="mpfr-4.1.0\mul_d.c" />
+    <ClCompile Include="mpfr-4.1.0\mul_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\nbits_ulong.c" />
+    <ClCompile Include="mpfr-4.1.0\neg.c" />
+    <ClCompile Include="mpfr-4.1.0\next.c" />
+    <ClCompile Include="mpfr-4.1.0\nrandom.c" />
+    <ClCompile Include="mpfr-4.1.0\odd_p.c" />
+    <ClCompile Include="mpfr-4.1.0\out_str.c" />
+    <ClCompile Include="mpfr-4.1.0\pool.c" />
+    <ClCompile Include="mpfr-4.1.0\pow.c" />
+    <ClCompile Include="mpfr-4.1.0\powerof2.c" />
+    <ClCompile Include="mpfr-4.1.0\pow_si.c" />
+    <ClCompile Include="mpfr-4.1.0\pow_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\pow_z.c" />
+    <ClCompile Include="mpfr-4.1.0\printf.c" />
+    <ClCompile Include="mpfr-4.1.0\print_raw.c" />
+    <ClCompile Include="mpfr-4.1.0\print_rnd_mode.c" />
+    <ClCompile Include="mpfr-4.1.0\random_deviate.c" />
+    <ClCompile Include="mpfr-4.1.0\rec_sqrt.c" />
+    <ClCompile Include="mpfr-4.1.0\reldiff.c" />
+    <ClCompile Include="mpfr-4.1.0\rem1.c" />
+    <ClCompile Include="mpfr-4.1.0\rint.c" />
+    <ClCompile Include="mpfr-4.1.0\rndna.c" />
+    <ClCompile Include="mpfr-4.1.0\root.c" />
+    <ClCompile Include="mpfr-4.1.0\round_near_x.c" />
+    <ClCompile Include="mpfr-4.1.0\round_p.c" />
+    <ClCompile Include="mpfr-4.1.0\round_prec.c" />
+    <ClCompile Include="mpfr-4.1.0\round_raw_generic.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="mpfr-4.1.0\scale2.c" />
+    <ClCompile Include="mpfr-4.1.0\sec.c" />
+    <ClCompile Include="mpfr-4.1.0\sech.c" />
+    <ClCompile Include="mpfr-4.1.0\set.c" />
+    <ClCompile Include="mpfr-4.1.0\setmax.c" />
+    <ClCompile Include="mpfr-4.1.0\setmin.c" />
+    <ClCompile Include="mpfr-4.1.0\setsign.c" />
+    <ClCompile Include="mpfr-4.1.0\set_d.c" />
+    <ClCompile Include="mpfr-4.1.0\set_d128.c" />
+    <ClCompile Include="mpfr-4.1.0\set_d64.c" />
+    <ClCompile Include="mpfr-4.1.0\set_dfl_prec.c" />
+    <ClCompile Include="mpfr-4.1.0\set_exp.c" />
+    <ClCompile Include="mpfr-4.1.0\set_f.c" />
+    <ClCompile Include="mpfr-4.1.0\set_float128.c" />
+    <ClCompile Include="mpfr-4.1.0\set_flt.c" />
+    <ClCompile Include="mpfr-4.1.0\set_inf.c" />
+    <ClCompile Include="mpfr-4.1.0\set_ld.c" />
+    <ClCompile Include="mpfr-4.1.0\set_nan.c" />
+    <ClCompile Include="mpfr-4.1.0\set_prc_raw.c" />
+    <ClCompile Include="mpfr-4.1.0\set_prec.c" />
+    <ClCompile Include="mpfr-4.1.0\set_q.c" />
+    <ClCompile Include="mpfr-4.1.0\set_rnd.c" />
+    <ClCompile Include="mpfr-4.1.0\set_si.c" />
+    <ClCompile Include="mpfr-4.1.0\set_si_2exp.c" />
+    <ClCompile Include="mpfr-4.1.0\set_sj.c" />
+    <ClCompile Include="mpfr-4.1.0\set_str.c" />
+    <ClCompile Include="mpfr-4.1.0\set_str_raw.c" />
+    <ClCompile Include="mpfr-4.1.0\set_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\set_ui_2exp.c" />
+    <ClCompile Include="mpfr-4.1.0\set_uj.c" />
+    <ClCompile Include="mpfr-4.1.0\set_z.c" />
+    <ClCompile Include="mpfr-4.1.0\set_zero.c" />
+    <ClCompile Include="mpfr-4.1.0\set_z_exp.c" />
+    <ClCompile Include="mpfr-4.1.0\sgn.c" />
+    <ClCompile Include="mpfr-4.1.0\signbit.c" />
+    <ClCompile Include="mpfr-4.1.0\sin.c" />
+    <ClCompile Include="mpfr-4.1.0\sinh.c" />
+    <ClCompile Include="mpfr-4.1.0\sinh_cosh.c" />
+    <ClCompile Include="mpfr-4.1.0\sin_cos.c" />
+    <ClCompile Include="mpfr-4.1.0\si_op.c" />
+    <ClCompile Include="mpfr-4.1.0\sqr.c" />
+    <ClCompile Include="mpfr-4.1.0\sqrt.c" />
+    <ClCompile Include="mpfr-4.1.0\sqrt_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\stack_interface.c" />
+    <ClCompile Include="mpfr-4.1.0\strtofr.c" />
+    <ClCompile Include="mpfr-4.1.0\sub.c" />
+    <ClCompile Include="mpfr-4.1.0\sub1.c" />
+    <ClCompile Include="mpfr-4.1.0\sub1sp.c" />
+    <ClCompile Include="mpfr-4.1.0\subnormal.c" />
+    <ClCompile Include="mpfr-4.1.0\sub_d.c" />
+    <ClCompile Include="mpfr-4.1.0\sub_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\sum.c" />
+    <ClCompile Include="mpfr-4.1.0\swap.c" />
+    <ClCompile Include="mpfr-4.1.0\tan.c" />
+    <ClCompile Include="mpfr-4.1.0\tanh.c" />
+    <ClCompile Include="mpfr-4.1.0\total_order.c" />
+    <ClCompile Include="mpfr-4.1.0\ubf.c" />
+    <ClCompile Include="mpfr-4.1.0\uceil_exp2.c" />
+    <ClCompile Include="mpfr-4.1.0\uceil_log2.c" />
+    <ClCompile Include="mpfr-4.1.0\ufloor_log2.c" />
+    <ClCompile Include="mpfr-4.1.0\ui_div.c" />
+    <ClCompile Include="mpfr-4.1.0\ui_pow.c" />
+    <ClCompile Include="mpfr-4.1.0\ui_pow_ui.c" />
+    <ClCompile Include="mpfr-4.1.0\ui_sub.c" />
+    <ClCompile Include="mpfr-4.1.0\urandom.c" />
+    <ClCompile Include="mpfr-4.1.0\urandomb.c" />
+    <ClCompile Include="mpfr-4.1.0\vasprintf.c" />
+    <ClCompile Include="mpfr-4.1.0\version.c" />
+    <ClCompile Include="mpfr-4.1.0\volatile.c" />
+    <ClCompile Include="mpfr-4.1.0\yn.c" />
+    <ClCompile Include="mpfr-4.1.0\zeta.c" />
+    <ClCompile Include="mpfr-4.1.0\zeta_ui.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\config.h" />
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\gmp-impl.h" />
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\gmp-mparam.h" />
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\gmp.h" />
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\longlong.h" />
+    <ClInclude Include="mpfr-4.1.0\x86_64\corei5\mparam.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A03EE670-7862-4684-A2D5-1CF9B780E245}</ProjectGuid>
+    <RootNamespace>mpfr241</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>mpfr-4.1.0</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)mpfr-4.1.0\x86_64\corei5;$(SolutionDir)mpfr-4.1.0;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <TargetName>mpfr</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)mpfr-4.1.0\x86_64\corei5;$(SolutionDir)mpfr-4.1.0;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <TargetName>mpfr</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)mpfr-4.1.0\x86_64\corei5;$(SolutionDir)mpfr-4.1.0;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <TargetName>mpfr</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)mpfr-4.1.0\x86_64\corei5;$(SolutionDir)mpfr-4.1.0;$(IncludePath)</IncludePath>
+    <TargetName>mpfr</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(ProjectDir)gmp/4-2-4/vc9/p4; $(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;__GMP_INLINE_PROTOTYPES;HAVE_CONFIG_H;HAVE_STDARG;HAVE_VA_COPY;MPFR_JN;MPFR_YN;flag=0;use_inexp=1;mpfr_round_raw_generic=mpfr_round_raw;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4146;4244;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)mpfr.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(ProjectDir)gmp/4-2-4/vc9/x64; $(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;__GMP_INLINE_PROTOTYPES;HAVE_CONFIG_H;HAVE_STDARG;HAVE_VA_COPY;MPFR_JN;MPFR_YN;flag=0;use_inexp=1;mpfr_round_raw_generic=mpfr_round_raw;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeader />
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4146;4244;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)mpfr.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(ProjectDir)gmp/4-2-4/vc9/p4; $(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;HAVE_CONFIG_H;__GMP_INLINE_PROTOTYPES;HAVE_STDARG;HAVE_VA_COPY;flag=0;use_inexp=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4146;4244;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)mpfr.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(ProjectDir)gmp/4-2-4/vc9/x64; $(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;HAVE_CONFIG_H;__GMP_INLINE_PROTOTYPES;HAVE_STDARG;HAVE_VA_COPY;flag=0;use_inexp=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeader />
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4146;4244;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)mpfr.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
