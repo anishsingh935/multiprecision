@@ -155,7 +155,7 @@ mpfr_get_str_aux (char *const str, mpfr_exp_t *const exp, mp_limb_t *const r,
 
       /* round str1 */
       MPFR_ASSERTN(size_s1 >= m);
-      *exp = size_s1 - m; /* number of superfluous characters */
+      *exp = (mpfr_exp_t) (size_s1 - m); /* number of superfluous characters */
 
       /* if size_s1 = m + 2, necessarily we have b^(m+1) as result,
          and the result will not change */
@@ -2677,7 +2677,7 @@ mpfr_get_str (char *s, mpfr_exp_t *e, int b, size_t m, mpfr_srcptr x,
         }
 
       /* the first digit will contain only r bits */
-      prec = (m - 1) * pow2 + r; /* total number of bits */
+      prec = (mpfr_exp_t) ((m - 1) * pow2 + r); /* total number of bits */
       /* if m=1 then 1 <= prec <= pow2, and since prec=1 is now valid in MPFR,
          the power-of-two code also works for m=1 */
       n = MPFR_PREC2LIMBS (prec);
@@ -2735,7 +2735,7 @@ mpfr_get_str (char *s, mpfr_exp_t *e, int b, size_t m, mpfr_srcptr x,
   g = mpfr_ceil_mul (MPFR_GET_EXP (x) - 1, b, 1);
   exact = 1;
   /* prec is the radix-2 precision necessary to get m digits in radix b */
-  prec = mpfr_ceil_mul (m, b, 0) + 1;
+  prec = mpfr_ceil_mul ((mpfr_exp_t) m, b, 0) + 1;
   exp = ((mpfr_exp_t) m < g) ? g - (mpfr_exp_t) m : (mpfr_exp_t) m - g;
   prec += MPFR_INT_CEIL_LOG2 (prec); /* number of guard bits */
   if (exp != 0) /* add maximal exponentiation error */
@@ -2763,7 +2763,7 @@ mpfr_get_str (char *s, mpfr_exp_t *e, int b, size_t m, mpfr_srcptr x,
             exact = mpn_scan1 (xp, 0) >= (nx - n) * GMP_NUMB_BITS;
           err = !exact;
           MPN_COPY2 (a, n, xp, nx);
-          exp_a = MPFR_GET_EXP (x) - n * GMP_NUMB_BITS;
+          exp_a = (mpfr_exp_t) (MPFR_GET_EXP (x) - n * GMP_NUMB_BITS);
         }
       else if ((mpfr_exp_t) m > g) /* we have to multiply x by b^exp */
         {
@@ -2833,7 +2833,7 @@ mpfr_get_str (char *s, mpfr_exp_t *e, int b, size_t m, mpfr_srcptr x,
 
           /* result = x / a */
           mpn_tdiv_qr (result, reste, 0, x1, 2 * n, a, n);
-          exp_a = MPFR_GET_EXP (x) - exp_a - 2 * n * GMP_NUMB_BITS;
+          exp_a = (mpfr_exp_t) (MPFR_GET_EXP (x) - exp_a - 2 * n * GMP_NUMB_BITS);
 
           /* test if division was exact */
           if (exact)

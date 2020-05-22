@@ -108,7 +108,7 @@ mpfr_mpn_exp (mp_limb_t *a, mpfr_exp_t *exp_r, int b, mpfr_exp_t e, size_t n)
   a [n - 1] = B;
   MPN_ZERO (a, n - 1);
   /* initial exponent for A: invariant is A = {a, n} * 2^f */
-  f = h - (n - 1) * GMP_NUMB_BITS;
+  f = (mpfr_exp_t) (h - (n - 1) * GMP_NUMB_BITS);
 
   /* determine number of bits in e */
   t = nbits_mpfr_exp_t (e);

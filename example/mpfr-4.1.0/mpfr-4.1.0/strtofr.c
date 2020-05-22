@@ -544,7 +544,7 @@ parsed_string_to_mpfr (mpfr_t x, struct parsed_string *pstr, mpfr_rnd_t rnd)
       /* If the number of wanted bytes is more than what is available
          in pstr->mant, i.e. pstr->prec, reduce it to pstr->prec. */
       if (pstr_size > pstr->prec)
-        pstr_size = pstr->prec;
+        pstr_size = (mpfr_prec_t) pstr->prec;
 
       /* Convert str (potentially truncated to pstr_size) into binary.
          Note that pstr->mant is big endian, thus no offset is needed. */

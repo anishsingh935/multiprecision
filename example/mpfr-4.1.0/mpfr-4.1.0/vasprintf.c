@@ -1609,7 +1609,7 @@ regular_fg (struct number_parts *np, mpfr_srcptr p,
              When spec.size != 0, this case is also possible in the case
              where p is rounded up to the next power of 10: a zero must be
              added since the exponent has been increased by 1. */
-          np->ip_trailing_digits = exp - str_len;
+          np->ip_trailing_digits = (int) (exp - str_len);
           np->ip_size = str_len;
         }
       else

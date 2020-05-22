@@ -59,7 +59,7 @@ mpfr_get_f (mpf_ptr x, mpfr_srcptr y, mpfr_rnd_t rnd_mode)
 
           /* To this day, [mp_exp_t] and mp_size_t are #defined as the same
              type */
-          EXP (x) = MP_SIZE_T_MAX;
+          EXP (x) = (mpfr_exp_t) MP_SIZE_T_MAX;
 
           sx = PREC (x);
           SIZ (x) = sx;

@@ -182,7 +182,7 @@ mpfr_atan_aux (mpfr_ptr y, mpz_ptr p, unsigned long r, int m, mpz_t *tab)
       for (im = 1 ; im <= m ; im ++)
         mpz_mul (ptoj[im], ptoj[im - 1], ptoj[im - 1]);
       /* main loop */
-      n = 1UL << m;
+      n = (mp_bitcnt_t) (1ULL << m);
       MPFR_ASSERTN (n != 0);  /* no overflow */
       /* the i-th term being X^i/(2i+1) with X=p/2^r, we can stop when
          p^i/2^(r*i) < 2^(-precy), i.e. r*i > precy + log2(p^i) */
@@ -219,7 +219,7 @@ mpfr_atan_aux (mpfr_ptr y, mpz_ptr p, unsigned long r, int m, mpz_t *tab)
   else /* special case p=1: the i-th term being X^i/(2i+1) with X=1/2^r,
           we can stop when r*i > precy i.e. i > precy/r */
     {
-      n = 1UL << m;
+      n = (mp_bitcnt_t) (1ULL << m);
       if (precy / r <= n)
         n = (precy / r) + 1;
       MPFR_ASSERTN (n != 0);  /* no overflow */

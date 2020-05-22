@@ -75,7 +75,7 @@ mpfr_exp_rational (mpfr_ptr y, mpz_ptr p, long r, int m,
   prec_i_have = 0;
 
   /* Main Loop */
-  n = 1UL << m;
+  n = (mp_bitcnt_t) (1ULL << m);
   MPFR_ASSERTN (n != 0);  /* no overflow */
   for (i = 1; (prec_i_have < precy) && (i < n); i++)
     {

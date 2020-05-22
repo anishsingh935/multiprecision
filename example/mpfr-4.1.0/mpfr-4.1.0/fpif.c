@@ -204,7 +204,7 @@ mpfr_fpif_store_precision (unsigned char *buffer, size_t *buffer_size,
 
   if (precision > MPFR_MAX_EMBEDDED_PRECISION)
     {
-      result[0] = size_precision - 1;
+      result[0] = (unsigned char) (size_precision - 1);
       precision -= (MPFR_MAX_EMBEDDED_PRECISION + 1);
       putLittleEndianData (result + 1, (unsigned char *) &precision,
                            sizeof(mpfr_prec_t), size_precision);
@@ -236,7 +236,7 @@ mpfr_fpif_read_precision_from_file (FILE *fh)
 
   precision_size = buffer[0];
   if (precision_size > MPFR_MAX_PRECSIZE)
-    return precision_size - MPFR_MAX_PRECSIZE;
+    return (mpfr_prec_t) (precision_size - MPFR_MAX_PRECSIZE);
 
   precision_size++;
   MPFR_ASSERTD (precision_size <= BUFFER_SIZE);
@@ -338,7 +338,7 @@ mpfr_fpif_store_exponent (unsigned char *buffer, size_t *buffer_size, mpfr_t x)
         result[0] = uexp;
       else
         {
-          result[0] = MPFR_EXTERNAL_EXPONENT + exponent_size;
+          result[0] = (unsigned char) (MPFR_EXTERNAL_EXPONENT + exponent_size);
 
           putLittleEndianData (result + 1, (unsigned char *) &uexp,
                                sizeof(mpfr_exp_t), exponent_size);
@@ -539,7 +539,7 @@ mpfr_fpif_export (FILE *fh, mpfr_t x)
   used_size = buf_size;
   buf = mpfr_fpif_store_precision (buf, &used_size, mpfr_get_prec (x));
   used_size > buf_size ? buf_size = used_size : 0;
-  status = fwrite (buf, used_size, 1, fh);
+  status = (int) fwrite (buf, used_size, 1, fh);
   if (status != 1)
     {
       mpfr_free_func (buf, buf_size);
@@ -551,7 +551,7 @@ mpfr_fpif_export (FILE *fh, mpfr_t x)
      mpfr_fpif_store_exponent, an assertion failed */
   buf = bufResult;
   used_size > buf_size ? buf_size = used_size : 0;
-  status = fwrite (buf, used_size, 1, fh);
+  status = (int) fwrite (buf, used_size, 1, fh);
   if (status != 1)
     {
       mpfr_free_func (buf, buf_size);
@@ -563,7 +563,7 @@ mpfr_fpif_export (FILE *fh, mpfr_t x)
       used_size = buf_size;
       buf = mpfr_fpif_store_limbs (buf, &used_size, x);
       used_size > buf_size ? buf_size = used_size : 0;
-      status = fwrite (buf, used_size, 1, fh);
+      status = (int) fwrite (buf, used_size, 1, fh);
       if (status != 1)
         {
           mpfr_free_func (buf, buf_size);
@@ -619,7 +619,7 @@ mpfr_fpif_import (mpfr_t x, FILE *fh)
       used_size = (precision + 7) >> 3; /* ceil(precision/8) */
       buffer = (unsigned char*) mpfr_allocate_func (used_size);
       MPFR_ASSERTN(buffer != NULL);
-      status = fread (buffer, used_size, 1, fh);
+      status = (int) fread (buffer, used_size, 1, fh);
       if (status != 1)
         {
           mpfr_free_func (buffer, used_size);

@@ -82,10 +82,10 @@ mpfr_cos2_aux (mpfr_ptr f, mpfr_srcptr r)
   mpz_set_ui (s, 1); /* initialize sum with 1 */
   mpz_mul_2exp (s, s, p + q); /* scale all values by 2^(p+q) */
   mpz_set (t, s); /* invariant: t is previous term */
-  for (i = 1; (m = mpz_sizeinbase (t, 2)) >= q; i += 2)
+  for (i = 1; (m = (mpfr_exp_t) mpz_sizeinbase (t, 2)) >= q; i += 2)
     {
       /* adjust precision of x to that of t */
-      l = mpz_sizeinbase (x, 2);
+      l = (mpfr_exp_t) mpz_sizeinbase (x, 2);
       if (l > m)
         {
           l -= m;

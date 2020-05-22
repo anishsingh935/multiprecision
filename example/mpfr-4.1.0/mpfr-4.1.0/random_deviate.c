@@ -232,7 +232,7 @@ random_deviate_leading_bit (mpfr_random_deviate_t x, gmp_randstate_t r)
   random_deviate_generate (x, 2 * W, r, 0);
   while (mpz_sgn (x->f) == 0)
     random_deviate_generate (x, x->e + 1, r, 0);
-  l = x->e + 1 - mpz_sizeinbase (x->f, 2);
+  l = (mpfr_random_size_t) (x->e + 1 - mpz_sizeinbase (x->f, 2));
   /* Guard against a ridiculously long string of leading zeros in the fraction;
    * probability of this happening is 2^(-2^31).  In particular ensure that
    * p + 1 + l in mpfr_random_deviate_value doesn't overflow with p =

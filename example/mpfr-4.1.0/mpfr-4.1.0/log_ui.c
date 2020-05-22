@@ -133,7 +133,7 @@ mpfr_log_ui (mpfr_ptr x, unsigned long n, mpfr_rnd_t rnd_mode)
 
   mpz_init_set_ui (three_n, n);
   mpz_mul_ui (three_n, three_n, 3);
-  k = mpz_sizeinbase (three_n, 2) - 2;
+  k = (unsigned long) (mpz_sizeinbase (three_n, 2) - 2);
   MPFR_ASSERTD (k >= 2);
   mpz_clear (three_n);
 
