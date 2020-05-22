@@ -8,3 +8,4 @@ example/mpfr-4.1.0/x64/
 example/mpir-3.0.0/build.vc16/.vs/
 example/mpir-3.0.0/build.vc16/lib_mpir_core2/lib_mpir_core2.vcxproj.user
 example/mpir-3.0.0/build.vc16/lib_mpir_core2/x64/
+example/mpir-3.0.0/lib/
