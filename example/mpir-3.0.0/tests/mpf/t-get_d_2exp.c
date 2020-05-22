@@ -109,6 +109,43 @@ check_round (void)
   tests_hardware_setround (old_rnd_mode);
 }
 
+static void
+check_large_exponent(void)
+{
+#ifdef _WIN64
+  static const mpir_si data[] = { 0x1F789ABCDE, 0x1FFFFFFFBF, -0x1FEDCBA987, -0x1FFFFFFFC1 };
+  mpf_t   f;
+  double  got;
+  mpir_si got_exp;
+  unsigned int i;
+
+  mpf_init2 (f, 1024L);
+
+  for (i = 0; i < numberof (data); i++)
+  {
+    mpf_set_ui (f, 1L);
+    if (data[i] > 0)
+    {
+      mpf_mul_2exp(f, f, data[i]);
+    }
+    else
+    {
+      mpf_div_2exp(f, f, -data[i]);
+    }
+    got_exp = mpf_get_2exp_d (&got, f);
+    if (got != 0.5 || got_exp != data[i] + 1)
+    {
+      printf    ("mpf_get_2exp_d bad on 2**%lld\n", data[i]);
+      printf    ("result incorrect, expect mantissa = 0.5, exp = %lld\n", data[i] + 1);
+      mpf_trace ("   f    ", f);
+      d_trace   ("   got  ", got);
+      printf    ("   got exp  %lld\n", got_exp);
+      abort();
+    }
+  }
+  mpf_clear (f);
+#endif
+}
 
 int
 main (void)
@@ -118,6 +155,7 @@ main (void)
 
   check_onebit ();
   check_round ();
+  check_large_exponent ();
 
   tests_end ();
   exit (0);

@@ -65,7 +65,7 @@ MA 02110-1301, USA. */
 
 int   option_libc_scanf = 0;
 
-typedef int (*fun_t) _PROTO ((const char *, const char *, void *, void *));
+typedef int (*fun_t)(const char *, const char *, void *, void *);
 
 
 /* This problem was seen on powerpc7450-apple-darwin7.0.0, sscanf returns 0
@@ -1350,9 +1350,7 @@ check_n (void)
 #if HAVE_INTMAX_T
   CHECK_N (intmax_t,  "j");
 #endif
-#if HAVE_PTRDIFF_T
   CHECK_N (ptrdiff_t, "t");
-#endif
   CHECK_N (short,     "h");
   CHECK_N (size_t,    "z");
 

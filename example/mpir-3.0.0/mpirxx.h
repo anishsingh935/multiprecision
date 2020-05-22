@@ -3326,6 +3326,8 @@ __GMP_DEFINE_UNARY_FUNCTION(floor, __gmp_floor_function)
 __GMP_DEFINE_UNARY_FUNCTION(ceil, __gmp_ceil_function)
 __GMP_DEFINE_UNARY_FUNCTION(sqrt, __gmp_sqrt_function)
 __GMP_DEFINE_BINARY_FUNCTION(hypot, __gmp_hypot_function)
+__GMP_DEFINE_BINARY_FUNCTION(gcd, __gmp_gcd_function)
+__GMP_DEFINE_BINARY_FUNCTION(lcm, __gmp_lcm_function)
 
 __GMP_DEFINE_UNARY_TYPE_FUNCTION(int, sgn, __gmp_sgn_function)
 __GMP_DEFINE_BINARY_TYPE_FUNCTION(int, cmp, __gmp_cmp_function)
@@ -3481,6 +3483,10 @@ public:
   void seed(); // choose a random seed some way (?)
   void seed(mpir_ui s) { gmp_randseed_ui(state, s); }
   void seed(const mpz_class &z) { gmp_randseed(state, z.get_mpz_t()); }
+
+  //get randstate_t for compatibility with non-OO API functions
+  randstate_srcptr get_randstate_t() const { return this->state; }
+  randstate_ptr get_randstate_t() { return this->state; }
 
   // get random number
   __gmp_expr<mpz_t, __gmp_urandomb_value> get_z_bits(mp_bitcnt_t l)

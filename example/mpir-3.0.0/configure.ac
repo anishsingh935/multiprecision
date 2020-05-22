@@ -1,5 +1,5 @@
 dnl  Process this file with autoconf to produce a configure script.
- 
+
 define(GMP_COPYRIGHT,[[
 
 Copyright 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006
@@ -60,7 +60,7 @@ dnl  Automake "no-dependencies" is used because include file dependencies
 dnl  are not useful to us.  Pretty much everything depends just on mpir.h,
 dnl  gmp-impl.h and longlong.h, and yet only rarely does everything need to
 dnl  be rebuilt for changes to those files.
-dnl 
+dnl
 dnl  Note that there's a copy of these options in the top-level Makefile.am,
 dnl  so update there too if changing anything.
 dnl
@@ -390,7 +390,7 @@ case $host in
     GMP_INCLUDE_MPN(alpha/alpha-defs.m4)
     GMP_INCLUDE_MPN(alpha/default.m4)
     SPEED_CYCLECOUNTER_OBJ=alpha.lo
-    cyclecounter_size=1    
+    cyclecounter_size=1
     ;;
 
   arm*-*-*)
@@ -587,7 +587,7 @@ case $host in
       powerpc7400 | powerpc7410)
 		    gcc_cflags_asm="-Wa,-maltivec"
   		    gcc_cflags_cpu="-mcpu=7400 -mcpu=750" ;;
-      powerpc74[45]?)  
+      powerpc74[45]?)
             gcc_cflags_asm="-Wa,-maltivec"
   		    gcc_cflags_cpu="-mcpu=7450" ;;
       powerpc750)   gcc_cflags_cpu="-mcpu=750" ;;
@@ -938,7 +938,7 @@ case $host in
 
     # Availability of rdtsc is checked at run-time.
     SPEED_CYCLECOUNTER_OBJ=pentium.lo
-    
+
     case $host in
       *-*-solaris* | *-*-sunos*)
     	# Note no -g, it disables all optimizations.
@@ -1097,7 +1097,11 @@ case $host in
         gcc_cflags_cpu="-mtune=corei7 -mtune=core2 -mtune=nocona -mtune=pentium3 -mcpu=pentiumpro -mcpu=i486 -m486"
         gcc_cflags_arch="-march=corei7 -march=core2 -march=nocona -march=pentium3 -march=pentiumpro -march=pentium"
         ;;
-      sandybridge | ivybridge | haswell)
+      haswell)
+        gcc_cflags_cpu="-mtune=corei7 -mtune=corei7 -mtune=core2 -mtune=nocona -mtune=pentium3 -mcpu=pentiumpro -mcpu=i486 -m486"
+        gcc_cflags_arch="-march=corei7 -march=corei7 -march=core2 -march=nocona -march=pentium3 -march=pentiumpro -march=pentium"
+        ;;
+      sandybridge | ivybridge | haswellavx)
         gcc_cflags_cpu="-mtune=corei7-avx -mtune=corei7 -mtune=core2 -mtune=nocona -mtune=pentium3 -mcpu=pentiumpro -mcpu=i486 -m486"
         gcc_cflags_arch="-march=corei7-avx -march=corei7 -march=core2 -march=nocona -march=pentium3 -march=pentiumpro -march=pentium"
         ;;
@@ -1131,12 +1135,12 @@ case $host in
       [k6[23]])                path="x86/k6/k62mmx x86/k6/mmx x86/k6 x86" ;;
       k6)                      path="x86/k6/mmx x86/k6 x86" ;;
       athlon | k7 | x86_64 | atom)   path="x86/k7/mmx x86/k7 x86" ;;
-      k102 | k103 | bulldozer | piledriver)       path="x86/k7/mmx/k8/k10/k102  x86/k7/mmx/k8/k10 x86/k7/mmx/k8 x86/k7/mmx x86/k7 x86" ;; 
+      k102 | k103 | bulldozer | piledriver)       path="x86/k7/mmx/k8/k10/k102  x86/k7/mmx/k8/k10 x86/k7/mmx/k8 x86/k7/mmx x86/k7 x86" ;;
       k10)			path="x86/k7/mmx/k8/k10 x86/k7/mmx/k8 x86/k7/mmx x86/k7 x86" ;;
       k8 | bobcat)		path="x86/k7/mmx/k8 x86/k7/mmx x86/k7 x86" ;;
       core2 | penryn)		path="x86/core2 x86" ;;
       i786 | pentium4)		path="x86/pentium4/sse2 x86/pentium4/mmx x86/pentium4 x86" ;;
-      nehalem | westmere | sandybridge | ivybridge | haswell | skylake | skylakeavx | broadwell)	path="x86/nehalem x86" ;;
+      nehalem | westmere | sandybridge | ivybridge | haswell | haswellavx | skylake | skylakeavx | broadwell)	path="x86/nehalem x86" ;;
       prescott | netburst | netburstlahf)       path="x86/pentium4/sse2 x86/pentium4/mmx x86/pentium4 x86" ;;
       # VIA/Centaur processors, sold as CyrixIII and C3.
       nano | viac32)           path="x86/p6/p3mmx x86/p6/mmx x86/p6 x86";;
@@ -1167,7 +1171,7 @@ case $host in
 		x86/core2 x86/nehalem"
       fat_functions="add_n addmul_1 add_err1_n add_err2_n copyd copyi
 		     divexact_1 divexact_by3c divexact_byfobm1 divrem_1 divrem_2
-			 divrem_euclidean_qr_1 
+			 divrem_euclidean_qr_1
 			divrem_euclidean_qr_2 gcd_1 lshift
 		     mod_1 mod_34lsub1 modexact_1c_odd mul_1 mul_basecase
 		     mulmid_basecase preinv_divrem_1 preinv_mod_1 redc_1 rshift
@@ -1190,7 +1194,7 @@ case $host in
         gcc_64_cflags_optlist="opt arch cpu"
         SPEED_CYCLECOUNTER_OBJ_64=x86_64.lo
         CALLING_CONVENTIONS_OBJS_64='x86_64call.lo x86_64check$U.lo'
-        cyclecounter_size_64=2 
+        cyclecounter_size_64=2
         case $host in
            *-*-solaris* | *-*-sunos*)
            # Note no -g, it disables all optimizations.
@@ -1237,10 +1241,12 @@ case $host in
             path_64="x86_64w/sandybridge/ivybridge x86_64w/sandybridge x86_64w" ;;
           haswell-pc-msys|haswell-w64-mingw*|haswell-*-cygwin*)
             path_64="x86_64w/haswell x86_64w/sandybridge x86_64w" ;;
+          haswellavx-pc-msys|haswellavx-w64-mingw*|haswellavx-*-cygwin*)
+            path_64="x86_64w/haswell/avx x86_64w/haswell x86_64w/sandybridge x86_64w" ;;
           skylake-pc-msys|skylake-w64-mingw*|skylake-*-cygwin*)
             path_64="x86_64w/skylake x86_64w/sandybridge x86_64w" ;;
           skylakeavx-pc-msys|skylakeavx-w64-mingw*|skylakeavx-*-cygwin*)
-            path_64="x86_64w/skylakeavx x86_64w/skylake x86_64w/haswell x86_64w/sandybridge x86_64w" ;;
+            path_64="x86_64w/skylake/avx x86_64w/skylake x86_64w/haswell x86_64w/sandybridge x86_64w" ;;
           broadwell-pc-msys|broadwell-w64-mingw*|broadwell-*-cygwin*)
             path_64="x86_64w/haswell/broadwell x86_64w/haswell/avx x86_64w/haswell x86_64w/sandybridge x86_64w" ;;
           atom-pc-msys|atom-w64-mingw*|atom-*-cygwin*)
@@ -1268,19 +1274,21 @@ case $host in
             path_64="x86_64/bulldozer/piledriver x86_64/bulldozer x86_64/k8/k10/k102 x86_64/k8/k10 x86_64/k8 x86_64" ;;
           bobcat-*-*)
             path_64="x86_64/bobcat x86_64" ;;
-          core2-*-*) 
+          core2-*-*)
             path_64="x86_64/core2 x86_64" ;;
-          penryn-*-*) 
+          penryn-*-*)
             path_64="x86_64/core2/penryn x86_64/core2 x86_64" ;;
-          nehalem-*-*) 
+          nehalem-*-*)
             path_64="x86_64/nehalem x86_64/core2 x86_64" ;;
-          westmere-*-*) 
+          westmere-*-*)
             path_64="x86_64/nehalem/westmere x86_64/nehalem x86_64/core2 x86_64" ;;
-          sandybridge-*-*) 
+          sandybridge-*-*)
             path_64="x86_64/sandybridge x86_64/nehalem x86_64/core2 x86_64" ;;
           ivybridge-*-*)
             path_64="x86_64/sandybridge/ivybridge x86_64/sandybridge x86_64/nehalem x86_64/core2 x86_64" ;;
           haswell-*-*)
+            path_64="x86_64/haswell x86_64/sandybridge x86_64" ;;
+          haswellavx-*-*)
             path_64="x86_64/haswell/avx x86_64/haswell x86_64/sandybridge x86_64" ;;
           broadwell-*-*)
             path_64="x86_64/haswell/broadwell x86_64/haswell/avx x86_64/haswell x86_64/sandybridge x86_64" ;;
@@ -1288,9 +1296,9 @@ case $host in
             path_64="x86_64/skylake x86_64/sandybridge x86_64" ;;
           skylakeavx-*-*)
             path_64="x86_64/skylake/avx x86_64/haswell/avx x86_64/skylake x86_64/haswell x86_64/sandybridge x86_64" ;;
-          atom-*-*) 
+          atom-*-*)
             path_64="x86_64/atom x86_64" ;;
-          nano-*-*) 
+          nano-*-*)
             path_64="x86_64/k8/k8only x86_64/k8 x86_64" ;;
         esac
 
@@ -1632,7 +1640,7 @@ if test $found_compiler = yes; then
   else
     GMP_CC="/* No __GMP_CC here as --enable-gmpcompat option not selected */"
     GMP_CFLAGS=""
-  fi    
+  fi
 
    AC_SUBST(GMP_CC)
    AC_SUBST(GMP_CFLAGS)
@@ -1930,11 +1938,14 @@ Use "--disable-static --enable-shared" to build just a DLL.])
     # inline isascii (used in gmp).  It gives an extern inline for
     # __isascii, but for some reason not the plain isascii.
     #
-    # LDFLAGS="$LDFLAGS -Wl,--enable-auto-import"  this is too general 
+    # LDFLAGS="$LDFLAGS -Wl,--enable-auto-import"  this is too general
     if test "$enable_shared" = yes; then
-      GMP_LDFLAGS="$GMP_LDFLAGS -no-undefined -Wl,--export-all-symbols"
-      LIBGMP_LDFLAGS="$LIBGMP_LDFLAGS -Wl,--output-def,.libs/libmpir-3.dll.def"
-      LIBGMPXX_LDFLAGS="$LIBGMP_LDFLAGS -Wl,--output-def,.libs/libmpirxx-3.dll.def"
+      GMP_LDFLAGS="$GMP_LDFLAGS -no-undefined"
+      if test "$with_gnu_ld" = yes; then
+        GMP_LDFLAGS="$GMP_LDFLAGS -Wl,--export-all-symbols"
+        LIBGMP_LDFLAGS="$LIBGMP_LDFLAGS -Wl,--output-def,.libs/libmpir-3.dll.def"
+        LIBGMPXX_LDFLAGS="$LIBGMP_LDFLAGS -Wl,--output-def,.libs/libmpirxx-3.dll.def"
+      fi
       LIBGMP_DLL=1
     fi
     ;;
@@ -2019,19 +2030,16 @@ AC_CHECK_DECLS([sys_errlist, sys_nerr], , ,
 [#include <stdio.h>
 #include <errno.h>])
 
-AC_TYPE_SIGNAL
-
 # Reasons for testing:
 #   intmax_t       - C99
 #   long double    - not in the HP bundled K&R cc
 #   long long      - only in reasonably recent compilers
-#   ptrdiff_t      - seems to be everywhere, maybe don't need to check this
 #   quad_t         - BSD specific
 #   uint_least32_t - C99
 #
 # the default includes are sufficient for all these types
 #
-AC_CHECK_TYPES([intmax_t, uintmax_t, long double, long long, ptrdiff_t, quad_t, uint_least32_t])
+AC_CHECK_TYPES([intmax_t, uintmax_t, long double, long long, quad_t, uint_least32_t])
 
 AC_C_STRINGIZE
 
@@ -2105,7 +2113,7 @@ GMP_C_DOUBLE_FORMAT
 # __gmp_replacement_vsnprintf which is not required on AIX since it has a
 # vsnprintf.
 #
-AC_CHECK_FUNCS(alarm attr_get clock clock_gettime cputime getpagesize getrusage gettimeofday getsysinfo localeconv memset mmap nl_langinfo obstack_vprintf popen processor_info pstat_getprocessor raise read_real_time syssgi strchr strerror strnlen strtol strtoul sysconf sysctl sysctlbyname times)
+AC_CHECK_FUNCS(alarm attr_get clock clock_gettime cputime getpagesize getrusage gettimeofday getsysinfo localeconv mmap nl_langinfo obstack_vprintf popen processor_info pstat_getprocessor raise read_real_time syssgi strerror strnlen strtol strtoul sysconf sysctl sysctlbyname times)
 
 # mingw returns OK on mprotect , but it's broken
 #
@@ -2182,7 +2190,7 @@ gmp_mpn_functions="$extra_functions					   \
   mulmod_2expp1_basecase mul_fft \
   mul mul_n mul_basecase sqr_basecase random random2 	   \
   pow_1 powlo powm binvert \
-  urandomb urandomm randomb rrandom invert \	
+  urandomb urandomm randomb rrandom invert \
   rootrem sizeinbase sqrtrem get_str set_str scan0 scan1 popcount hamdist cmp perfect_square_p \
   bdivmod gcd gcd_1 gcdext tdiv_qr jacobi_base jacobi jacobi_2 get_d  \
   mullow_n mulhigh_n mullow_n_basecase mullow_basecase \
@@ -2193,7 +2201,7 @@ gmp_mpn_functions="$extra_functions					   \
   toom_eval_dgr3_pm1 toom_eval_dgr3_pm2 toom_eval_pm1 toom_eval_pm2 \
   toom_eval_pm2exp toom_eval_pm2rexp toom_interpolate_16pts \
   toom8_sqr_n toom8h_mul toom_couple_handling sb_bdiv_q sb_bdiv_qr \
-  dc_bdiv_q_n dc_bdiv_q dc_bdiv_qr dc_bdiv_qr_n divexact zero $gmp_mpn_functions_optional"
+  dc_bdiv_q_n dc_bdiv_q dc_bdiv_qr dc_bdiv_qr_n divexact zero zero_p $gmp_mpn_functions_optional"
 
 # should be able to remove the mulfunc below
 define(GMP_MULFUNC_CHOICES,
@@ -2835,7 +2843,7 @@ if test "$gmp_asm_syntax_testing" != no; then
       	  case $enable_profiling in
       	    prof | gprof)  GMP_ASM_X86_MCOUNT ;;
       	  esac
-          case $host in 
+          case $host in
             *-*-darwin*)
               OBJECT_FORMAT="-f macho32" ;;
             *)
@@ -2844,18 +2852,18 @@ if test "$gmp_asm_syntax_testing" != no; then
           ;;
 
         64)
-          case $host in 
+          GMP_INCLUDE_MPN(x86_64/x86_64-defs.m4)
+          case $host in
             *-*-darwin*)
               # Defined in mpn/x86_64/x86_64-defs.m4, but there currently
               # hardcoded just for ELF, so redefine it here for Mach-O:
-              GMP_DEFINE_RAW(["define(\`JUMPTABSECT',\`    .section    __DATA,__const')"],POST)
+	      GMP_DEFINE_RAW(["define(\`JUMPTABSECT',\`    .text')"],POST)
               OBJECT_FORMAT="-f macho64" ;;
             *-pc-msys|*-w64-mingw*|*-*-cygwin*)
               OBJECT_FORMAT="-f x64"  ;;
             *)
               OBJECT_FORMAT="-f elf64" ;;
           esac
-          GMP_INCLUDE_MPN(x86_64/x86_64-defs.m4)
           ;;
       esac
       AC_SUBST(OBJECT_FORMAT)

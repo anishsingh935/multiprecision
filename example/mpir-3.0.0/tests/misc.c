@@ -136,7 +136,7 @@ tests_rand_end (void)
 
 
 /* Only used if CPU calling conventions checking is available. */
-mp_limb_t (*calling_conventions_function) _PROTO ((ANYARGS));
+mp_limb_t (*calling_conventions_function)(ANYARGS);
 
 
 /* Return p advanced to the next multiple of "align" bytes.  "align" must be
@@ -396,7 +396,7 @@ urandom (gmp_randstate_t rands)
 
 /* Call (*func)() with various random number generators. */
 void
-call_rand_algs (void (*func) __GMP_PROTO ((const char *, gmp_randstate_ptr)))
+call_rand_algs (void (*func)(const char *, gmp_randstate_ptr))
 {
   gmp_randstate_t  rstate;
   mpz_t            a;
@@ -583,7 +583,7 @@ tests_dbl_mant_bits (void)
 
 jmp_buf    tests_sigfpe_target;
 
-RETSIGTYPE
+void
 tests_sigfpe_handler (int sig)
 {
   longjmp (tests_sigfpe_target, 1);
@@ -594,4 +594,3 @@ tests_sigfpe_done (void)
 {
   signal (SIGFPE, SIG_DFL);
 }
-
