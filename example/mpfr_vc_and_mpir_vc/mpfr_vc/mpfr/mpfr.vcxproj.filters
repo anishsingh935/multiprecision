@@ -8,6 +8,15 @@
     <Filter Include="Source Files\src">
       <UniqueIdentifier>{fc57ab08-294a-42f3-9e93-26121a5fe914}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\inc">
+      <UniqueIdentifier>{9f511ba1-de93-4c9d-af39-2d047aec2d9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\inc\core2_x64">
+      <UniqueIdentifier>{66c3e5ac-0603-46bf-8e6c-81c199ccb81d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\inc\gc_x64">
+      <UniqueIdentifier>{835e5185-e617-4fe2-ac4a-7796e6f9c048}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\abort_prec_max.c">
@@ -809,6 +818,12 @@
     </ClInclude>
     <ClInclude Include="src\random_deviate.h">
       <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\core2_x64\mparam.h">
+      <Filter>Source Files\inc\core2_x64</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gc_x64\mparam.h">
+      <Filter>Source Files\inc\gc_x64</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
