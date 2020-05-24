@@ -825,5 +825,8 @@
     <ClInclude Include="inc\gc_x64\mparam.h">
       <Filter>Source Files\inc\gc_x64</Filter>
     </ClInclude>
+    <ClInclude Include="inc\mpfr.h">
+      <Filter>Source Files\inc</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

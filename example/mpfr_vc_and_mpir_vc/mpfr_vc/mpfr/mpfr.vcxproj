@@ -274,6 +274,7 @@
   <ItemGroup>
     <ClInclude Include="inc\core2_x64\mparam.h" />
     <ClInclude Include="inc\gc_x64\mparam.h" />
+    <ClInclude Include="inc\mpfr.h" />
     <ClInclude Include="src\fits_s.h" />
     <ClInclude Include="src\fits_u.h" />
     <ClInclude Include="src\gen_inverse.h" />
@@ -342,19 +343,19 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mpfr_gc_lib_debug|x64'">
     <OutDir>$(SolutionDir)_Out\</OutDir>
-    <IncludePath>$(ProjectDir)..\..\mpfr_vc\mpfr\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\mpfr_vc\mpfr\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(ProjectDir)..\..\mpfr_vc\mpfr\inc;$(IncludePath)</IncludePath>
     <TargetName>$(Configuration)</TargetName>
     <IntDir>$(SolutionDir)_Tmp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mpfr_gc_lib_release|x64'">
     <OutDir>$(SolutionDir)_Out\</OutDir>
-    <IncludePath>$(ProjectDir)..\..\mpfr_vc\mpfr\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\mpfr_vc\mpfr\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(ProjectDir)..\..\mpfr_vc\mpfr\inc;$(IncludePath)</IncludePath>
     <TargetName>$(Configuration)</TargetName>
     <IntDir>$(SolutionDir)_Tmp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mpfr_core2_lib_release|x64'">
     <OutDir>$(SolutionDir)_Out\</OutDir>
-    <IncludePath>$(ProjectDir)..\..\mpfr_vc\mpfr\inc\core2_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc\core2_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\mpfr_vc\mpfr\inc\core2_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc\core2_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(ProjectDir)..\..\mpfr_vc\mpfr\inc;$(IncludePath)</IncludePath>
     <TargetName>$(Configuration)</TargetName>
     <IntDir>$(SolutionDir)_Tmp\$(Configuration)\</IntDir>
   </PropertyGroup>
