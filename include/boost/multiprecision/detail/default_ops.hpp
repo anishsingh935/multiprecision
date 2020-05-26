@@ -129,14 +129,14 @@ template<typename FloatingPointType,
   local_floating_point_type result;
 
   if (p == local_unsigned_integral_type(0U)) {
-    result = local_floating_point_type(1.0);
+    result = 1.0;
   } else if (p == local_unsigned_integral_type(1U)) {
     result = b;
   } else if (p == local_unsigned_integral_type(2U)) {
     result = b;
     eval_multiply(result, b);
   } else {
-    result = local_floating_point_type(1.0);
+    result = 1.0;
 
     local_floating_point_type y(b);
 

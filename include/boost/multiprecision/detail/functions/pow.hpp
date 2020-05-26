@@ -477,7 +477,8 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
   // Set a0 = 1
   // Set b0 = 4 / (x * 2^m) = 1 / (x * 2^(m - 2))
 
-  T ak(1.0);
+  T ak;
+  ak = 1.0;
 
   const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
   
@@ -492,10 +493,13 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
   // Also enforce that m >= 8.
   m = (std::max)(m, static_cast<std::int32_t>(8));
 
-  T bk = eval_pown(T(2.0), static_cast<std::uint32_t>(m));
+  T two;
+  two = 2.0;
+  T bk = eval_pown(two, static_cast<std::uint32_t>(m));
 
   eval_multiply(bk, xx);
-  T four = 4.0;
+  T four;
+  four = 4.0;
   eval_divide(four, bk);
   bk = four;
 
@@ -535,7 +539,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
 
     ak_tmp = ak;
     eval_add(ak, bk);
-    eval_divide(ak, 2);
+    eval_divide(ak, 2.0);
     if (break_after_this_iteration) {
       break;
     }
@@ -552,12 +556,12 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
   // Retrieve the value of pi, divide by (2 * a) and subtract (m * ln2).
 
 
-  eval_multiply(ak, 2);
+  eval_multiply(ak, 2.0);
   result = get_constant_pi<T>();
   eval_divide(result, ak);
 
   T m_ln2 = get_constant_ln2<T>();
-  eval_multiply(m_ln2, m);
+  eval_multiply(m_ln2, double(m));
   eval_subtract(result, m_ln2);
 
   if (b_negate) {
