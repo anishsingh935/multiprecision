@@ -186,10 +186,13 @@ void calc_log2(T& num, unsigned digits) {
   // Also enforce that m >= 8.
   m = (std::max)(m, static_cast<std::int32_t>(8));
 
-  T ak(1.0);
+  T ak;
+  ak = 1.0;
   // TBD: Since this is a negative binary power, there might be a way to compute
   // this more efficiently.
-  T bk = eval_pown(T(0.5), static_cast<std::uint32_t>(m-1));
+  T half;
+  half = 0.5;
+  T bk = eval_pown(half, static_cast<std::uint32_t>(m-1));
 
   // Determine the requested precision of the upcoming iteration in units of digits10.
   // Tolerance ~ sqrt(eps) / 100.
@@ -197,7 +200,8 @@ void calc_log2(T& num, unsigned digits) {
 
   // TBD: By exploting the structure of ak, bk, it may be possible to speedup the
   // update calculations.
-  T ak_tmp(0.0);
+  T ak_tmp;
+  ak_tmp = 0.0;
   for (std::int32_t k = static_cast<std::int32_t>(0); k < static_cast<std::int32_t>(64); ++k) {
     T cp_ak = ak;
     eval_subtract(cp_ak, bk);
@@ -218,7 +222,7 @@ void calc_log2(T& num, unsigned digits) {
 
     ak_tmp = ak;
     eval_add(ak, bk);
-    eval_divide(ak, 2);
+    eval_divide(ak, 2.0);
     if (break_after_this_iteration) {
       break;
     }
@@ -234,7 +238,7 @@ void calc_log2(T& num, unsigned digits) {
   // For any x, ln(x) = {pi / [2 * AGM(1, 4 / (x * 2^m) )]} - (m * ln2)
   // For x = 2, we get ln(x) = {pi / [2 * AGM(1, 4 / (x * 2^m) )]} - (m * ln2)
   // By solving for ln(2), ln(2) = {pi / [2 * (m + 1) * AGM(1, 4 / (x * 2^m) )]}
-  eval_multiply(ak, 2 * (m + 1));
+  eval_multiply(ak, double(2 * (m + 1)));
   calc_pi(num, digits);
   eval_divide(num, ak);
 }
