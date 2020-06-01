@@ -1551,8 +1551,59 @@ inline BOOST_MP_CXX14_CONSTEXPR void eval_bit_unset(T& val, unsigned index)
 }
 
 template <class B>
+void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
+  unsigned num_digits = 2;
+  if (num_digits == 0) {
+    // TBD: Clean this function
+  }
+  // std::cout << x.limb_bits << std::endl;
+  B a0(x.limbs(), 0, num_digits),
+    a1(x.limbs(), num_digits, num_digits), 
+    a2(x.limbs(), 2 * num_digits, num_digits), 
+    a3(x.limbs(), 3 * num_digits, num_digits);
+  B rr, ss;
+  
+  std::cout << "a0 : " << number<B>(a0) << std::endl;
+  std::cout << "a1 : " << number<B>(a1) << std::endl;
+  std::cout << "a2 : " << number<B>(a2) << std::endl;
+  std::cout << "a3 : " << number<B>(a3) << std::endl;
+
+  /* eval_sqrt_rem(ss, rr, a_3 * b_l);
+
+  B q, u, tmp, div;
+  tmp = rr * b_l + a_1;
+  div = 2 * ss;
+  eval_divide(tmp, ss);
+  s = ss * b_l + q;
+  r = u * b_l + a_0 - q * q;
+  if (r < 0) {
+    r = r + 2 * s - 1;
+    s = s - 1;
+  } */
+}
+
+template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
 {
+  B u, xx;
+  u = x;
+
+  // Shift by that amount of limbs.
+  eval_right_shift(u, u.size() * u.limb_bits / 2 - 10);
+
+  int is_greater;
+  int iter_count = 0;
+  do {
+    s = u;
+    xx = x;
+    eval_divide(xx, s);
+    eval_add(xx, s);
+    u = xx;
+    eval_right_shift(u, 1);
+    is_greater = u.compare(s);
+    ++iter_count;
+  } while (is_greater < 0);
+  eval_subtract_default(r, x, s);
    //
    // This is slow bit-by-bit integer square root, see for example
    // http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Binary_numeral_system_.28base_2.29
@@ -1560,8 +1611,9 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
    // and http://hal.inria.fr/docs/00/07/21/13/PDF/RR-4475.pdf which should be implemented
    // at some point.
    //
+  /*
    typedef typename boost::multiprecision::detail::canonical<unsigned char, B>::type ui_type;
-
+   std::cout << "Calling integer square root" << std::endl;
    s = ui_type(0u);
    if (eval_get_sign(x) == 0)
    {
@@ -1605,7 +1657,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
          }
       }
       --g;
-   } while (g >= 0);
+   } while (g >= 0); */
 }
 
 template <class B>
