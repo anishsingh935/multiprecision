@@ -1550,12 +1550,12 @@ inline BOOST_MP_CXX14_CONSTEXPR void eval_bit_unset(T& val, unsigned index)
       eval_bitwise_xor(val, mask);
 }
 
-void eval_sqrt_rem_base_case(boost::multiprecision::limb_type a, boost::multiprecision::limb_type b, boost::multiprecision::limb_type c, uint64_t& r, uint64_t& s) {
+void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, uint64_t& r, uint64_t& s) {
   // If the value fits into 64-bits then use the C++ method for sqrt.
   if (c == 0) {
     uint64_t u = uint64_t(a) + (uint64_t(b) << 32);
     // TBD: Could there be some loss of precision?
-    s = std::sqrt(u);
+    s = static_cast<uint64_t>(std::sqrt(u));
     r = u - s * s;
     return;
   }
@@ -1592,15 +1592,22 @@ void eval_sqrt_rem_base_case(boost::multiprecision::limb_type a, boost::multipre
 
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
-  unsigned num_digits = 2;
+  unsigned num_digits = x.size() / 4;
   if (num_digits == 0) {
-    // TBD: Clean this function
+    auto limbs = x.limbs();
+    uint64_t ss;
+    uint64_t rr;
+    if (x.size() == 1) eval_sqrt_rem_base_case(limbs[0], 0UL, 0UL, rr, ss);
+    else if (x.size() == 2) eval_sqrt_rem_base_case(limbs[0], limbs[1], 0UL, rr, ss);
+    else eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], rr, ss);
+    s = B(ss);
+    r = B(rr);
+    return;
   }
-  // std::cout << x.limb_bits << std::endl;
-  B a0(x.limbs(), 0, num_digits),
+  B a0(x.limbs(), 0,  num_digits),
     a1(x.limbs(), num_digits, num_digits), 
     a2(x.limbs(), 2 * num_digits, num_digits), 
-    a3(x.limbs(), 3 * num_digits, num_digits);
+    a3(x.limbs(), 3 * num_digits, x.size() - 3 * num_digits);
   B rr, ss;
   
   std::cout << "a0 : " << number<B>(a0) << std::endl;
@@ -1608,9 +1615,20 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
   std::cout << "a2 : " << number<B>(a2) << std::endl;
   std::cout << "a3 : " << number<B>(a3) << std::endl;
 
-  /* eval_sqrt_rem(ss, rr, a_3 * b_l);
+  unsigned long ell = num_digits * x.limb_bits;
+  std::cout << "ell : " << ell << std::endl;
+  B b_l(1ULL << 32), ans, val_1;
+  
+  // eval_left_shift(cp_a3, ell);
+  a3.normalize();
+  val_1 = a3;
+  eval_multiply(val_1, b_l);
+  eval_multiply(val_1, b_l);
+  // eval_add(cp_a3, a2);
+  std::cout << "val_1 : " << number<B>(val_1) << std::endl;
+  // eval_sqrt_rem(ss, rr, a_3 * b_l);
 
-  B q, u, tmp, div;
+  /*B q, u, tmp, div;
   tmp = rr * b_l + a_1;
   div = 2 * ss;
   eval_divide(tmp, ss);
@@ -1625,7 +1643,8 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
 {
-  B u, xx;
+  eval_sqrt_rem(s, r, x);
+  /* B u, xx;
   u = x;
 
   // Shift by that amount of limbs.
@@ -1643,7 +1662,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
     is_greater = u.compare(s);
     ++iter_count;
   } while (is_greater < 0);
-  eval_subtract_default(r, x, s);
+  eval_subtract_default(r, x, s); */
    //
    // This is slow bit-by-bit integer square root, see for example
    // http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Binary_numeral_system_.28base_2.29
