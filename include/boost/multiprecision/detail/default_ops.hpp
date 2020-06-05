@@ -1550,6 +1550,46 @@ inline BOOST_MP_CXX14_CONSTEXPR void eval_bit_unset(T& val, unsigned index)
       eval_bitwise_xor(val, mask);
 }
 
+void eval_sqrt_rem_base_case(boost::multiprecision::limb_type a, boost::multiprecision::limb_type b, boost::multiprecision::limb_type c, uint64_t& r, uint64_t& s) {
+  // If the value fits into 64-bits then use the C++ method for sqrt.
+  if (c == 0) {
+    uint64_t u = uint64_t(a) + (uint64_t(b) << 32);
+    // TBD: Could there be some loss of precision?
+    s = std::sqrt(u);
+    r = u - s * s;
+    return;
+  }
+
+  // Split a and b into three 16-bit integers.
+  uint64_t a0 = a & (0xFFFFUL);
+  uint64_t a1 = (a & (0xFFFF0000UL)) >> 16;
+  uint64_t a2 = (b & (0xFFFFUL));
+
+  // Add the remaining digits of a,b and the digits of c in a3. 
+  // Note that there is no restriction other than a3 > 0.
+  uint64_t a3 = (b & (0xFFFF0000UL)) >> 16 | (uint64_t(c) << 16);
+
+  // Call sqrt_rem recursively.
+  uint64_t val = a2 + (a3 << 16);
+  uint64_t sqrt_val = static_cast<int64_t>(sqrt(val));
+  uint64_t sqrt_rem = val - sqrt_val * sqrt_val;
+
+  // Compute div_rem.
+  uint64_t val_prime = (sqrt_rem << 16) + a1;
+  uint64_t twice_sqrt_val = 2 * sqrt_val;
+  uint64_t q = val_prime / twice_sqrt_val;
+  uint64_t u = twice_sqrt_val - val_prime;
+
+  // Update s and r.
+  s = (sqrt_val << 16) + q;
+  r = (u << 16) + a0 - q * q;
+
+  if (r < 0) {
+    r += 2 * s - 1;
+    s -= 1;
+  }
+}
+
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
   unsigned num_digits = 2;
