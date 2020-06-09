@@ -1643,8 +1643,12 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
 {
+  #if 0
+  // TBD Chris: Investigate compile error
   eval_sqrt_rem(s, r, x);
-  /* B u, xx;
+  #endif
+
+  B u, xx;
   u = x;
 
   // Shift by that amount of limbs.
@@ -1662,7 +1666,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
     is_greater = u.compare(s);
     ++iter_count;
   } while (is_greater < 0);
-  eval_subtract_default(r, x, s); */
+  eval_subtract_default(r, x, s);
    //
    // This is slow bit-by-bit integer square root, see for example
    // http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Binary_numeral_system_.28base_2.29
@@ -1670,9 +1674,11 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
    // and http://hal.inria.fr/docs/00/07/21/13/PDF/RR-4475.pdf which should be implemented
    // at some point.
    //
-  /*
+
    typedef typename boost::multiprecision::detail::canonical<unsigned char, B>::type ui_type;
-   std::cout << "Calling integer square root" << std::endl;
+
+   //std::cout << "Calling integer square root" << std::endl;
+
    s = ui_type(0u);
    if (eval_get_sign(x) == 0)
    {
@@ -1716,7 +1722,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
          }
       }
       --g;
-   } while (g >= 0); */
+   } while (g >= 0);
 }
 
 template <class B>
