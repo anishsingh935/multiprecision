@@ -1641,10 +1641,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
 }
 
 template <class B>
-void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
-{
-  /*
-  // eval_sqrt_rem(s, r, x);
+void BOOST_MP_CXX14_CONSTEXPR eval_newton_raphson_sqrt(B& s, B& r, const B& x) {
   B u, xx;
   u = x;
 
@@ -1661,7 +1658,15 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
     eval_right_shift(u, 1);
     is_greater = u.compare(s);
   } while (is_greater < 0);
-  eval_subtract_default(r, x, s); */
+  eval_subtract_default(r, x, s);
+}
+
+template <class B>
+void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
+{
+  // eval_sqrt_rem(s, r, x);
+  
+  // eval_newton_raphson_sqrt(s, r, x);
    //
    // This is slow bit-by-bit integer square root, see for example
    // http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Binary_numeral_system_.28base_2.29
@@ -1669,8 +1674,8 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
    // and http://hal.inria.fr/docs/00/07/21/13/PDF/RR-4475.pdf which should be implemented
    // at some point.
    //
-  
    typedef typename boost::multiprecision::detail::canonical<unsigned char, B>::type ui_type;
+
    s = ui_type(0u);
    if (eval_get_sign(x) == 0)
    {
