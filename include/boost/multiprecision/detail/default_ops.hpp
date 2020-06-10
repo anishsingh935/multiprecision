@@ -1621,7 +1621,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
   
   // eval_left_shift(cp_a3, ell);
   a3.normalize();
-  val_1 = a3;
+  val_1 = a0;
   eval_multiply(val_1, b_l);
   eval_multiply(val_1, b_l);
   // eval_add(cp_a3, a2);
@@ -1643,15 +1643,15 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
 {
-  eval_sqrt_rem(s, r, x);
-  /* B u, xx;
+  /*
+  // eval_sqrt_rem(s, r, x);
+  B u, xx;
   u = x;
 
   // Shift by that amount of limbs.
   eval_right_shift(u, u.size() * u.limb_bits / 2 - 10);
 
   int is_greater;
-  int iter_count = 0;
   do {
     s = u;
     xx = x;
@@ -1660,7 +1660,6 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
     u = xx;
     eval_right_shift(u, 1);
     is_greater = u.compare(s);
-    ++iter_count;
   } while (is_greater < 0);
   eval_subtract_default(r, x, s); */
    //
@@ -1670,9 +1669,8 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
    // and http://hal.inria.fr/docs/00/07/21/13/PDF/RR-4475.pdf which should be implemented
    // at some point.
    //
-  /*
+  
    typedef typename boost::multiprecision::detail::canonical<unsigned char, B>::type ui_type;
-   std::cout << "Calling integer square root" << std::endl;
    s = ui_type(0u);
    if (eval_get_sign(x) == 0)
    {
@@ -1716,7 +1714,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
          }
       }
       --g;
-   } while (g >= 0); */
+   } while (g >= 0);
 }
 
 template <class B>
