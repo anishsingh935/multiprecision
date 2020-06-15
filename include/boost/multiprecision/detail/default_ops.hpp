@@ -1673,6 +1673,73 @@ inline BOOST_MP_CXX14_CONSTEXPR void eval_scalbln(B& result, const B& val, A e)
    eval_scalbn(result, val, e);
 }
 
+template<typename FloatingPointType, typename UnsignedIntegralType>
+void eval_pown(FloatingPointType& result, const FloatingPointType& b, const UnsignedIntegralType& p) {
+  // Calculate (b ^ p).
+
+  using local_floating_point_type = FloatingPointType;
+  using local_unsigned_integral_type = UnsignedIntegralType;
+
+  if (p == local_unsigned_integral_type(0U)) {
+    result = 1.0;
+  } else if (p == local_unsigned_integral_type(1U)) {
+    result = b;
+  } else if (p == local_unsigned_integral_type(2U)) {
+    result = b;
+    eval_multiply(result, b);
+  } else {
+    result = 1.0;
+
+    local_floating_point_type y(b);
+
+    for (local_unsigned_integral_type p_local(p); p_local != local_unsigned_integral_type(0U); p_local >>= 1U) {
+      if ((static_cast<unsigned>(p_local) & 1U) != 0U) {
+        eval_multiply(result, y); // result *= y;
+      }
+      local_floating_point_type cp_y = y;
+      eval_multiply(y, cp_y);
+    }
+  }
+}
+
+template <class B, class A>
+inline BOOST_MP_CXX14_CONSTEXPR void eval_kth_root(B& s, const B& val, A k) {
+  // This is a Newton-Raphson implementation for finding the integer k-th root using
+  // the function f(x) = x - val^k
+  // See Algorithm 1.14 "RootInt" in "Modern Computer Arithmetic" by P. Zimmermann, R. P. Brent
+
+  if (k == 1) {
+    s = val;
+    return;
+  }
+  A k_minus_one = k - 1;
+  B u, base;
+  // Any starting value greater than kth root of val is good
+  // for convergence, but the smaller it is the faster the convergence.
+  // So, we approximate to something just larger than the k-th root.
+  u = val;
+  int e;
+  eval_frexp(base, u, &e);
+  e = e / k + 1;
+  eval_scalbn(u, base, e);
+  B t1, t2, s_pow_k_minus_one;
+  int is_greater;
+  // TBD: These ints need to be converted to B type
+  // to avoid ambiguity for gmp_float types.
+  B k_minus_one_b, k_b;
+  k_minus_one_b = double(k_minus_one);
+  k_b = double(k);
+  do {
+    s = u;
+    eval_pown(s_pow_k_minus_one, u, k-1);
+    eval_divide_default(t1, val, s_pow_k_minus_one);
+    eval_multiply_default(t2, u, k_minus_one_b);
+    eval_add(t1, t2);
+    eval_divide_default(u, t1, k_b);
+    is_greater = u.compare(s);
+  } while (is_greater < 0);
+}
+
 template <class T>
 inline BOOST_MP_CXX14_CONSTEXPR bool is_arg_nan(const T& val, mpl::true_ const&, const mpl::false_&)
 {
@@ -3584,6 +3651,7 @@ HETERO_BINARY_OP_FUNCTOR_B(scalbn, long, number_kind_floating_point)
 HETERO_BINARY_OP_FUNCTOR_B(scalbln, long, number_kind_floating_point)
 HETERO_BINARY_OP_FUNCTOR_B(scalbn, boost::long_long_type, number_kind_floating_point)
 HETERO_BINARY_OP_FUNCTOR_B(scalbln, boost::long_long_type, number_kind_floating_point)
+HETERO_BINARY_OP_FUNCTOR(kth_root, int, number_kind_floating_point)
 
 //
 // Complex functions:

@@ -416,7 +416,8 @@ T quintic_borwein_for_pi(size_t correct_digits)
    {
       T x_n = 5 / s_n - 1;
       T y_n = sqr(x_n - 1) + 7;
-      T z_n = pow(x_n / 2 * (y_n + sqrt(sqr(y_n) - 4 * cube(x_n))), inverse_five);
+      T z_n = kth_root(x_n / 2 * (y_n + sqrt(sqr(y_n) - 4 * cube(x_n))), 5);
+      // T z_n = pow(x_n / 2 * (y_n + sqrt(sqr(y_n) - 4 * cube(x_n))), inverse_five);
       a_n   = sqr(s_n) * a_n - pow_five * ((sqr(s_n) - 5) / 2 + sqrt(s_n * (s_n * s_n - 2 * s_n + 5)));
       s_n   = 25 / (sqr(z_n + x_n / z_n + 1) * s_n);
       pow_five *= 5;
@@ -505,6 +506,8 @@ void run_experiments_for_algorithm(const std::string& name)
 {
    std::cout << "Testing : " << name << std::endl;
    run_experiment<FloatType, f>(5);
+   run_experiment<FloatType, f>(100);
+   run_experiment<FloatType, f>(200);
    run_experiment<FloatType, f>(1000);
    run_experiment<FloatType, f>(3000);
    run_experiment<FloatType, f>(5000);
@@ -512,7 +515,7 @@ void run_experiments_for_algorithm(const std::string& name)
    run_experiment<FloatType, f>(9000);
 }
 
-template <typename FloatType, bool slow = false>
+template <typename FloatType>
 void run_experiments_for_float_type(const std::string& float_type_name)
 {
    std::cout << " ---- " << float_type_name << " ----" << std::endl;
@@ -520,10 +523,7 @@ void run_experiments_for_float_type(const std::string& float_type_name)
    run_experiments_for_algorithm<FloatType, quadratic_borwein_for_pi<FloatType> >("Quadratic Borwein");
    run_experiments_for_algorithm<FloatType, cubic_borwein_for_pi<FloatType> >("Cubic Borwein");
    run_experiments_for_algorithm<FloatType, quartic_borwein_for_pi<FloatType> >("Quartic Borwein");
-   if (!slow)
-   {
-      run_experiments_for_algorithm<FloatType, quintic_borwein_for_pi<FloatType> >("Quintic Borwein");
-   }
+   run_experiments_for_algorithm<FloatType, quintic_borwein_for_pi<FloatType> >("Quintic Borwein");
    run_experiments_for_algorithm<FloatType, nonic_borwein_for_pi<FloatType> >("Nonic Borwein");
    std::cout << std::endl
              << std::endl;
@@ -541,11 +541,19 @@ int main()
        boost::multiprecision::number<boost::multiprecision::cpp_bin_float<10000>,
                                      boost::multiprecision::et_off>;
 
-   run_experiments_for_float_type<cpp_bin_float_type, true>("cpp_bin_10000");
+   run_experiments_for_float_type<cpp_bin_float_type>("cpp_bin_10000");
 
    using cpp_dec_float_type =
        boost::multiprecision::number<boost::multiprecision::cpp_dec_float<10000>,
                                      boost::multiprecision::et_off>;
 
-   run_experiments_for_float_type<cpp_dec_float_type, true>("cpp_dec_10000");
+   run_experiments_for_float_type<cpp_dec_float_type>("cpp_dec_10000");
+   /* boost::multiprecision::number<boost::multiprecision::cpp_bin_float<1000>,
+                                 boost::multiprecision::et_off>
+       val(12345678); 
+   boost::multiprecision::number<boost::multiprecision::cpp_dec_float<1000>,
+                                 boost::multiprecision::et_off>
+       val(12345678); 
+   // std::cout << std::setprecision(10) << kth_root(val, 3) << std::endl;
+   std::cout << "kth root : " << std::setprecision(1000) << kth_root(val, 3) << std::endl; */
 }
