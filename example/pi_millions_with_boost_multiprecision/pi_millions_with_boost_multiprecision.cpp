@@ -1,3 +1,5 @@
+#if 0
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Copyright Christopher Kormanyos 1999-2020.
 //  Distributed under the Boost Software License,
@@ -557,3 +559,6 @@ int main()
    // std::cout << std::setprecision(10) << kth_root(val, 3) << std::endl;
    std::cout << "kth root : " << std::setprecision(1000) << kth_root(val, 3) << std::endl; */
 }
+
+#endif
+
