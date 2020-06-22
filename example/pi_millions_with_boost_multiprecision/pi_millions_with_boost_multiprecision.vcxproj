@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pi_millions_with_boost_multiprecision.cpp" />
+    <ClCompile Include="pi_millions_with_boost_multiprecision2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mpir\x64\gmp.h" />
@@ -71,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\boost\modular_boost\boost\libs\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/p3;$(IncludePath)</IncludePath>
+    <IncludePath>C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/p3;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\boost\modular_boost\boost\libs\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/x64;$(IncludePath)</IncludePath>
+    <IncludePath>C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/x64;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\boost\modular_boost\boost\libs\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/p3;$(IncludePath)</IncludePath>
+    <IncludePath>C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/p3;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\boost\modular_boost\boost\libs\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/x64;$(IncludePath)</IncludePath>
+    <IncludePath>C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/x64;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

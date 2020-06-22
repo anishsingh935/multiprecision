@@ -16,6 +16,9 @@
     <ClCompile Include="pi_millions_with_boost_multiprecision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="pi_millions_with_boost_multiprecision2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mpir\x64\gmp.h">
