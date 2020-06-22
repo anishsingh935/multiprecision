@@ -1,1 +1,1 @@
-# /boost/libs/multiprecision/.gitignore# Use of manifest is unclear, so add to .gitignore./doc/html/standalone_HTML.manifest
+# /boost/libs/multiprecision/.gitignore# Use of manifest is unclear, so add to .gitignore./doc/html/standalone_HTML.manifest/example/pi_millions_with_boost_multiprecision/pi_millions_with_boost_multiprecision.vcxproj
