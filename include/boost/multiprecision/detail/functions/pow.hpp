@@ -200,7 +200,6 @@ struct should_use_log_series {
 
 template <class T>
 typename std::enable_if<should_use_log_series<T>::value>::type eval_exp(T& result, const T& x) {
-  std::cout << "Using standard exponential" << std::endl;
   BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The exp function is only valid for floating point types.");
   if (&x == &result) {
     T temp;
@@ -558,7 +557,6 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
 
 template <class T>
 typename std::enable_if<should_use_log_agm<T>::value>::type eval_exp(T& result, const T& x) {
-  std::cout << "Using AGM-based implementation." << std::endl;
   BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The exp function is only valid for floating point types.");
   if (&x == &result) {
     T temp;
@@ -587,12 +585,19 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_exp(T& result, 
   } else if (type == (int)FP_ZERO) {
     result = ui_type(1);
     return;
+  } else if (isneg) {
+    T tmp_res;
+    result = x;
+    result.negate();
+    eval_exp(tmp_res, result);
+    eval_divide_default(result, T(1.0), tmp_res);
+    return;
   }
   T diff, x_n, prev, arg_plus_one, tmp, lg;
   x_n = x;
   eval_add(arg_plus_one, x, T(1.0));
   do {
-    eval_log(lg, x_n);//  (lg, x_n);
+    eval_log(lg, x_n);
     prev = x_n;
     eval_subtract_default(tmp, arg_plus_one, lg);
     eval_multiply(x_n, prev, tmp);
