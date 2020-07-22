@@ -475,12 +475,44 @@ template <class Backend>
 inline void eval_exp(complex_adaptor<Backend>& result, const complex_adaptor<Backend>& arg)
 {
    using default_ops::eval_cos;
-   using default_ops::eval_exp;
    using default_ops::eval_is_zero;
    using default_ops::eval_multiply;
    using default_ops::eval_sin;
+   using default_ops::eval_subtract;
+   using default_ops::eval_abs;
+   using default_ops::eval_fmod;
+   using default_ops::get_constant_pi;
+   using default_ops::eval_divide;
+   
+   static Backend eps = std::numeric_limits<number<Backend>>::epsilon();
+   eval_multiply(eps, 100000.0);
 
-   if (eval_is_zero(arg.imag_data()))
+   complex_adaptor<Backend> diff, x_n, prev, arg_plus_one, tmp, lg, one;
+   x_n = arg;
+   Backend half_pi = get_constant_pi<Backend>();
+   eval_divide(half_pi, 2.0);
+   // |Imag(arg)| <= pi/2 in order for Newton-Raphson to converge.
+   eval_fmod(x_n.imag_data(), arg.imag_data(), half_pi);
+   Backend a, b;
+   Backend diff_imag_data, diff_real_data;
+   a = 1.0f;
+   b = 0.0f;
+   assign_components(one, a, b);
+   arg_plus_one = x_n;
+   eval_add(arg_plus_one, one);
+   do {
+     eval_log(lg, x_n);
+     prev = x_n;
+     eval_subtract(tmp, arg_plus_one, lg);
+     eval_multiply(x_n, prev, tmp);
+     eval_subtract(diff_imag_data, x_n.imag_data(), prev.imag_data());
+     eval_subtract(diff_real_data, x_n.real_data(), prev.real_data());
+     if (number<Backend>(diff_imag_data) < 0) diff_imag_data.negate();
+     if (number<Backend>(diff_real_data) < 0) diff_real_data.negate();
+   } while (number<Backend>(diff_imag_data) > eps || number<Backend>(diff_real_data) > eps);
+   result = x_n;
+
+   /* if (eval_is_zero(arg.imag_data()))
    {
       eval_exp(result.real_data(), arg.real_data());
       typename mpl::front<typename Backend::unsigned_types>::type zero(0);
@@ -496,7 +528,7 @@ inline void eval_exp(complex_adaptor<Backend>& result, const complex_adaptor<Bac
    else if (eval_is_zero(result.imag_data()))
       eval_multiply(result.real_data(), e);
    else
-      eval_multiply(result, e);
+      eval_multiply(result, e); */
 }
 
 template <class Backend>
@@ -508,7 +540,6 @@ inline void eval_log(complex_adaptor<Backend>& result, const complex_adaptor<Bac
    using default_ops::eval_is_zero;
    using default_ops::eval_log;
    using default_ops::eval_multiply;
-
    if (eval_is_zero(arg.imag_data()) && (eval_get_sign(arg.real_data()) >= 0))
    {
       eval_log(result.real_data(), arg.real_data());
