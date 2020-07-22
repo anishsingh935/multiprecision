@@ -9,3 +9,6 @@ example/mpir-3.0.0/build.vc16/.vs/
 example/mpir-3.0.0/build.vc16/lib_mpir_core2/lib_mpir_core2.vcxproj.user
 example/mpir-3.0.0/build.vc16/lib_mpir_core2/x64/
 example/mpir-3.0.0/lib/
+example/pi_millions_with_boost_multiprecision/pi_millions_with_boost_multiprecision.vcxproj.user
+example/pi_millions_with_boost_multiprecision/.vs/
+example/pi_millions_with_boost_multiprecision/x64/
