@@ -474,30 +474,58 @@ inline void eval_pow(complex_adaptor<Backend>& result, const complex_adaptor<Bac
 template <class Backend>
 inline void eval_exp(complex_adaptor<Backend>& result, const complex_adaptor<Backend>& arg)
 {
-   using default_ops::eval_cos;
-   using default_ops::eval_is_zero;
    using default_ops::eval_multiply;
-   using default_ops::eval_sin;
    using default_ops::eval_subtract;
-   using default_ops::eval_abs;
    using default_ops::eval_fmod;
    using default_ops::get_constant_pi;
    using default_ops::eval_divide;
+
+   // Handle special arguments.
+   int  real_type = eval_fpclassify(arg.real_data());
+   int  imag_type = eval_fpclassify(arg.imag_data());
+   bool real_isneg = eval_get_sign(arg.real_data()) < 0;
+
+   Backend one, zero;
+   complex_adaptor<Backend> one_complex;
+   one = 1.0f;
+   zero = 0.0f;
+   assign_components(one_complex, one, zero);
+   // std::cout << "Here" << std::endl;
+
+   // TBD: Decide how to handle these.
+   /* if (type == (int)FP_NAN) {
+     result = arg;
+     errno = EDOM;
+     return;
+   } else if (type == (int)FP_INFINITE) {
+     if (isneg)
+       result = ui_type(0u);
+     else
+       result = arg;
+     return;
+   } else */ if (real_type == (int)FP_ZERO && imag_type == (int)FP_ZERO) {
+     result = one_complex;
+     return;
+   } else if (real_isneg) {
+     complex_adaptor<Backend> tmp_res;
+     result = arg;
+     result.imag_data().negate();
+     result.real_data().negate();
+     eval_exp(tmp_res, result);
+     eval_divide(result, one_complex, tmp_res);
+     return;
+   }
    
    static Backend eps = std::numeric_limits<number<Backend>>::epsilon();
    eval_multiply(eps, 100000.0);
 
-   complex_adaptor<Backend> diff, x_n, prev, arg_plus_one, tmp, lg, one;
+   complex_adaptor<Backend> diff, x_n, prev, arg_plus_one, tmp, lg;
    x_n = arg;
    Backend half_pi = get_constant_pi<Backend>();
    eval_divide(half_pi, 2.0);
    // |Imag(arg)| <= pi/2 in order for Newton-Raphson to converge.
    eval_fmod(x_n.imag_data(), arg.imag_data(), half_pi);
-   Backend a, b;
    Backend diff_imag_data, diff_real_data;
-   a = 1.0f;
-   b = 0.0f;
-   assign_components(one, a, b);
    arg_plus_one = x_n;
    eval_add(arg_plus_one, one);
    do {
@@ -505,11 +533,14 @@ inline void eval_exp(complex_adaptor<Backend>& result, const complex_adaptor<Bac
      prev = x_n;
      eval_subtract(tmp, arg_plus_one, lg);
      eval_multiply(x_n, prev, tmp);
+
+     // Compute the difference in each component from the previous
+     // result.
      eval_subtract(diff_imag_data, x_n.imag_data(), prev.imag_data());
      eval_subtract(diff_real_data, x_n.real_data(), prev.real_data());
-     if (number<Backend>(diff_imag_data) < 0) diff_imag_data.negate();
-     if (number<Backend>(diff_real_data) < 0) diff_real_data.negate();
-   } while (number<Backend>(diff_imag_data) > eps || number<Backend>(diff_real_data) > eps);
+     if (eval_get_sign(diff_imag_data) < 0) diff_imag_data.negate();
+     if (eval_get_sign(diff_real_data) < 0) diff_real_data.negate();
+   } while (diff_imag_data.compare(eps) > 0 || diff_real_data.compare(eps) > 0);
    result = x_n;
 
    /* if (eval_is_zero(arg.imag_data()))
