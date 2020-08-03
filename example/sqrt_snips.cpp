@@ -162,6 +162,7 @@ void run_all()
    run_sqrt_experiment<T>(x13, ref_x13);
 
    // Test 2^n-1 which catches the edge cases for overflows. 
+   // TBD: This limit should be increased to 256.
    for (int i = 1; i <= 95; ++i)
    {
       T x = 1;
