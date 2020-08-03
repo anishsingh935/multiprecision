@@ -1560,7 +1560,7 @@ uint64_t correct_sqrt(uint64_t x) {
 void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, unsigned long d, uint64_t& r, uint64_t& s) {
   // If the value fits into 64-bits then use the C++ method for sqrt.
   if (c == 0 && d == 0) {
-    uint64_t u = uint64_t(a) + (uint64_t(b) << 32);
+    uint64_t u = uint64_t(a) | (uint64_t(b) << 32);
     s = correct_sqrt(u);
     r = u - s * s;
     return;
@@ -1572,7 +1572,7 @@ void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, 
   if (d == 0) {
     // Split a and b into three 16-bit integers.
     uint64_t a0 = a & (0xFFFFUL);
-    uint64_t a1 = (a & (0xFFFF0000UL)) >> 16;
+    uint64_t a1 = a >> 16;
     uint64_t a2 = (b & (0xFFFFUL));
 
     // Add the remaining digits of a,b and the digits of c in a3. 
@@ -1614,23 +1614,23 @@ void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, 
     uint64_t sqrt_val;
     uint64_t sqrt_rem;
 
-    eval_sqrt_rem_base_case((a2 & (0xFFFFFFUL)) + ((a3 & 0xFFUL) << 24), ((a3 >> 8) & 0xFFFFFFFFULL), a3 >> 40, 0u, sqrt_rem, sqrt_val);
+    eval_sqrt_rem_base_case((a2 & (0xFFFFFFUL)) | ((a3 & 0xFFUL) << 24), ((a3 >> 8) & 0xFFFFFFFFULL), a3 >> 40, 0u, sqrt_rem, sqrt_val);
     // Compute div_rem with trick to avoid overflow when sqrt_rem has 41 bits.
-    // TBD: Verify that this trick avoids overflow in all cases.
     uint64_t val_prime = (sqrt_rem << 23) + (a1 >> 1);
     uint64_t twice_sqrt_val = sqrt_val;
     uint64_t q = val_prime / twice_sqrt_val;
     uint64_t u = 2 * (val_prime - twice_sqrt_val * q) + (a1 & 1);
 
     // Update s and r.
+    // std::cout << "sqrt_val : " << sqrt_val << std::endl;
     s = (sqrt_val << 24) + q;
-    int64_t r_prime = (u << 24) + int64_t(a0) - q * q;
-
-    if (r_prime < 0) {
-      r = r_prime + (2 * s - 1);
+    uint64_t lhs = (u << 24) | a0, rhs = q * q;
+    if (lhs < rhs) {
+      uint64_t delta = rhs - lhs;
+      r = delta + (2 * s - 1);
       s -= 1;
     } else {
-      r = r_prime;
+      r = lhs - rhs;
     }
   }
 }
@@ -1643,12 +1643,23 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
     auto limbs = x.limbs();
     uint64_t ss;
     uint64_t rr;
-    if (x.size() == 1) eval_sqrt_rem_base_case(limbs[0], 0UL, 0UL, 0UL, rr, ss);
-    else if (x.size() == 2) eval_sqrt_rem_base_case(limbs[0], limbs[1], 0UL, 0UL, rr, ss);
-    else if (x.size() == 3) eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], 0UL, rr, ss);
-    else eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], limbs[3], rr, ss);
-    s = B(ss);
-    r = B(rr);
+    if (x.size() == 4) {
+      eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], limbs[3], rr, ss);
+      s = B(ss);
+      // The remainder r might not fit into a 64-bit integer, so we need to 
+      // calculate the remainder here.
+      B temp;
+      temp = s;
+      eval_multiply(temp, s);
+      eval_subtract_default(r, x, temp);
+      return;
+    } else {
+      if (x.size() == 1) eval_sqrt_rem_base_case(limbs[0], 0UL, 0UL, 0UL, rr, ss);
+      else if (x.size() == 2) eval_sqrt_rem_base_case(limbs[0], limbs[1], 0UL, 0UL, rr, ss);
+      else /* if (x.size() == 3) */ eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], 0UL, rr, ss);
+      s = B(ss);
+      r = B(rr);
+    }
     return;
   }
   B a0, a1, a2, a3;

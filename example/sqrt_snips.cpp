@@ -153,16 +153,20 @@ void run_all()
    run_sqrt_experiment<T>(x11, ref_x11);
 
    // Integers with 4 limbs.
-   T x12("88743724578984095477373554869009772534");
-   T ref_x12("9420388770055304648");
+   T x12("322641423992404147943656864513128071623");
+   T ref_x12("17962222134034645880");
    run_sqrt_experiment<T>(x12, ref_x12);
 
    T x13("40574055951553183194429630201912946772");
    T ref_x13("6369776758376480433");
    run_sqrt_experiment<T>(x13, ref_x13);
 
+   T x14("174950723329530435889705323158024850783");
+   T ref_x14("13226893941115972972");
+   run_sqrt_experiment<T>(x14, ref_x14);
+
    // Test 2^n-1 which catches the edge cases for overflows. 
-   for (int i = 1; i <= 152; ++i)
+   for (int i = 1; i <= 256; ++i)
    {
       T x = 1;
       x   = (x << i) - 1;
@@ -174,6 +178,7 @@ void run_all()
          std::cout << "Got : " << sqrt(x) << std::endl;
       }
    }
+   std::cout << "Tested powers 2^i-1 for i = 0, 1, ..., 256" << std::endl;
 }
 
 int main()
