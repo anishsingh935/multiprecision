@@ -1559,49 +1559,86 @@ uint64_t correct_sqrt(uint64_t x) {
 
 void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, unsigned long d, uint64_t& r, uint64_t& s) {
   // If the value fits into 64-bits then use the C++ method for sqrt.
-  if (c == 0) {
+  if (c == 0 && d == 0) {
     uint64_t u = uint64_t(a) + (uint64_t(b) << 32);
     s = correct_sqrt(u);
     r = u - s * s;
     return;
   }
 
-  // Split a and b into three 16-bit integers.
-  uint64_t a0 = a & (0xFFFFUL);
-  uint64_t a1 = (a & (0xFFFF0000UL)) >> 16;
-  uint64_t a2 = (b & (0xFFFFUL));
+  // We need to split the number into three parts so that a3 > b^ell.
+  // If d = 0, we can split into 16-bit integers, otherwise we have to 
+  // split into 32*3/4=24-bit integers.
+  if (d == 0) {
+    // Split a and b into three 16-bit integers.
+    uint64_t a0 = a & (0xFFFFUL);
+    uint64_t a1 = (a & (0xFFFF0000UL)) >> 16;
+    uint64_t a2 = (b & (0xFFFFUL));
 
-  // Add the remaining digits of a,b and the digits of c in a3. 
-  // Note that there is no restriction other than a3 > 0.
-  uint64_t a3 = (b & (0xFFFF0000UL)) >> 16 | (uint64_t(c) << 16);
+    // Add the remaining digits of a,b and the digits of c in a3. 
+    // Note that there is no restriction other than a3 > 0.
+    uint64_t a3 = (b & (0xFFFF0000UL)) >> 16 | (uint64_t(c) << 16);
 
-  // Call sqrt_rem recursively.
-  uint64_t val = a2 + (a3 << 16);
-  uint64_t sqrt_val = correct_sqrt(val);
-  uint64_t sqrt_rem = val - sqrt_val * sqrt_val;
+    // Call sqrt_rem recursively.
+    uint64_t val = a2 + (a3 << 16);
+    uint64_t sqrt_val = correct_sqrt(val);
+    uint64_t sqrt_rem = val - sqrt_val * sqrt_val;
 
-  // Compute div_rem.
-  uint64_t val_prime = (sqrt_rem << 16) + a1;
-  uint64_t twice_sqrt_val = 2 * sqrt_val;
-  uint64_t q = val_prime / twice_sqrt_val;
-  uint64_t u = val_prime - twice_sqrt_val * q;
+    // Compute div_rem.
+    uint64_t val_prime = (sqrt_rem << 16) + a1;
+    uint64_t twice_sqrt_val = 2 * sqrt_val;
+    uint64_t q = val_prime / twice_sqrt_val;
+    uint64_t u = val_prime - twice_sqrt_val * q;
 
-  // Update s and r.
-  s = (sqrt_val << 16) + q;
-  int64_t r_prime = (u << 16) + int64_t(a0) - q * q;
+    // Update s and r.
+    s = (sqrt_val << 16) + q;
+    int64_t r_prime = (u << 16) + int64_t(a0) - q * q;
 
-  if (r_prime < 0) {
-    r = r_prime + (2 * s - 1);
-    s -= 1;
+    if (r_prime < 0) {
+      r = r_prime + (2 * s - 1);
+      s -= 1;
+    } else {
+      r = r_prime;
+    }
   } else {
-    r = r_prime;
+    // Split a and b into three 24-bit integers.
+    uint64_t a0 = a & (0xFFFFFFUL);
+    uint64_t a1 = (a >> 24) | ((b & 0xFFFFUL) << 8);
+    uint64_t a2 = (b >> 16) | ((c & 0xFFUL) << 16);
+
+    // Add the remaining digits of a,b and the digits of c in a3. 
+    // Note that there is no restriction other than a3 > 0.
+    uint64_t a3 = (c >> 8) | (uint64_t(d) << 24);
+    
+    // Call sqrt_rem recursively.
+    uint64_t sqrt_val;
+    uint64_t sqrt_rem;
+
+    eval_sqrt_rem_base_case((a2 & (0xFFFFFFUL)) + ((a3 & 0xFFUL) << 24), ((a3 >> 8) & 0xFFFFFFFFULL), a3 >> 40, 0u, sqrt_rem, sqrt_val);
+    // Compute div_rem with trick to avoid overflow when sqrt_rem has 41 bits.
+    // TBD: Verify that this trick avoids overflow in all cases.
+    uint64_t val_prime = (sqrt_rem << 23) + (a1 >> 1);
+    uint64_t twice_sqrt_val = sqrt_val;
+    uint64_t q = val_prime / twice_sqrt_val;
+    uint64_t u = 2 * (val_prime - twice_sqrt_val * q) + (a1 & 1);
+
+    // Update s and r.
+    s = (sqrt_val << 24) + q;
+    int64_t r_prime = (u << 24) + int64_t(a0) - q * q;
+
+    if (r_prime < 0) {
+      r = r_prime + (2 * s - 1);
+      s -= 1;
+    } else {
+      r = r_prime;
+    }
   }
 }
 
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
   // TBD: This should be x.size()-1 and there should be a base case for 4 limbs.
-  unsigned num_digits = (x.size()) / 4;
+  unsigned num_digits = (x.size() - 1) / 4;
   if (num_digits == 0) {
     auto limbs = x.limbs();
     uint64_t ss;
