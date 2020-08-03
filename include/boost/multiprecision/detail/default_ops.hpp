@@ -1550,12 +1550,18 @@ inline BOOST_MP_CXX14_CONSTEXPR void eval_bit_unset(T& val, unsigned index)
       eval_bitwise_xor(val, mask);
 }
 
-void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, uint64_t& r, uint64_t& s) {
+uint64_t correct_sqrt(uint64_t x) {
+  uint64_t y = sqrt(x) - 0x1p-20;
+  if (2 * y < x - y * y)
+    ++y;
+  return y;
+}
+
+void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, unsigned long d, uint64_t& r, uint64_t& s) {
   // If the value fits into 64-bits then use the C++ method for sqrt.
   if (c == 0) {
     uint64_t u = uint64_t(a) + (uint64_t(b) << 32);
-    // TBD: Could there be some loss of precision?
-    s = static_cast<uint64_t>(std::sqrt(u));
+    s = correct_sqrt(u);
     r = u - s * s;
     return;
   }
@@ -1571,73 +1577,101 @@ void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, 
 
   // Call sqrt_rem recursively.
   uint64_t val = a2 + (a3 << 16);
-  uint64_t sqrt_val = static_cast<int64_t>(sqrt(val));
+  uint64_t sqrt_val = correct_sqrt(val);
   uint64_t sqrt_rem = val - sqrt_val * sqrt_val;
 
   // Compute div_rem.
   uint64_t val_prime = (sqrt_rem << 16) + a1;
   uint64_t twice_sqrt_val = 2 * sqrt_val;
   uint64_t q = val_prime / twice_sqrt_val;
-  uint64_t u = twice_sqrt_val - val_prime;
+  uint64_t u = val_prime - twice_sqrt_val * q;
 
   // Update s and r.
   s = (sqrt_val << 16) + q;
-  r = (u << 16) + a0 - q * q;
+  int64_t r_prime = (u << 16) + int64_t(a0) - q * q;
 
-  if (r < 0) {
-    r += 2 * s - 1;
+  if (r_prime < 0) {
+    r = r_prime + (2 * s - 1);
     s -= 1;
+  } else {
+    r = r_prime;
   }
 }
 
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
-  unsigned num_digits = x.size() / 4;
+  // TBD: This should be x.size()-1 and there should be a base case for 4 limbs.
+  unsigned num_digits = (x.size()) / 4;
   if (num_digits == 0) {
     auto limbs = x.limbs();
     uint64_t ss;
     uint64_t rr;
-    if (x.size() == 1) eval_sqrt_rem_base_case(limbs[0], 0UL, 0UL, rr, ss);
-    else if (x.size() == 2) eval_sqrt_rem_base_case(limbs[0], limbs[1], 0UL, rr, ss);
-    else eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], rr, ss);
+    if (x.size() == 1) eval_sqrt_rem_base_case(limbs[0], 0UL, 0UL, 0UL, rr, ss);
+    else if (x.size() == 2) eval_sqrt_rem_base_case(limbs[0], limbs[1], 0UL, 0UL, rr, ss);
+    else if (x.size() == 3) eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], 0UL, rr, ss);
+    else eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], limbs[3], rr, ss);
     s = B(ss);
     r = B(rr);
     return;
   }
-  B a0(x.limbs(), 0,  num_digits),
-    a1(x.limbs(), num_digits, num_digits), 
-    a2(x.limbs(), 2 * num_digits, num_digits), 
-    a3(x.limbs(), 3 * num_digits, x.size() - 3 * num_digits);
-  B rr, ss;
-  
-  std::cout << "a0 : " << number<B>(a0) << std::endl;
-  std::cout << "a1 : " << number<B>(a1) << std::endl;
-  std::cout << "a2 : " << number<B>(a2) << std::endl;
-  std::cout << "a3 : " << number<B>(a3) << std::endl;
+  B a0, a1, a2, a3;
+  a0.resize(num_digits, num_digits);
+  std::copy(x.limbs(), x.limbs() + num_digits, a0.limbs());
 
+  a1.resize(num_digits, num_digits);
+  std::copy(x.limbs() + num_digits, x.limbs() + 2 * num_digits, a1.limbs());
+
+  a2.resize(num_digits, num_digits);
+  std::copy(x.limbs() + 2 * num_digits, x.limbs() + 3 * num_digits, a2.limbs());
+
+  unsigned rem_digits = x.size() - 3 * num_digits;
+  a3.resize(rem_digits, rem_digits);
+  std::copy(x.limbs() + 3 * num_digits, x.limbs() + x.size(), a3.limbs());
+  
   unsigned long ell = num_digits * x.limb_bits;
-  std::cout << "ell : " << ell << std::endl;
-  B b_l(1ULL << 32), ans, val_1;
+  B v1, s1, r1;
   
-  // eval_left_shift(cp_a3, ell);
-  a3.normalize();
-  val_1 = a0;
-  eval_multiply(val_1, b_l);
-  eval_multiply(val_1, b_l);
-  // eval_add(cp_a3, a2);
-  std::cout << "val_1 : " << number<B>(val_1) << std::endl;
-  // eval_sqrt_rem(ss, rr, a_3 * b_l);
+  v1 = a3;
+  eval_left_shift(v1, ell);
+  
+  eval_add(v1, a2);
+  
+  eval_sqrt_rem(s1, r1, v1);
+  
+  B v2, div2, rem2, s1_double;
+  v2 = r1;
+  eval_left_shift(v2, ell);
+  eval_add(v2, a1);
+  B two(2LL);
+  eval_multiply_default(s1_double, s1, two);
+  eval_divide_default(div2, v2, s1_double);
+  B temp_prod;
+  eval_multiply_default(temp_prod, div2, s1_double);
+  eval_subtract_default(rem2, v2, temp_prod);
+  
+  // TBD: Consider adding remainder for integers.
+  // eval_remainder(rem2, v2, s1_double);
 
-  /*B q, u, tmp, div;
-  tmp = rr * b_l + a_1;
-  div = 2 * ss;
-  eval_divide(tmp, ss);
-  s = ss * b_l + q;
-  r = u * b_l + a_0 - q * q;
-  if (r < 0) {
-    r = r + 2 * s - 1;
-    s = s - 1;
-  } */
+  // Evaluate s.
+  eval_left_shift(s, s1, ell);
+  eval_add(s, div2);
+
+  // Evaluate r := rem2 * 2^\ell + .
+  B div2_squared;
+  eval_multiply_default(div2_squared, div2, div2);
+  eval_left_shift(r, rem2, ell);
+  eval_add(r, a0);
+  eval_subtract(r, div2_squared);
+  
+  if (eval_get_sign(r) < 0) {
+    B s_double, neg_one;
+    neg_one = -1LL;
+    s_double = s;
+    eval_multiply(s_double, two);
+    eval_add(s_double, neg_one);
+    eval_add(r, s_double);
+    eval_add(s, neg_one);
+  }
 }
 
 template <class B>
@@ -1664,8 +1698,8 @@ void BOOST_MP_CXX14_CONSTEXPR eval_newton_raphson_sqrt(B& s, B& r, const B& x) {
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
 {
-  // eval_sqrt_rem(s, r, x);
-  
+  eval_sqrt_rem(s, r, x);
+  return;
   // eval_newton_raphson_sqrt(s, r, x);
    //
    // This is slow bit-by-bit integer square root, see for example
