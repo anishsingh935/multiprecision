@@ -1637,7 +1637,6 @@ void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, 
 
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
-  // TBD: This should be x.size()-1 and there should be a base case for 4 limbs.
   unsigned num_digits = (x.size() - 1) / 4;
   if (num_digits == 0) {
     auto limbs = x.limbs();
@@ -1749,6 +1748,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
   eval_sqrt_rem(s, r, x);
   return;
   // eval_newton_raphson_sqrt(s, r, x);
+  // return;
    //
    // This is slow bit-by-bit integer square root, see for example
    // http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Binary_numeral_system_.28base_2.29

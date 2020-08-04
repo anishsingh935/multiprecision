@@ -5,13 +5,11 @@
 #include <string>
 #include <vector>
 
-#include <boost/multiprecision/complex_adaptor.hpp>
-#include <boost/multiprecision/cpp_complex.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
-#include <boost/math/complex.hpp>
+#include <random>
 
 namespace boost_gsoc2020 {
 template <class clock_type>
@@ -47,6 +45,41 @@ struct stopwatch
 };
 
 using stopwatch_type = stopwatch<std::chrono::high_resolution_clock>;
+
+template <typename T>
+struct Aggregator
+{
+
+   Aggregator() : mean(), variance(), n(0) {}
+
+   void addMeasurement(T measurement)
+   {
+      T prev_mean = mean;
+      if (n == 0) {
+         mean = measurement;
+      }
+      else {
+         mean += (measurement - mean) / n;
+         variance += (measurement - prev_mean) * (measurement - mean);
+      }
+      ++n;
+   }
+
+   T getMean() const
+   {
+      return mean;
+   }
+
+   T getVariance() const {
+      return variance / (n-1);
+   }
+
+   T      mean;
+   T      variance;
+   size_t n;
+};
+
+using aggregator_type = Aggregator<std::chrono::high_resolution_clock::duration::rep>;
 
 } // namespace boost_gsoc2020
 
@@ -97,11 +130,11 @@ void run_all()
    T x2(kInp2);
    T ref_x2(kOut2);
    run_sqrt_experiment<T>(x2, ref_x2);
-   
+
    for (int i = 0; i < 128; ++i)
    {
-      T b = 1;
-      b   = b << (2 * i);
+      T b   = 1;
+      b     = b << (2 * i);
       T ref = 1;
       ref   = ref << i;
       if (sqrt(b) != ref)
@@ -165,7 +198,7 @@ void run_all()
    T ref_x14("13226893941115972972");
    run_sqrt_experiment<T>(x14, ref_x14);
 
-   // Test 2^n-1 which catches the edge cases for overflows. 
+   // Test 2^n-1 which catches the edge cases for overflows.
    for (int i = 1; i <= 256; ++i)
    {
       T x = 1;
@@ -181,8 +214,46 @@ void run_all()
    std::cout << "Tested powers 2^i-1 for i = 0, 1, ..., 256" << std::endl;
 }
 
+template <typename Generator>
+std::string generateRandomNumber(size_t digits, Generator& gen)
+{
+   std::uniform_int_distribution<int> uniform(0, 10);
+   std::string                        str;
+   str += std::to_string(uniform(gen) % 9 + 1);
+   for (size_t i = 1; i < digits; ++i)
+   {
+      str += std::to_string(uniform(gen));
+   }
+   return str;
+}
+
+void run_time_experiments()
+{
+   std::vector<int>           digits({100, 200, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000});
+   size_t                     reps = 10;
+   std::default_random_engine generator;
+   for (int cur_digits : digits)
+   {
+      boost_gsoc2020::aggregator_type aggregator;
+      for (size_t rep = 0; rep < reps; ++rep)
+      {
+         boost::multiprecision::cpp_int val(generateRandomNumber(cur_digits, generator));
+         boost_gsoc2020::stopwatch_type stopwatch;
+         stopwatch.reset();
+         sqrt(val);
+         aggregator.addMeasurement(stopwatch.elapsed().count());
+      }
+      double mean = aggregator.getMean() / 1000000000.0;
+      double st_deviation = sqrt(aggregator.getVariance()) / 1000000000.0;
+      std::cout << "(" << cur_digits << ", " << mean << ") +- (" 
+        << st_deviation << ", " << st_deviation << ")" << std::endl;
+      // std::cout << "digits : " << cur_digits << " : " << mean << " +- " << st_deviation << std::endl;
+   }
+}
+
 int main()
 {
-   run_all<boost::multiprecision::cpp_int>();
+   // run_all<boost::multiprecision::cpp_int>();
+   run_time_experiments();
    return 0;
 }
