@@ -1622,7 +1622,6 @@ void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, 
     uint64_t u = 2 * (val_prime - twice_sqrt_val * q) + (a1 & 1);
 
     // Update s and r.
-    // std::cout << "sqrt_val : " << sqrt_val << std::endl;
     s = (sqrt_val << 24) + q;
     uint64_t lhs = (u << 24) | a0, rhs = q * q;
     if (lhs < rhs) {
@@ -1651,7 +1650,6 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
       temp = s;
       eval_multiply(temp, s);
       eval_subtract_default(r, x, temp);
-      return;
     } else {
       if (x.size() == 1) eval_sqrt_rem_base_case(limbs[0], 0UL, 0UL, 0UL, rr, ss);
       else if (x.size() == 2) eval_sqrt_rem_base_case(limbs[0], limbs[1], 0UL, 0UL, rr, ss);
@@ -1700,6 +1698,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
   // eval_remainder(rem2, v2, s1_double);
 
   // Evaluate s.
+  s = 0LL; r = 0LL;
   eval_left_shift(s, s1, ell);
   eval_add(s, div2);
 
@@ -1709,7 +1708,7 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
   eval_left_shift(r, rem2, ell);
   eval_add(r, a0);
   eval_subtract(r, div2_squared);
-  
+
   if (eval_get_sign(r) < 0) {
     B s_double, neg_one;
     neg_one = -1LL;

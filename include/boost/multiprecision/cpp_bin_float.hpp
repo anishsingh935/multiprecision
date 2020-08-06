@@ -1645,7 +1645,9 @@ inline void eval_sqrt(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE
       return;
    }
 
-   typename cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::double_rep_type t(arg.bits()), r, s;
+   // typename cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::double_rep_type t(arg.bits()), r, s;
+   cpp_int_backend<2 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count,
+     2 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count, signed_magnitude, unchecked, Allocator> t(arg.bits()), r, s;
    eval_left_shift(t, arg.exponent() & 1 ? cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count : cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count - 1);
    eval_integer_sqrt(s, r, t);
 
