@@ -72,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir);C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);C:\boost\boost_1_73_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir);C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);C:\boost\boost_1_73_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir);C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);C:\boost\boost_1_73_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir);C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);C:\boost\boost_1_73_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,7 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="test_sqrt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\wide_integer\generic_template_uintwide_t.h" />
