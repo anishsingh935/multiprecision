@@ -1551,9 +1551,14 @@ inline BOOST_MP_CXX14_CONSTEXPR void eval_bit_unset(T& val, unsigned index)
 }
 
 uint64_t correct_sqrt(uint64_t x) {
-  uint64_t y = sqrt(x) - 0x1p-20;
-  if (2 * y < x - y * y)
+  using std::sqrt;
+
+  uint64_t y = (uint64_t) (sqrt((double) x) - (double) 0x1.0p-20);
+
+  if (2 * y < x - y * y) {
     ++y;
+  }
+
   return y;
 }
 
