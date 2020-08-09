@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-#define BOOST_TEST_MODULE test_uintwide_t
+#define BOOST_TEST_MODULE test_sqrt
 #include <boost/test/included/unit_test.hpp>
 
 #include <boost/multiprecision/cpp_int.hpp>
@@ -57,19 +57,19 @@ static void get_equal_random_test_values_boost_and_local_n(OtherLocalUintType* u
   }
 }
 
-constexpr std::size_t digits2 = 1024UL << 4U;
-constexpr std::size_t size() { return 1000U; }
+constexpr std::size_t digits2() { return 1UL << 13U; } // Dimitris, Change to 14U to see first failures.
+constexpr std::size_t size   () { return 1000U; }
 
 using boost_uint_backend_type =
-    boost::multiprecision::cpp_int_backend<digits2,
-                                           digits2,
+    boost::multiprecision::cpp_int_backend<digits2(),
+                                           digits2(),
                                            boost::multiprecision::unsigned_magnitude>;
 
 using boost_uint_type = boost::multiprecision::number<boost_uint_backend_type, boost::multiprecision::et_off>;
 
 using local_limb_type = std::uint32_t;
 
-using local_uint_type = wide_integer::generic_template::uintwide_t<digits2, local_limb_type>;
+using local_uint_type = wide_integer::generic_template::uintwide_t<digits2(), local_limb_type>;
 
 std::vector<local_uint_type> a_local;
 std::vector<boost_uint_type> a_boost;
@@ -93,7 +93,7 @@ void initialize()
   get_equal_random_test_values_boost_and_local_n(a_local.data(), a_boost.data(), size());
 }
 
-bool test_square_root_single_trial()
+BOOST_AUTO_TEST_CASE(test_square_root_single_trial)
 {
   const char str_x[] =
   "0x"
@@ -159,12 +159,10 @@ bool test_square_root_single_trial()
   const std::string str_control_boost = hexlexical_cast(y_boost);
   const std::string str_control_local = hexlexical_cast(y_local);
 
-  const bool test_square_root_single_trial_is_ok = (str_control_boost == str_control_local);
-
-  return test_square_root_single_trial_is_ok;
+  BOOST_CHECK(str_control_boost == str_control_local);
 }
 
-bool test_square_root_random_trials()
+BOOST_AUTO_TEST_CASE(test_square_root_random_trials)
 {
   initialize();
 
@@ -189,10 +187,7 @@ bool test_square_root_random_trials()
     const std::string str_boost = hexlexical_cast(result_boost[i]);
     const std::string str_local = hexlexical_cast(result_local[i]);
 
-    if(str_boost == str_local)
-    {
-      ++number_of_trials_that_are_ok;
-    }
+    BOOST_CHECK(str_boost == str_local);
   }
 
   /*
@@ -215,17 +210,4 @@ bool test_square_root_random_trials()
 
   std::cout << "elapsed_local: " << std::dec << double(elapsed_local) / double(CLOCKS_PER_SEC) << std::endl;
   std::cout << "elapsed_boost: " << std::dec << double(elapsed_boost) / double(CLOCKS_PER_SEC) << std::endl;
-
-  const bool test_square_root_random_trials_is_ok = (number_of_trials_that_are_ok == size());
-
-  return test_square_root_random_trials_is_ok;
-}
-
-BOOST_AUTO_TEST_CASE(test_square_root)
-{
-  const bool test_square_root_single_trial__is_ok = test_square_root_single_trial();
-  const bool test_square_root_random_trials_is_ok = test_square_root_random_trials();
-
-  BOOST_CHECK(test_square_root_single_trial__is_ok == true);
-  BOOST_CHECK(test_square_root_random_trials_is_ok == true);
 }
