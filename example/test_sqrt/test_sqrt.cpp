@@ -35,8 +35,8 @@ static void get_equal_random_test_values_boost_and_local_n(OtherLocalUintType* u
                                                            OtherBoostUintType* u_boost,
                                                            const std::size_t count)
 {
-  static_assert((std::numeric_limits<OtherLocalUintType>::digits == std::numeric_limits<OtherBoostUintType>::digits),
-                "Error: Multiprecision integer types must have equal bit counts.");
+  // static_assert((std::numeric_limits<OtherLocalUintType>::digits == std::numeric_limits<OtherBoostUintType>::digits),
+  //              "Error: Multiprecision integer types must have equal bit counts.");
 
   boost::mt11213b base_gen(std::clock());
 
@@ -65,7 +65,7 @@ using boost_uint_backend_type =
                                            digits2,
                                            boost::multiprecision::unsigned_magnitude>;
 
-using boost_uint_type = boost::multiprecision::number<boost_uint_backend_type, boost::multiprecision::et_off>;
+using boost_uint_type = boost::multiprecision::cpp_int; // boost::multiprecision::number<boost_uint_backend_type, boost::multiprecision::et_off>;
 
 using local_limb_type = std::uint32_t;
 
