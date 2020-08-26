@@ -1698,7 +1698,6 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
   // eval_remainder(rem2, v2, s1_double);
 
   // Evaluate s.
-  s = 0LL; r = 0LL;
   eval_left_shift(s, s1, ell);
   eval_add(s, div2);
 
