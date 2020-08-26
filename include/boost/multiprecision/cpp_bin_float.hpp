@@ -1646,10 +1646,15 @@ inline void eval_sqrt(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE
    }
 
    // typename cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::double_rep_type t(arg.bits()), r, s;
-   cpp_int_backend<2 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count,
-     2 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count, signed_magnitude, unchecked, Allocator> t(arg.bits()), r, s;
+   //cpp_int_backend<3 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count,
+   //  3 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count, signed_magnitude, unchecked, Allocator> t(arg.bits()), r, s;
+   cpp_int_backend < > t(arg.bits()), r, s;
    eval_left_shift(t, arg.exponent() & 1 ? cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count : cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count - 1);
    eval_integer_sqrt(s, r, t);
+   //std::cout << "t : " << number< cpp_int_backend<2 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count,
+   //  2 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count, signed_magnitude, unchecked, Allocator>>(t) << std::endl;
+   //std::cout << "s : " << number< cpp_int_backend<2 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count,
+   //  2 * cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count, signed_magnitude, unchecked, Allocator>>(s) << std::endl;
 
    if (!eval_bit_test(s, cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count))
    {
