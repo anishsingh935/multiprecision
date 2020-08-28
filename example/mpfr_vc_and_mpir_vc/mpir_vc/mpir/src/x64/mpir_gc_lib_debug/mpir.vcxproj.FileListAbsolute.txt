@@ -1,0 +1,1 @@
+C:\Users\User\Documents\Ks\PC_Software\NumericalPrograms\ExtendedNumberTypes\mpir_and_mpfr\mpir\mpir\x64\mpir_gc_lib_debug\mpir_gc_lib_debug.lib

@@ -188,239 +188,418 @@ void hyp1F0(T& H1F0, const T& a, const T& x)
       BOOST_THROW_EXCEPTION(std::runtime_error("H1F0 failed to converge"));
 }
 
+template <class Float>
+struct should_use_log_agm {
+  static const bool value = std::numeric_limits<number<Float> >::digits > 200;
+};
+
+template <class Float>
+struct should_use_log_series {
+  static const bool value = !should_use_log_agm<Float>::value;
+};
+
 template <class T>
-void eval_exp(T& result, const T& x)
-{
-   BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The exp function is only valid for floating point types.");
-   if (&x == &result)
-   {
-      T temp;
-      eval_exp(temp, x);
-      result = temp;
-      return;
-   }
-   typedef typename boost::multiprecision::detail::canonical<unsigned, T>::type ui_type;
-   typedef typename boost::multiprecision::detail::canonical<int, T>::type      si_type;
-   typedef typename T::exponent_type                                            exp_type;
-   typedef typename boost::multiprecision::detail::canonical<exp_type, T>::type canonical_exp_type;
+typename std::enable_if<should_use_log_series<T>::value>::type eval_exp(T& result, const T& x) {
+  BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The exp function is only valid for floating point types.");
+  if (&x == &result) {
+    T temp;
+    eval_exp(temp, x);
+    result = temp;
+    return;
+  }
+  typedef typename boost::multiprecision::detail::canonical<unsigned, T>::type ui_type;
+  typedef typename boost::multiprecision::detail::canonical<int, T>::type      si_type;
+  typedef typename T::exponent_type                                            exp_type;
+  typedef typename boost::multiprecision::detail::canonical<exp_type, T>::type canonical_exp_type;
 
-   // Handle special arguments.
-   int  type  = eval_fpclassify(x);
-   bool isneg = eval_get_sign(x) < 0;
-   if (type == (int)FP_NAN)
-   {
+  // Handle special arguments.
+  int  type = eval_fpclassify(x);
+  bool isneg = eval_get_sign(x) < 0;
+  if (type == (int)FP_NAN) {
+    result = x;
+    errno = EDOM;
+    return;
+  } else if (type == (int)FP_INFINITE) {
+    if (isneg)
+      result = ui_type(0u);
+    else
       result = x;
-      errno  = EDOM;
-      return;
-   }
-   else if (type == (int)FP_INFINITE)
-   {
-      if (isneg)
-         result = ui_type(0u);
-      else
-         result = x;
-      return;
-   }
-   else if (type == (int)FP_ZERO)
-   {
+    return;
+  } else if (type == (int)FP_ZERO) {
+    result = ui_type(1);
+    return;
+  }
+
+  // Get local copy of argument and force it to be positive.
+  T xx = x;
+  T exp_series;
+  if (isneg)
+    xx.negate();
+
+  // Check the range of the argument.
+  if (xx.compare(si_type(1)) <= 0) {
+    //
+    // Use series for exp(x) - 1:
+    //
+    T lim;
+    if (std::numeric_limits<number<T, et_on> >::is_specialized)
+      lim = std::numeric_limits<number<T, et_on> >::epsilon().backend();
+    else {
       result = ui_type(1);
-      return;
-   }
-
-   // Get local copy of argument and force it to be positive.
-   T xx = x;
-   T exp_series;
-   if (isneg)
-      xx.negate();
-
-   // Check the range of the argument.
-   if (xx.compare(si_type(1)) <= 0)
-   {
-      //
-      // Use series for exp(x) - 1:
-      //
-      T lim;
-      if (std::numeric_limits<number<T, et_on> >::is_specialized)
-         lim = std::numeric_limits<number<T, et_on> >::epsilon().backend();
-      else
-      {
-         result = ui_type(1);
-         eval_ldexp(lim, result, 1 - boost::multiprecision::detail::digits2<number<T, et_on> >::value());
-      }
-      unsigned k = 2;
-      exp_series = xx;
-      result     = si_type(1);
-      if (isneg)
-         eval_subtract(result, exp_series);
-      else
-         eval_add(result, exp_series);
+      eval_ldexp(lim, result, 1 - boost::multiprecision::detail::digits2<number<T, et_on> >::value());
+    }
+    unsigned k = 2;
+    exp_series = xx;
+    result = si_type(1);
+    if (isneg)
+      eval_subtract(result, exp_series);
+    else
+      eval_add(result, exp_series);
+    eval_multiply(exp_series, xx);
+    eval_divide(exp_series, ui_type(k));
+    eval_add(result, exp_series);
+    while (exp_series.compare(lim) > 0) {
+      ++k;
       eval_multiply(exp_series, xx);
       eval_divide(exp_series, ui_type(k));
-      eval_add(result, exp_series);
-      while (exp_series.compare(lim) > 0)
-      {
-         ++k;
-         eval_multiply(exp_series, xx);
-         eval_divide(exp_series, ui_type(k));
-         if (isneg && (k & 1))
-            eval_subtract(result, exp_series);
-         else
-            eval_add(result, exp_series);
-      }
-      return;
-   }
-
-   // Check for pure-integer arguments which can be either signed or unsigned.
-   typename boost::multiprecision::detail::canonical<boost::intmax_t, T>::type ll;
-   eval_trunc(exp_series, x);
-   eval_convert_to(&ll, exp_series);
-   if (x.compare(ll) == 0)
-   {
-      detail::pow_imp(result, get_constant_e<T>(), ll, mpl::true_());
-      return;
-   }
-   else if (exp_series.compare(x) == 0)
-   {
-      // We have a value that has no fractional part, but is too large to fit
-      // in a long long, in this situation the code below will fail, so
-      // we're just going to assume that this will overflow:
-      if (isneg)
-         result = ui_type(0);
+      if (isneg && (k & 1))
+        eval_subtract(result, exp_series);
       else
-         result = std::numeric_limits<number<T> >::has_infinity ? std::numeric_limits<number<T> >::infinity().backend() : (std::numeric_limits<number<T> >::max)().backend();
-      return;
-   }
+        eval_add(result, exp_series);
+    }
+    return;
+  }
 
-   // The algorithm for exp has been taken from MPFUN.
-   // exp(t) = [ (1 + r + r^2/2! + r^3/3! + r^4/4! ...)^p2 ] * 2^n
-   // where p2 is a power of 2 such as 2048, r = t_prime / p2, and
-   // t_prime = t - n*ln2, with n chosen to minimize the absolute
-   // value of t_prime. In the resulting Taylor series, which is
-   // implemented as a hypergeometric function, |r| is bounded by
-   // ln2 / p2. For small arguments, no scaling is done.
+  // Check for pure-integer arguments which can be either signed or unsigned.
+  typename boost::multiprecision::detail::canonical<boost::intmax_t, T>::type ll;
+  eval_trunc(exp_series, x);
+  eval_convert_to(&ll, exp_series);
+  if (x.compare(ll) == 0) {
+    detail::pow_imp(result, get_constant_e<T>(), ll, mpl::true_());
+    return;
+  } else if (exp_series.compare(x) == 0) {
+    // We have a value that has no fractional part, but is too large to fit
+    // in a long long, in this situation the code below will fail, so
+    // we're just going to assume that this will overflow:
+    if (isneg)
+      result = ui_type(0);
+    else
+      result = std::numeric_limits<number<T> >::has_infinity ? std::numeric_limits<number<T> >::infinity().backend() : (std::numeric_limits<number<T> >::max)().backend();
+    return;
+  }
 
-   // Compute the exponential series of the (possibly) scaled argument.
+  // The algorithm for exp has been taken from MPFUN.
+  // exp(t) = [ (1 + r + r^2/2! + r^3/3! + r^4/4! ...)^p2 ] * 2^n
+  // where p2 is a power of 2 such as 2048, r = t_prime / p2, and
+  // t_prime = t - n*ln2, with n chosen to minimize the absolute
+  // value of t_prime. In the resulting Taylor series, which is
+  // implemented as a hypergeometric function, |r| is bounded by
+  // ln2 / p2. For small arguments, no scaling is done.
 
-   eval_divide(result, xx, get_constant_ln2<T>());
-   exp_type n;
-   eval_convert_to(&n, result);
+  // Compute the exponential series of the (possibly) scaled argument.
 
-   if (n == (std::numeric_limits<exp_type>::max)())
-   {
-      // Exponent is too large to fit in our exponent type:
-      if (isneg)
-         result = ui_type(0);
-      else
-         result = std::numeric_limits<number<T> >::has_infinity ? std::numeric_limits<number<T> >::infinity().backend() : (std::numeric_limits<number<T> >::max)().backend();
-      return;
-   }
+  eval_divide(result, xx, get_constant_ln2<T>());
+  exp_type n;
+  eval_convert_to(&n, result);
 
-   // The scaling is 2^11 = 2048.
-   const si_type p2 = static_cast<si_type>(si_type(1) << 11);
+  if (n == (std::numeric_limits<exp_type>::max)()) {
+    // Exponent is too large to fit in our exponent type:
+    if (isneg)
+      result = ui_type(0);
+    else
+      result = std::numeric_limits<number<T> >::has_infinity ? std::numeric_limits<number<T> >::infinity().backend() : (std::numeric_limits<number<T> >::max)().backend();
+    return;
+  }
 
-   eval_multiply(exp_series, get_constant_ln2<T>(), static_cast<canonical_exp_type>(n));
-   eval_subtract(exp_series, xx);
-   eval_divide(exp_series, p2);
-   exp_series.negate();
-   hyp0F0(result, exp_series);
+  // The scaling is 2^11 = 2048.
+  const si_type p2 = static_cast<si_type>(si_type(1) << 11);
 
-   detail::pow_imp(exp_series, result, p2, mpl::true_());
-   result = ui_type(1);
-   eval_ldexp(result, result, n);
-   eval_multiply(exp_series, result);
+  eval_multiply(exp_series, get_constant_ln2<T>(), static_cast<canonical_exp_type>(n));
+  eval_subtract(exp_series, xx);
+  eval_divide(exp_series, p2);
+  exp_series.negate();
+  hyp0F0(result, exp_series);
 
-   if (isneg)
-      eval_divide(result, ui_type(1), exp_series);
-   else
-      result = exp_series;
+  detail::pow_imp(exp_series, result, p2, mpl::true_());
+  result = ui_type(1);
+  eval_ldexp(result, result, n);
+  eval_multiply(exp_series, result);
+
+  if (isneg)
+    eval_divide(result, ui_type(1), exp_series);
+  else
+    result = exp_series;
 }
 
 template <class T>
-void eval_log(T& result, const T& arg)
-{
-   BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The log function is only valid for floating point types.");
-   //
-   // We use a variation of http://dlmf.nist.gov/4.45#i
-   // using frexp to reduce the argument to x * 2^n,
-   // then let y = x - 1 and compute:
-   // log(x) = log(2) * n + log1p(1 + y)
-   //
-   typedef typename boost::multiprecision::detail::canonical<unsigned, T>::type ui_type;
-   typedef typename T::exponent_type                                            exp_type;
-   typedef typename boost::multiprecision::detail::canonical<exp_type, T>::type canonical_exp_type;
-   typedef typename mpl::front<typename T::float_types>::type                   fp_type;
-   int                                                                          s = eval_signbit(arg);
-   switch (eval_fpclassify(arg))
-   {
-   case FP_NAN:
-      result = arg;
-      errno  = EDOM;
-      return;
-   case FP_INFINITE:
-      if (s)
-         break;
-      result = arg;
-      return;
-   case FP_ZERO:
-      result = std::numeric_limits<number<T> >::has_infinity ? std::numeric_limits<number<T> >::infinity().backend() : (std::numeric_limits<number<T> >::max)().backend();
-      result.negate();
-      errno = ERANGE;
-      return;
-   }
-   if (s)
-   {
-      result = std::numeric_limits<number<T> >::quiet_NaN().backend();
-      errno  = EDOM;
-      return;
-   }
+typename std::enable_if<should_use_log_series<T>::value>::type eval_log(T& result, const T& arg) {
+  BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The log function is only valid for floating point types.");
+  //
+  // We use a variation of http://dlmf.nist.gov/4.45#i
+  // using frexp to reduce the argument to x * 2^n,
+  // then let y = x - 1 and compute:
+  // log(x) = log(2) * n + log1p(1 + y)
+  //
+  typedef typename boost::multiprecision::detail::canonical<unsigned, T>::type ui_type;
+  typedef typename T::exponent_type                                            exp_type;
+  typedef typename boost::multiprecision::detail::canonical<exp_type, T>::type canonical_exp_type;
+  typedef typename mpl::front<typename T::float_types>::type                   fp_type;
+  int                                                                          s = eval_signbit(arg);
+  switch (eval_fpclassify(arg)) {
+  case FP_NAN:
+    result = arg;
+    errno = EDOM;
+    return;
+  case FP_INFINITE:
+    if (s)
+      break;
+    result = arg;
+    return;
+  case FP_ZERO:
+    result = std::numeric_limits<number<T> >::has_infinity ? std::numeric_limits<number<T> >::infinity().backend() : (std::numeric_limits<number<T> >::max)().backend();
+    result.negate();
+    errno = ERANGE;
+    return;
+  }
+  if (s) {
+    result = std::numeric_limits<number<T> >::quiet_NaN().backend();
+    errno = EDOM;
+    return;
+  }
 
-   exp_type e;
-   T        t;
-   eval_frexp(t, arg, &e);
-   bool alternate = false;
+  exp_type e;
+  T        t;
+  eval_frexp(t, arg, &e);
+  bool alternate = false;
 
-   if (t.compare(fp_type(2) / fp_type(3)) <= 0)
-   {
-      alternate = true;
-      eval_ldexp(t, t, 1);
-      --e;
-   }
+  if (t.compare(fp_type(2) / fp_type(3)) <= 0) {
+    alternate = true;
+    eval_ldexp(t, t, 1);
+    --e;
+  }
 
-   eval_multiply(result, get_constant_ln2<T>(), canonical_exp_type(e));
-   INSTRUMENT_BACKEND(result);
-   eval_subtract(t, ui_type(1)); /* -0.3 <= t <= 0.3 */
-   if (!alternate)
-      t.negate(); /* 0 <= t <= 0.33333 */
-   T pow = t;
-   T lim;
-   T t2;
+  eval_multiply(result, get_constant_ln2<T>(), canonical_exp_type(e));
+  INSTRUMENT_BACKEND(result);
+  eval_subtract(t, ui_type(1)); /* -0.3 <= t <= 0.3 */
+  if (!alternate)
+    t.negate(); /* 0 <= t <= 0.33333 */
+  T pow = t;
+  T lim;
+  T t2;
 
-   if (alternate)
-      eval_add(result, t);
-   else
-      eval_subtract(result, t);
+  if (alternate)
+    eval_add(result, t);
+  else
+    eval_subtract(result, t);
 
-   if (std::numeric_limits<number<T, et_on> >::is_specialized)
-      eval_multiply(lim, result, std::numeric_limits<number<T, et_on> >::epsilon().backend());
-   else
-      eval_ldexp(lim, result, 1 - boost::multiprecision::detail::digits2<number<T, et_on> >::value());
-   if (eval_get_sign(lim) < 0)
-      lim.negate();
-   INSTRUMENT_BACKEND(lim);
+  if (std::numeric_limits<number<T, et_on> >::is_specialized)
+    eval_multiply(lim, result, std::numeric_limits<number<T, et_on> >::epsilon().backend());
+  else
+    eval_ldexp(lim, result, 1 - boost::multiprecision::detail::digits2<number<T, et_on> >::value());
+  if (eval_get_sign(lim) < 0)
+    lim.negate();
+  INSTRUMENT_BACKEND(lim);
 
-   ui_type k = 1;
-   do
-   {
-      ++k;
-      eval_multiply(pow, t);
-      eval_divide(t2, pow, k);
-      INSTRUMENT_BACKEND(t2);
-      if (alternate && ((k & 1) != 0))
-         eval_add(result, t2);
-      else
-         eval_subtract(result, t2);
-      INSTRUMENT_BACKEND(result);
-   } while (lim.compare(t2) < 0);
+  ui_type k = 1;
+  do {
+    ++k;
+    eval_multiply(pow, t);
+    eval_divide(t2, pow, k);
+    INSTRUMENT_BACKEND(t2);
+    if (alternate && ((k & 1) != 0))
+      eval_add(result, t2);
+    else
+      eval_subtract(result, t2);
+    INSTRUMENT_BACKEND(result);
+  } while (lim.compare(t2) < 0);
+}
+
+template <class T>
+typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, const T& arg) {
+  BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The log function is only valid for floating point types.");
+
+  // Use an AGM method to compute the logarithm of arg.
+  int s = eval_signbit(arg);
+  switch (eval_fpclassify(arg)) {
+  case FP_NAN:
+    result = arg;
+    errno = EDOM;
+    return;
+  case FP_INFINITE:
+    if (s)
+      break;
+    result = arg;
+    return;
+  case FP_ZERO:
+    result = std::numeric_limits<number<T> >::has_infinity ? std::numeric_limits<number<T> >::infinity().backend() : (std::numeric_limits<number<T> >::max)().backend();
+    result.negate();
+    errno = ERANGE;
+    return;
+  }
+  if (s) {
+    result = std::numeric_limits<number<T> >::quiet_NaN().backend();
+    errno = EDOM;
+    return;
+  }
+
+  // For values less than 1 invert the argument and
+  // remember (in this case) to negate the result below.
+  const int cmp_one = arg.compare(1.0);
+  if (cmp_one == 0) {
+    result = 0.0;
+    return;
+  }
+
+  const bool b_negate = (cmp_one < 0);
+
+  T xx;
+  if (!b_negate) {
+    xx = arg;
+  } else {
+    xx = 1.0;
+    eval_divide(xx, arg);
+  }
+
+  // Set a0 = 1
+  // Set b0 = 4 / (x * 2^m) = 1 / (x * 2^(m - 2))
+
+  T ak;
+  ak = 1.0;
+
+  const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
+  
+  int xx_exponent;
+  T ignore_xx_result;
+  eval_frexp(ignore_xx_result, xx, &xx_exponent);
+  const float lgx_over_lg_radix = xx_exponent / std::log(float(std::numeric_limits<number<T> >::radix));
+
+  std::int32_t m = static_cast<std::int32_t>(n_times_factor - lgx_over_lg_radix);
+
+  // Ensure that the resulting power is non-negative.
+  // Also enforce that m >= 8.
+  m = (std::max)(m, static_cast<std::int32_t>(8));
+
+  T two;
+  two = 2.0;
+  T bk = eval_pown(two, static_cast<std::uint32_t>(m));
+
+  eval_multiply(bk, xx);
+  T four;
+  four = 4.0;
+  eval_divide(four, bk);
+  bk = four;
+
+  // Determine the requested precision of the upcoming iteration in units of digits10.
+
+  T eps = std::numeric_limits<number<T> >::epsilon().backend();
+  int eps_exponent;
+  T ignore_result;
+  eval_frexp(ignore_result, eps, &eps_exponent);
+  // Tolerance ~ sqrt(eps) / 2 -  15.
+  long target_tolerance_exponent = (eps_exponent / 2 - 15);
+  
+  T cp_ak;
+  T ak_tmp;
+
+  for (std::int32_t k = static_cast<std::int32_t>(0); k < static_cast<std::int32_t>(64); ++k) {
+
+    // Checking the closeness of the iteration variables ak and bk.
+    eval_subtract(cp_ak, ak, bk);
+
+    int diff_exponent;
+    eval_frexp(ignore_result, cp_ak, &diff_exponent);
+
+    int bk_exponent;
+    eval_frexp(ignore_result, bk, &bk_exponent);
+
+    // Check for the number of significant digits to be
+    // at least half of the requested digits. If at least
+    // half of the requested digits have been achieved,
+    // then break after the upcoming iteration.
+    const bool break_after_this_iteration = (  (k > static_cast<std::int32_t>(4))
+                                             && (diff_exponent < bk_exponent + target_tolerance_exponent));
+
+    ak_tmp = ak;
+    eval_add(ak, bk);
+    eval_divide(ak, 2.0);
+    if (break_after_this_iteration) {
+      break;
+    }
+
+    eval_multiply(bk, ak_tmp);
+    eval_sqrt(bk, bk);
+  }
+
+  // We are now finished with the AGM iteration for log(x).
+
+  // Compute log(x) = {pi / [2 * AGM(1, 4 / (x * 2^m) )]} - (m * ln2)
+  // Note at this time that (ak = bk) = AGM(...)
+
+  // Retrieve the value of pi, divide by (2 * a) and subtract (m * ln2).
+
+
+  eval_multiply(ak, 2.0);
+  result = get_constant_pi<T>();
+  eval_divide(result, ak);
+
+  T m_ln2 = get_constant_ln2<T>();
+  eval_multiply(m_ln2, double(m));
+  eval_subtract(result, m_ln2);
+
+  if (b_negate) {
+    result.negate();
+  }
+}
+
+template <class T>
+typename std::enable_if<should_use_log_agm<T>::value>::type eval_exp(T& result, const T& x) {
+  BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The exp function is only valid for floating point types.");
+  if (&x == &result) {
+    T temp;
+    eval_exp(temp, x);
+    result = temp;
+    return;
+  }
+  typedef typename boost::multiprecision::detail::canonical<unsigned, T>::type ui_type;
+  typedef typename boost::multiprecision::detail::canonical<int, T>::type      si_type;
+  typedef typename T::exponent_type                                            exp_type;
+  typedef typename boost::multiprecision::detail::canonical<exp_type, T>::type canonical_exp_type;
+
+  // Handle special arguments.
+  int  type = eval_fpclassify(x);
+  bool isneg = eval_get_sign(x) < 0;
+  if (type == (int)FP_NAN) {
+    result = x;
+    errno = EDOM;
+    return;
+  } else if (type == (int)FP_INFINITE) {
+    if (isneg)
+      result = ui_type(0u);
+    else
+      result = x;
+    return;
+  } else if (type == (int)FP_ZERO) {
+    result = ui_type(1);
+    return;
+  } else if (isneg) {
+    T tmp_res;
+    result = x;
+    result.negate();
+    eval_exp(tmp_res, result);
+    eval_divide_default(result, T(1.0), tmp_res);
+    return;
+  }
+  T diff, x_n, prev, arg_plus_one, tmp, lg;
+  x_n = x;
+  eval_add(arg_plus_one, x, T(1.0));
+  do {
+    eval_log(lg, x_n);
+    prev = x_n;
+    eval_subtract_default(tmp, arg_plus_one, lg);
+    eval_multiply(x_n, prev, tmp);
+    eval_subtract_default(diff, x_n, prev);
+  } while (diff > std::numeric_limits<number<T>>::epsilon());
+  result = x_n;
 }
 
 template <class T>

@@ -1,0 +1,1274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="mpir_core2_lib_release|x64">
+      <Configuration>mpir_core2_lib_release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="mpir_gc_lib_debug|x64">
+      <Configuration>mpir_gc_lib_debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="mpir_gc_lib_release|x64">
+      <Configuration>mpir_gc_lib_release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{2e7aea29-882b-4f6c-b5bb-b871aa9baa74}</ProjectGuid>
+    <RootNamespace>mpir</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\vsyasm.props" />
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)..\..\mpir_vc\mpir\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)_Out\</OutDir>
+    <TargetName>$(Configuration)</TargetName>
+    <IntDir>$(SolutionDir)_Tmp\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)..\..\mpir_vc\mpir\inc\gc_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(IncludePath)</IncludePath>
+    <TargetName>$(Configuration)</TargetName>
+    <OutDir>$(SolutionDir)_Out\</OutDir>
+    <IntDir>$(SolutionDir)_Tmp\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)..\..\mpir_vc\mpir\inc\core2_x64;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(IncludePath)</IncludePath>
+    <TargetName>$(Configuration)</TargetName>
+    <OutDir>$(SolutionDir)_Out\</OutDir>
+    <IntDir>$(SolutionDir)_Tmp\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level1</WarningLevel>
+      <SDLCheck>
+      </SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)$(Configuration).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)$(Configuration)</XMLDocumentationFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <BuildLog>
+      <Path>$(OutDir)$(Configuration).log</Path>
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">
+    <ClCompile>
+      <WarningLevel>Level1</WarningLevel>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <SDLCheck>
+      </SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(Configuration).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)$(Configuration)</XMLDocumentationFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <BuildLog>
+      <Path>$(OutDir)$(Configuration).log</Path>
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">
+    <ClCompile>
+      <WarningLevel>Level1</WarningLevel>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <SDLCheck>
+      </SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_LIB;HAVE_CONFIG_H;_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(Configuration).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)$(Configuration)</XMLDocumentationFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PreBuildEvent>
+      <Command>if not exist $(Intdir)src\mpn\x86_64w\core2 mkdir $(Intdir)src\mpn\x86_64w\core2</Command>
+    </PreBuildEvent>
+    <BuildLog>
+      <Path>$(OutDir)$(Configuration).log</Path>
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\assert.c" />
+    <ClCompile Include="src\errno.c" />
+    <ClCompile Include="src\extract-dbl.c" />
+    <ClCompile Include="src\fft\adjust.c" />
+    <ClCompile Include="src\fft\adjust_sqrt2.c" />
+    <ClCompile Include="src\fft\butterfly_lshB.c" />
+    <ClCompile Include="src\fft\butterfly_rshB.c" />
+    <ClCompile Include="src\fft\combine_bits.c" />
+    <ClCompile Include="src\fft\div_2expmod_2expp1.c" />
+    <ClCompile Include="src\fft\fermat_to_mpz.c" />
+    <ClCompile Include="src\fft\fft_mfa_trunc_sqrt2.c" />
+    <ClCompile Include="src\fft\fft_mfa_trunc_sqrt2_inner.c" />
+    <ClCompile Include="src\fft\fft_negacyclic.c" />
+    <ClCompile Include="src\fft\fft_radix2.c" />
+    <ClCompile Include="src\fft\fft_trunc.c" />
+    <ClCompile Include="src\fft\fft_trunc_sqrt2.c" />
+    <ClCompile Include="src\fft\ifft_mfa_trunc_sqrt2.c" />
+    <ClCompile Include="src\fft\ifft_negacyclic.c" />
+    <ClCompile Include="src\fft\ifft_radix2.c" />
+    <ClCompile Include="src\fft\ifft_trunc.c" />
+    <ClCompile Include="src\fft\ifft_trunc_sqrt2.c" />
+    <ClCompile Include="src\fft\mulmod_2expp1.c" />
+    <ClCompile Include="src\fft\mul_2expmod_2expp1.c" />
+    <ClCompile Include="src\fft\mul_fft_main.c" />
+    <ClCompile Include="src\fft\mul_mfa_trunc_sqrt2.c" />
+    <ClCompile Include="src\fft\mul_trunc_sqrt2.c" />
+    <ClCompile Include="src\fft\normmod_2expp1.c" />
+    <ClCompile Include="src\fft\revbin.c" />
+    <ClCompile Include="src\fft\split_bits.c" />
+    <ClCompile Include="src\invalid.c" />
+    <ClCompile Include="src\memory.c" />
+    <ClCompile Include="src\mpf\abs.c" />
+    <ClCompile Include="src\mpf\add.c" />
+    <ClCompile Include="src\mpf\add_ui.c" />
+    <ClCompile Include="src\mpf\ceilfloor.c" />
+    <ClCompile Include="src\mpf\clear.c" />
+    <ClCompile Include="src\mpf\clears.c" />
+    <ClCompile Include="src\mpf\cmp.c" />
+    <ClCompile Include="src\mpf\cmp_d.c" />
+    <ClCompile Include="src\mpf\cmp_si.c" />
+    <ClCompile Include="src\mpf\cmp_ui.c" />
+    <ClCompile Include="src\mpf\div.c" />
+    <ClCompile Include="src\mpf\div_2exp.c" />
+    <ClCompile Include="src\mpf\div_ui.c" />
+    <ClCompile Include="src\mpf\dump.c" />
+    <ClCompile Include="src\mpf\eq.c" />
+    <ClCompile Include="src\mpf\fits_si.c" />
+    <ClCompile Include="src\mpf\fits_sint.c" />
+    <ClCompile Include="src\mpf\fits_slong.c" />
+    <ClCompile Include="src\mpf\fits_sshort.c" />
+    <ClCompile Include="src\mpf\fits_ui.c" />
+    <ClCompile Include="src\mpf\fits_uint.c" />
+    <ClCompile Include="src\mpf\fits_ulong.c" />
+    <ClCompile Include="src\mpf\fits_ushort.c" />
+    <ClCompile Include="src\mpf\get_d.c" />
+    <ClCompile Include="src\mpf\get_dfl_prec.c" />
+    <ClCompile Include="src\mpf\get_d_2exp.c" />
+    <ClCompile Include="src\mpf\get_prc.c" />
+    <ClCompile Include="src\mpf\get_si.c" />
+    <ClCompile Include="src\mpf\get_str.c" />
+    <ClCompile Include="src\mpf\get_ui.c" />
+    <ClCompile Include="src\mpf\init.c" />
+    <ClCompile Include="src\mpf\init2.c" />
+    <ClCompile Include="src\mpf\inits.c" />
+    <ClCompile Include="src\mpf\inp_str.c" />
+    <ClCompile Include="src\mpf\int_p.c" />
+    <ClCompile Include="src\mpf\iset.c" />
+    <ClCompile Include="src\mpf\iset_d.c" />
+    <ClCompile Include="src\mpf\iset_si.c" />
+    <ClCompile Include="src\mpf\iset_str.c" />
+    <ClCompile Include="src\mpf\iset_ui.c" />
+    <ClCompile Include="src\mpf\mul.c" />
+    <ClCompile Include="src\mpf\mul_2exp.c" />
+    <ClCompile Include="src\mpf\mul_ui.c" />
+    <ClCompile Include="src\mpf\neg.c" />
+    <ClCompile Include="src\mpf\out_str.c" />
+    <ClCompile Include="src\mpf\pow_ui.c" />
+    <ClCompile Include="src\mpf\random2.c" />
+    <ClCompile Include="src\mpf\reldiff.c" />
+    <ClCompile Include="src\mpf\rrandomb.c" />
+    <ClCompile Include="src\mpf\set.c" />
+    <ClCompile Include="src\mpf\set_d.c" />
+    <ClCompile Include="src\mpf\set_dfl_prec.c" />
+    <ClCompile Include="src\mpf\set_prc.c" />
+    <ClCompile Include="src\mpf\set_prc_raw.c" />
+    <ClCompile Include="src\mpf\set_q.c" />
+    <ClCompile Include="src\mpf\set_si.c" />
+    <ClCompile Include="src\mpf\set_str.c" />
+    <ClCompile Include="src\mpf\set_ui.c" />
+    <ClCompile Include="src\mpf\set_z.c" />
+    <ClCompile Include="src\mpf\size.c" />
+    <ClCompile Include="src\mpf\sqrt.c" />
+    <ClCompile Include="src\mpf\sqrt_ui.c" />
+    <ClCompile Include="src\mpf\sub.c" />
+    <ClCompile Include="src\mpf\sub_ui.c" />
+    <ClCompile Include="src\mpf\swap.c" />
+    <ClCompile Include="src\mpf\trunc.c" />
+    <ClCompile Include="src\mpf\ui_div.c" />
+    <ClCompile Include="src\mpf\ui_sub.c" />
+    <ClCompile Include="src\mpf\urandomb.c" />
+    <ClCompile Include="src\mpn\generic\add.c" />
+    <ClCompile Include="src\mpn\generic\addadd_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\addmul_1.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\addsub_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\add_1.c" />
+    <ClCompile Include="src\mpn\generic\add_err1_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\add_err2_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\add_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\andn_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\and_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\bdivmod.c" />
+    <ClCompile Include="src\mpn\generic\binvert.c" />
+    <ClCompile Include="src\mpn\generic\cmp.c" />
+    <ClCompile Include="src\mpn\generic\comb_tables.c" />
+    <ClCompile Include="src\mpn\generic\com_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\copyd.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\copyi.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\dc_bdiv_q.c" />
+    <ClCompile Include="src\mpn\generic\dc_bdiv_qr.c" />
+    <ClCompile Include="src\mpn\generic\dc_bdiv_qr_n.c" />
+    <ClCompile Include="src\mpn\generic\dc_bdiv_q_n.c" />
+    <ClCompile Include="src\mpn\generic\dc_divappr_q.c" />
+    <ClCompile Include="src\mpn\generic\dc_div_q.c" />
+    <ClCompile Include="src\mpn\generic\dc_div_qr.c" />
+    <ClCompile Include="src\mpn\generic\dc_div_qr_n.c" />
+    <ClCompile Include="src\mpn\generic\divexact.c" />
+    <ClCompile Include="src\mpn\generic\divexact_1.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\divexact_by3c.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\divexact_byff.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\divexact_byfobm1.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\divisible_p.c" />
+    <ClCompile Include="src\mpn\generic\divrem.c" />
+    <ClCompile Include="src\mpn\generic\divrem_1.c" />
+    <ClCompile Include="src\mpn\generic\divrem_2.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\divrem_euclidean_qr_1.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\divrem_euclidean_qr_2.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\divrem_euclidean_r_1.c" />
+    <ClCompile Include="src\mpn\generic\divrem_hensel_qr_1.c" />
+    <ClCompile Include="src\mpn\generic\divrem_hensel_qr_1_1.c" />
+    <ClCompile Include="src\mpn\generic\divrem_hensel_qr_1_2.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\divrem_hensel_rsh_qr_1.c" />
+    <ClCompile Include="src\mpn\generic\divrem_hensel_r_1.c" />
+    <ClCompile Include="src\mpn\generic\dump.c" />
+    <ClCompile Include="src\mpn\generic\fib2_ui.c" />
+    <ClCompile Include="src\mpn\generic\fib_table.c" />
+    <ClCompile Include="src\mpn\generic\gcd.c" />
+    <ClCompile Include="src\mpn\generic\gcdext.c" />
+    <ClCompile Include="src\mpn\generic\gcdext_1.c" />
+    <ClCompile Include="src\mpn\generic\gcdext_lehmer.c" />
+    <ClCompile Include="src\mpn\generic\gcd_1.c" />
+    <ClCompile Include="src\mpn\generic\gcd_subdiv_step.c" />
+    <ClCompile Include="src\mpn\generic\get_d.c" />
+    <ClCompile Include="src\mpn\generic\get_str.c" />
+    <ClCompile Include="src\mpn\generic\hamdist.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\hgcd.c" />
+    <ClCompile Include="src\mpn\generic\hgcd2.c" />
+    <ClCompile Include="src\mpn\generic\hgcd2_jacobi.c" />
+    <ClCompile Include="src\mpn\generic\hgcd_appr.c" />
+    <ClCompile Include="src\mpn\generic\hgcd_jacobi.c" />
+    <ClCompile Include="src\mpn\generic\hgcd_matrix.c" />
+    <ClCompile Include="src\mpn\generic\hgcd_reduce.c" />
+    <ClCompile Include="src\mpn\generic\hgcd_step.c" />
+    <ClCompile Include="src\mpn\generic\invert.c" />
+    <ClCompile Include="src\mpn\generic\inv_divappr_q.c" />
+    <ClCompile Include="src\mpn\generic\inv_divappr_q_n.c" />
+    <ClCompile Include="src\mpn\generic\inv_div_q.c" />
+    <ClCompile Include="src\mpn\generic\inv_div_qr.c" />
+    <ClCompile Include="src\mpn\generic\inv_div_qr_n.c" />
+    <ClCompile Include="src\mpn\generic\iorn_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\ior_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\jacobi.c" />
+    <ClCompile Include="src\mpn\generic\jacobi_2.c" />
+    <ClCompile Include="src\mpn\generic\jacobi_base.c" />
+    <ClCompile Include="src\mpn\generic\lshift.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\matrix22_mul.c" />
+    <ClCompile Include="src\mpn\generic\matrix22_mul1_inverse_vector.c" />
+    <ClCompile Include="src\mpn\generic\modexact_1c_odd.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\mod_1.c" />
+    <ClCompile Include="src\mpn\generic\mod_1_1.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\mod_1_2.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\mod_1_3.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\mod_34lsub1.c" />
+    <ClCompile Include="src\mpn\generic\mp_bases.c" />
+    <ClCompile Include="src\mpn\generic\mul.c" />
+    <ClCompile Include="src\mpn\generic\mulhigh_n.c" />
+    <ClCompile Include="src\mpn\generic\mullow_basecase.c" />
+    <ClCompile Include="src\mpn\generic\mullow_n.c" />
+    <ClCompile Include="src\mpn\generic\mullow_n_basecase.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\mulmid.c" />
+    <ClCompile Include="src\mpn\generic\mulmid_basecase.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\mulmid_n.c" />
+    <ClCompile Include="src\mpn\generic\mulmod_2expm1.c" />
+    <ClCompile Include="src\mpn\generic\mulmod_2expp1_basecase.c" />
+    <ClCompile Include="src\mpn\generic\mulmod_bexpp1.c" />
+    <ClCompile Include="src\mpn\generic\mul_1.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\mul_basecase.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\mul_fft.c" />
+    <ClCompile Include="src\mpn\generic\mul_n.c" />
+    <ClCompile Include="src\mpn\generic\nand_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\neg_n.c" />
+    <ClCompile Include="src\mpn\generic\nior_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\nsumdiff_n.c" />
+    <ClCompile Include="src\mpn\generic\perfect_square_p.c" />
+    <ClCompile Include="src\mpn\generic\popcount.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\powlo.c" />
+    <ClCompile Include="src\mpn\generic\powm.c" />
+    <ClCompile Include="src\mpn\generic\pow_1.c" />
+    <ClCompile Include="src\mpn\generic\preinv_divrem_1.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\preinv_mod_1.c" />
+    <ClCompile Include="src\mpn\generic\random.c" />
+    <ClCompile Include="src\mpn\generic\random2.c" />
+    <ClCompile Include="src\mpn\generic\randomb.c" />
+    <ClCompile Include="src\mpn\generic\redc_1.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\redc_2.c" />
+    <ClCompile Include="src\mpn\generic\redc_n.c" />
+    <ClCompile Include="src\mpn\generic\rootrem.c" />
+    <ClCompile Include="src\mpn\generic\rootrem_basecase.c" />
+    <ClCompile Include="src\mpn\generic\rrandom.c" />
+    <ClCompile Include="src\mpn\generic\rshift.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\rsh_divrem_hensel_qr_1.c" />
+    <ClCompile Include="src\mpn\generic\rsh_divrem_hensel_qr_1_1.c" />
+    <ClCompile Include="src\mpn\generic\rsh_divrem_hensel_qr_1_2.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\sb_bdiv_q.c" />
+    <ClCompile Include="src\mpn\generic\sb_bdiv_qr.c" />
+    <ClCompile Include="src\mpn\generic\sb_divappr_q.c" />
+    <ClCompile Include="src\mpn\generic\sb_div_q.c" />
+    <ClCompile Include="src\mpn\generic\sb_div_qr.c" />
+    <ClCompile Include="src\mpn\generic\scan0.c" />
+    <ClCompile Include="src\mpn\generic\scan1.c" />
+    <ClCompile Include="src\mpn\generic\set_str.c" />
+    <ClCompile Include="src\mpn\generic\sizeinbase.c" />
+    <ClCompile Include="src\mpn\generic\sqrtrem.c" />
+    <ClCompile Include="src\mpn\generic\sqr_basecase.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\sub.c" />
+    <ClCompile Include="src\mpn\generic\subadd_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\submul_1.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\sub_1.c" />
+    <ClCompile Include="src\mpn\generic\sub_err1_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\sub_err2_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\sub_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\sumdiff_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\tdiv_q.c" />
+    <ClCompile Include="src\mpn\generic\tdiv_qr.c" />
+    <ClCompile Include="src\mpn\generic\toom3_mul.c" />
+    <ClCompile Include="src\mpn\generic\toom3_mul_n.c" />
+    <ClCompile Include="src\mpn\generic\toom42_mulmid.c" />
+    <ClCompile Include="src\mpn\generic\toom4_mul.c" />
+    <ClCompile Include="src\mpn\generic\toom4_mul_n.c" />
+    <ClCompile Include="src\mpn\generic\toom8h_mul.c" />
+    <ClCompile Include="src\mpn\generic\toom8_sqr_n.c" />
+    <ClCompile Include="src\mpn\generic\toom_couple_handling.c" />
+    <ClCompile Include="src\mpn\generic\toom_eval_dgr3_pm1.c" />
+    <ClCompile Include="src\mpn\generic\toom_eval_dgr3_pm2.c" />
+    <ClCompile Include="src\mpn\generic\toom_eval_pm1.c" />
+    <ClCompile Include="src\mpn\generic\toom_eval_pm2.c" />
+    <ClCompile Include="src\mpn\generic\toom_eval_pm2exp.c" />
+    <ClCompile Include="src\mpn\generic\toom_eval_pm2rexp.c" />
+    <ClCompile Include="src\mpn\generic\toom_interpolate_16pts.c" />
+    <ClCompile Include="src\mpn\generic\urandomb.c" />
+    <ClCompile Include="src\mpn\generic\urandomm.c" />
+    <ClCompile Include="src\mpn\generic\xnor_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\xor_n.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\mpn\generic\zero.c" />
+    <ClCompile Include="src\mpq\abs.c" />
+    <ClCompile Include="src\mpq\aors.c" />
+    <ClCompile Include="src\mpq\canonicalize.c" />
+    <ClCompile Include="src\mpq\clear.c" />
+    <ClCompile Include="src\mpq\clears.c" />
+    <ClCompile Include="src\mpq\cmp.c" />
+    <ClCompile Include="src\mpq\cmp_si.c" />
+    <ClCompile Include="src\mpq\cmp_ui.c" />
+    <ClCompile Include="src\mpq\div.c" />
+    <ClCompile Include="src\mpq\equal.c" />
+    <ClCompile Include="src\mpq\get_d.c" />
+    <ClCompile Include="src\mpq\get_den.c" />
+    <ClCompile Include="src\mpq\get_num.c" />
+    <ClCompile Include="src\mpq\get_str.c" />
+    <ClCompile Include="src\mpq\init.c" />
+    <ClCompile Include="src\mpq\inits.c" />
+    <ClCompile Include="src\mpq\inp_str.c" />
+    <ClCompile Include="src\mpq\inv.c" />
+    <ClCompile Include="src\mpq\md_2exp.c" />
+    <ClCompile Include="src\mpq\mul.c" />
+    <ClCompile Include="src\mpq\neg.c" />
+    <ClCompile Include="src\mpq\out_str.c" />
+    <ClCompile Include="src\mpq\set.c" />
+    <ClCompile Include="src\mpq\set_d.c" />
+    <ClCompile Include="src\mpq\set_den.c" />
+    <ClCompile Include="src\mpq\set_f.c" />
+    <ClCompile Include="src\mpq\set_num.c" />
+    <ClCompile Include="src\mpq\set_si.c" />
+    <ClCompile Include="src\mpq\set_str.c" />
+    <ClCompile Include="src\mpq\set_ui.c" />
+    <ClCompile Include="src\mpq\set_z.c" />
+    <ClCompile Include="src\mpq\swap.c" />
+    <ClCompile Include="src\mpz\2fac_ui.c" />
+    <ClCompile Include="src\mpz\abs.c" />
+    <ClCompile Include="src\mpz\add.c" />
+    <ClCompile Include="src\mpz\add_ui.c" />
+    <ClCompile Include="src\mpz\and.c" />
+    <ClCompile Include="src\mpz\aorsmul.c" />
+    <ClCompile Include="src\mpz\aorsmul_i.c" />
+    <ClCompile Include="src\mpz\array_init.c" />
+    <ClCompile Include="src\mpz\bin_ui.c" />
+    <ClCompile Include="src\mpz\bin_uiui.c" />
+    <ClCompile Include="src\mpz\cdiv_q.c" />
+    <ClCompile Include="src\mpz\cdiv_qr.c" />
+    <ClCompile Include="src\mpz\cdiv_qr_ui.c" />
+    <ClCompile Include="src\mpz\cdiv_q_ui.c" />
+    <ClCompile Include="src\mpz\cdiv_r.c" />
+    <ClCompile Include="src\mpz\cdiv_r_ui.c" />
+    <ClCompile Include="src\mpz\cdiv_ui.c" />
+    <ClCompile Include="src\mpz\cfdiv_q_2exp.c" />
+    <ClCompile Include="src\mpz\cfdiv_r_2exp.c" />
+    <ClCompile Include="src\mpz\clear.c" />
+    <ClCompile Include="src\mpz\clears.c" />
+    <ClCompile Include="src\mpz\clrbit.c" />
+    <ClCompile Include="src\mpz\cmp.c" />
+    <ClCompile Include="src\mpz\cmpabs.c" />
+    <ClCompile Include="src\mpz\cmpabs_d.c" />
+    <ClCompile Include="src\mpz\cmpabs_ui.c" />
+    <ClCompile Include="src\mpz\cmp_d.c" />
+    <ClCompile Include="src\mpz\cmp_si.c" />
+    <ClCompile Include="src\mpz\cmp_ui.c" />
+    <ClCompile Include="src\mpz\com.c" />
+    <ClCompile Include="src\mpz\combit.c" />
+    <ClCompile Include="src\mpz\cong.c" />
+    <ClCompile Include="src\mpz\cong_2exp.c" />
+    <ClCompile Include="src\mpz\cong_ui.c" />
+    <ClCompile Include="src\mpz\divegcd.c" />
+    <ClCompile Include="src\mpz\divexact.c" />
+    <ClCompile Include="src\mpz\dive_ui.c" />
+    <ClCompile Include="src\mpz\divis.c" />
+    <ClCompile Include="src\mpz\divis_2exp.c" />
+    <ClCompile Include="src\mpz\divis_ui.c" />
+    <ClCompile Include="src\mpz\dump.c" />
+    <ClCompile Include="src\mpz\export.c" />
+    <ClCompile Include="src\mpz\fac_ui.c" />
+    <ClCompile Include="src\mpz\fdiv_q.c" />
+    <ClCompile Include="src\mpz\fdiv_qr.c" />
+    <ClCompile Include="src\mpz\fdiv_qr_ui.c" />
+    <ClCompile Include="src\mpz\fdiv_q_ui.c" />
+    <ClCompile Include="src\mpz\fdiv_r.c" />
+    <ClCompile Include="src\mpz\fdiv_r_ui.c" />
+    <ClCompile Include="src\mpz\fdiv_ui.c" />
+    <ClCompile Include="src\mpz\fib2_ui.c" />
+    <ClCompile Include="src\mpz\fib_ui.c" />
+    <ClCompile Include="src\mpz\fits_si.c" />
+    <ClCompile Include="src\mpz\fits_sint.c" />
+    <ClCompile Include="src\mpz\fits_slong.c" />
+    <ClCompile Include="src\mpz\fits_sshort.c" />
+    <ClCompile Include="src\mpz\fits_ui.c" />
+    <ClCompile Include="src\mpz\fits_uint.c" />
+    <ClCompile Include="src\mpz\fits_ulong.c" />
+    <ClCompile Include="src\mpz\fits_ushort.c" />
+    <ClCompile Include="src\mpz\gcd.c" />
+    <ClCompile Include="src\mpz\gcdext.c" />
+    <ClCompile Include="src\mpz\gcd_ui.c" />
+    <ClCompile Include="src\mpz\getlimbn.c" />
+    <ClCompile Include="src\mpz\get_d.c" />
+    <ClCompile Include="src\mpz\get_d_2exp.c" />
+    <ClCompile Include="src\mpz\get_si.c" />
+    <ClCompile Include="src\mpz\get_str.c" />
+    <ClCompile Include="src\mpz\get_sx.c" />
+    <ClCompile Include="src\mpz\get_ui.c" />
+    <ClCompile Include="src\mpz\get_ux.c" />
+    <ClCompile Include="src\mpz\hamdist.c" />
+    <ClCompile Include="src\mpz\import.c" />
+    <ClCompile Include="src\mpz\init.c" />
+    <ClCompile Include="src\mpz\init2.c" />
+    <ClCompile Include="src\mpz\inits.c" />
+    <ClCompile Include="src\mpz\inp_raw.c" />
+    <ClCompile Include="src\mpz\inp_str.c" />
+    <ClCompile Include="src\mpz\invert.c" />
+    <ClCompile Include="src\mpz\ior.c" />
+    <ClCompile Include="src\mpz\iset.c" />
+    <ClCompile Include="src\mpz\iset_d.c" />
+    <ClCompile Include="src\mpz\iset_si.c" />
+    <ClCompile Include="src\mpz\iset_str.c" />
+    <ClCompile Include="src\mpz\iset_sx.c" />
+    <ClCompile Include="src\mpz\iset_ui.c" />
+    <ClCompile Include="src\mpz\iset_ux.c" />
+    <ClCompile Include="src\mpz\jacobi.c" />
+    <ClCompile Include="src\mpz\kronsz.c" />
+    <ClCompile Include="src\mpz\kronuz.c" />
+    <ClCompile Include="src\mpz\kronzs.c" />
+    <ClCompile Include="src\mpz\kronzu.c" />
+    <ClCompile Include="src\mpz\lcm.c" />
+    <ClCompile Include="src\mpz\lcm_ui.c" />
+    <ClCompile Include="src\mpz\likely_prime_p.c" />
+    <ClCompile Include="src\mpz\limbs_finish.c" />
+    <ClCompile Include="src\mpz\limbs_modify.c" />
+    <ClCompile Include="src\mpz\limbs_read.c" />
+    <ClCompile Include="src\mpz\limbs_write.c" />
+    <ClCompile Include="src\mpz\lucnum2_ui.c" />
+    <ClCompile Include="src\mpz\lucnum_ui.c" />
+    <ClCompile Include="src\mpz\mfac_uiui.c" />
+    <ClCompile Include="src\mpz\millerrabin.c" />
+    <ClCompile Include="src\mpz\miller_rabin.c" />
+    <ClCompile Include="src\mpz\mod.c" />
+    <ClCompile Include="src\mpz\mul.c" />
+    <ClCompile Include="src\mpz\mul_2exp.c" />
+    <ClCompile Include="src\mpz\mul_si.c" />
+    <ClCompile Include="src\mpz\mul_ui.c" />
+    <ClCompile Include="src\mpz\neg.c" />
+    <ClCompile Include="src\mpz\nextprime.c" />
+    <ClCompile Include="src\mpz\next_prime_candidate.c" />
+    <ClCompile Include="src\mpz\nthroot.c" />
+    <ClCompile Include="src\mpz\n_pow_ui.c" />
+    <ClCompile Include="src\mpz\oddfac_1.c" />
+    <ClCompile Include="src\mpz\out_raw.c" />
+    <ClCompile Include="src\mpz\out_str.c" />
+    <ClCompile Include="src\mpz\perfpow.c" />
+    <ClCompile Include="src\mpz\perfsqr.c" />
+    <ClCompile Include="src\mpz\popcount.c" />
+    <ClCompile Include="src\mpz\powm.c" />
+    <ClCompile Include="src\mpz\powm_ui.c" />
+    <ClCompile Include="src\mpz\pow_ui.c" />
+    <ClCompile Include="src\mpz\pprime_p.c" />
+    <ClCompile Include="src\mpz\primorial_ui.c" />
+    <ClCompile Include="src\mpz\probable_prime_p.c" />
+    <ClCompile Include="src\mpz\prodlimbs.c" />
+    <ClCompile Include="src\mpz\realloc.c" />
+    <ClCompile Include="src\mpz\realloc2.c" />
+    <ClCompile Include="src\mpz\remove.c" />
+    <ClCompile Include="src\mpz\roinit_n.c" />
+    <ClCompile Include="src\mpz\root.c" />
+    <ClCompile Include="src\mpz\rootrem.c" />
+    <ClCompile Include="src\mpz\rrandomb.c" />
+    <ClCompile Include="src\mpz\scan0.c" />
+    <ClCompile Include="src\mpz\scan1.c" />
+    <ClCompile Include="src\mpz\set.c" />
+    <ClCompile Include="src\mpz\setbit.c" />
+    <ClCompile Include="src\mpz\set_d.c" />
+    <ClCompile Include="src\mpz\set_f.c" />
+    <ClCompile Include="src\mpz\set_q.c" />
+    <ClCompile Include="src\mpz\set_si.c" />
+    <ClCompile Include="src\mpz\set_str.c" />
+    <ClCompile Include="src\mpz\set_sx.c" />
+    <ClCompile Include="src\mpz\set_ui.c" />
+    <ClCompile Include="src\mpz\set_ux.c" />
+    <ClCompile Include="src\mpz\size.c" />
+    <ClCompile Include="src\mpz\sizeinbase.c" />
+    <ClCompile Include="src\mpz\sqrt.c" />
+    <ClCompile Include="src\mpz\sqrtrem.c" />
+    <ClCompile Include="src\mpz\sub.c" />
+    <ClCompile Include="src\mpz\sub_ui.c" />
+    <ClCompile Include="src\mpz\swap.c" />
+    <ClCompile Include="src\mpz\tdiv_q.c" />
+    <ClCompile Include="src\mpz\tdiv_qr.c" />
+    <ClCompile Include="src\mpz\tdiv_qr_ui.c" />
+    <ClCompile Include="src\mpz\tdiv_q_2exp.c" />
+    <ClCompile Include="src\mpz\tdiv_q_ui.c" />
+    <ClCompile Include="src\mpz\tdiv_r.c" />
+    <ClCompile Include="src\mpz\tdiv_r_2exp.c" />
+    <ClCompile Include="src\mpz\tdiv_r_ui.c" />
+    <ClCompile Include="src\mpz\tdiv_ui.c" />
+    <ClCompile Include="src\mpz\trial_division.c" />
+    <ClCompile Include="src\mpz\tstbit.c" />
+    <ClCompile Include="src\mpz\ui_pow_ui.c" />
+    <ClCompile Include="src\mpz\ui_sub.c" />
+    <ClCompile Include="src\mpz\urandomb.c" />
+    <ClCompile Include="src\mpz\urandomm.c" />
+    <ClCompile Include="src\mpz\xor.c" />
+    <ClCompile Include="src\mp_bpl.c" />
+    <ClCompile Include="src\mp_clz_tab.c" />
+    <ClCompile Include="src\mp_dv_tab.c" />
+    <ClCompile Include="src\mp_get_fns.c" />
+    <ClCompile Include="src\mp_minv_tab.c" />
+    <ClCompile Include="src\mp_set_fns.c" />
+    <ClCompile Include="src\nextprime.c" />
+    <ClCompile Include="src\primesieve.c" />
+    <ClCompile Include="src\printf\asprintf.c" />
+    <ClCompile Include="src\printf\asprntffuns.c" />
+    <ClCompile Include="src\printf\doprnt.c" />
+    <ClCompile Include="src\printf\doprntf.c" />
+    <ClCompile Include="src\printf\doprnti.c" />
+    <ClCompile Include="src\printf\fprintf.c" />
+    <ClCompile Include="src\printf\obprintf.c" />
+    <ClCompile Include="src\printf\obprntffuns.c" />
+    <ClCompile Include="src\printf\obvprintf.c" />
+    <ClCompile Include="src\printf\printf.c" />
+    <ClCompile Include="src\printf\printffuns.c" />
+    <ClCompile Include="src\printf\repl-vsnprintf.c" />
+    <ClCompile Include="src\printf\snprintf.c" />
+    <ClCompile Include="src\printf\snprntffuns.c" />
+    <ClCompile Include="src\printf\sprintf.c" />
+    <ClCompile Include="src\printf\sprintffuns.c" />
+    <ClCompile Include="src\printf\vasprintf.c" />
+    <ClCompile Include="src\printf\vfprintf.c" />
+    <ClCompile Include="src\printf\vprintf.c" />
+    <ClCompile Include="src\printf\vsnprintf.c" />
+    <ClCompile Include="src\printf\vsprintf.c" />
+    <ClCompile Include="src\randbui.c" />
+    <ClCompile Include="src\randclr.c" />
+    <ClCompile Include="src\randdef.c" />
+    <ClCompile Include="src\randiset.c" />
+    <ClCompile Include="src\randlc2s.c" />
+    <ClCompile Include="src\randlc2x.c" />
+    <ClCompile Include="src\randmt.c" />
+    <ClCompile Include="src\randmts.c" />
+    <ClCompile Include="src\randmui.c" />
+    <ClCompile Include="src\rands.c" />
+    <ClCompile Include="src\randsd.c" />
+    <ClCompile Include="src\randsdui.c" />
+    <ClCompile Include="src\scanf\doscan.c" />
+    <ClCompile Include="src\scanf\fscanf.c" />
+    <ClCompile Include="src\scanf\fscanffuns.c" />
+    <ClCompile Include="src\scanf\scanf.c" />
+    <ClCompile Include="src\scanf\sscanf.c" />
+    <ClCompile Include="src\scanf\sscanffuns.c" />
+    <ClCompile Include="src\scanf\vfscanf.c" />
+    <ClCompile Include="src\scanf\vscanf.c" />
+    <ClCompile Include="src\scanf\vsscanf.c" />
+    <ClCompile Include="src\tal-reent.c" />
+    <ClCompile Include="src\version.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\core2_x64\config.h" />
+    <ClInclude Include="inc\core2_x64\gmp-mparam.h" />
+    <ClInclude Include="inc\core2_x64\longlong.h" />
+    <ClInclude Include="inc\gc_x64\config.h" />
+    <ClInclude Include="inc\gc_x64\gmp-mparam.h" />
+    <ClInclude Include="inc\gc_x64\longlong.h" />
+    <ClInclude Include="inc\gmp-impl.h" />
+    <ClInclude Include="inc\gmp.h" />
+    <ClInclude Include="inc\gmpxx.h" />
+    <ClInclude Include="inc\mpir.h" />
+    <ClInclude Include="inc\mpirxx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <YASM Include="src\mpn\x86_64w\add_err1_n.asm">
+      <Debug Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</Debug>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\add_err2_n.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\addadd_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\addlsh1_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\addlsh_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\addmul_1.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\addmul_2.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\addsub_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\add_n.asm">
+      <Debug Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">true</Debug>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\andn_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\and_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\com_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\copyd.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\copyi.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\divexact_byff.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\divrem_hensel_qr_1_2.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\hamdist.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\iorn_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\ior_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\karaadd.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\karasub.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\lshift.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\lshift1.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\mod_1_1.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\mod_1_2.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\mod_1_3.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\mullow_n_basecase.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\mul_1.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\mul_2.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\mul_basecase.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\nand_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\nior_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\popcount.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\redc_1.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\rsh1add_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\rsh1sub_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\rshift.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\rshift1.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\rsh_divrem_hensel_qr_1_2.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\store.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\subadd_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\sublsh1_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\submul_1.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\sub_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\sumdiff_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\udiv_qrnnd.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\umul_ppmm.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\xnor_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\core2\xor_n.asm">
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\divexact_1.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\divexact_by3c.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\divexact_byfobm1.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\divrem_2.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\divrem_euclidean_qr_1.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\divrem_euclidean_qr_2.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\modexact_1c_odd.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\mulmid_basecase.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\sqr_basecase.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\sub_err1_n.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+    <YASM Include="src\mpn\x86_64w\sub_err2_n.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">false</ExcludedFromBuild>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(ProjectDir)../../mpir_vc/mpir/src/mpn/x86_64w</IncludePaths>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='mpir_core2_lib_release|x64'">$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='mpir_gc_lib_release|x64'">true</ExcludedFromBuild>
+    </YASM>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\vsyasm.targets" />
+  </ImportGroup>
+</Project>

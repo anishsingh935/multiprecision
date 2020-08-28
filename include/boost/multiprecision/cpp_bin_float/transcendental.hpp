@@ -30,10 +30,10 @@ void eval_exp_taylor(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE,
          break;
    }
 }
-
+/*
 template <unsigned Digits, digit_base_type DigitBase, class Allocator, class Exponent, Exponent MinE, Exponent MaxE>
 void eval_exp(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>& res, const cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>& arg)
-{
+{ 
    //
    // This is based on MPFR's method, let:
    //
@@ -147,8 +147,8 @@ void eval_exp(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>&
       eval_add(res, t);
    }
    eval_add(res, limb_type(1));
-   eval_ldexp(res, res, nn);
-}
+   eval_ldexp(res, res, nn); 
+} */
 
 }}} // namespace boost::multiprecision::backends
 
