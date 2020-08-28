@@ -1550,43 +1550,62 @@ inline BOOST_MP_CXX14_CONSTEXPR void eval_bit_unset(T& val, unsigned index)
       eval_bitwise_xor(val, mask);
 }
 
-uint64_t correct_sqrt(uint64_t x) {
+/* Exact sqrt computation for uint64_t values. */
+uint64_t sqrt_uint64_t(uint64_t x) {
   using std::sqrt;
 
-  uint64_t y = (uint64_t) (sqrt((double) x) - (double) 0x1.0p-20);
-
-  if (2 * y < x - y * y) {
-    ++y;
+  // For values smaller than 2^54, double sqrt gives the
+  // correct answer. For larger values, the square root
+  // is at least 2^27. A change in the last bit leads to a difference
+  // of at least 2^27. Hence, the returned value is within 2 of
+  // the correct answer.
+  // The rounding error is at most one in every 2^54. Since, the
+  // largest possible square root is 2^32, there aggregate error
+  // is at most 2^20. Hence, by adjusting the result by 2^{-20}
+  // we get that the value is at most the square root.
+  uint64_t r = (uint64_t)(sqrt((double)x) -(double)0x1.0p-20);
+  
+  // So, suffices to decide if the square root is r or (r+1) (which
+  // can be done in a safe way).
+  // We can do this by checking if (r+1)*(r+1) <= x or equivalently 
+  if (2 * r < x - r * r) {
+    ++r;
   }
 
-  return y;
+  return r;
 }
 
-void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, unsigned long d, uint64_t& r, uint64_t& s) {
-  // If the value fits into 64-bits then use the C++ method for sqrt.
+void eval_sqrt_karatsuba_base_case(unsigned long a, unsigned long b, unsigned long c, unsigned long d, uint64_t& r, uint64_t& s) {
+  // If the value fits into 64-bits then use native methods.
   if (c == 0 && d == 0) {
-    uint64_t u = uint64_t(a) | (uint64_t(b) << 32);
-    s = correct_sqrt(u);
-    r = u - s * s;
+    if (b == 0) {
+      s = (uint64_t) std::sqrt(a);
+      r = a - s * s;
+    } else {
+      uint64_t u = uint64_t(a) | (uint64_t(b) << 32);
+      s = sqrt_uint64_t(u);
+      r = u - s * s;
+    }
     return;
   }
 
   // We need to split the number into three parts so that a3 > b^ell.
-  // If d = 0, we can split into 16-bit integers, otherwise we have to 
+  // If d = 0, we can split into 16-bit integers, otherwise we
   // split into 32*3/4=24-bit integers.
   if (d == 0) {
     // Split a and b into three 16-bit integers.
-    uint64_t a0 = a & (0xFFFFUL);
+    uint64_t a0 = a & 0xFFFFUL;
     uint64_t a1 = a >> 16;
-    uint64_t a2 = (b & (0xFFFFUL));
+    uint64_t a2 = b & 0xFFFFUL;
 
     // Add the remaining digits of a,b and the digits of c in a3. 
-    // Note that there is no restriction other than a3 > 0.
-    uint64_t a3 = (b & (0xFFFF0000UL)) >> 16 | (uint64_t(c) << 16);
+    // Note that there is no restriction other than a3 > 0
+    // (which holds otherwise we would be in c==0 && d==0).
+    uint64_t a3 = (b & 0xFFFF0000UL) >> 16 | (uint64_t(c) << 16);
 
     // Call sqrt_rem recursively.
     uint64_t val = a2 + (a3 << 16);
-    uint64_t sqrt_val = correct_sqrt(val);
+    uint64_t sqrt_val = sqrt_uint64_t(val);
     uint64_t sqrt_rem = val - sqrt_val * sqrt_val;
 
     // Compute div_rem.
@@ -1600,54 +1619,65 @@ void eval_sqrt_rem_base_case(unsigned long a, unsigned long b, unsigned long c, 
     int64_t r_prime = (u << 16) + int64_t(a0) - q * q;
 
     if (r_prime < 0) {
-      r = r_prime + (2 * s - 1);
+      r = r_prime + 2 * s - 1;
       s -= 1;
     } else {
       r = r_prime;
     }
   } else {
-    // Split a and b into three 24-bit integers.
-    uint64_t a0 = a & (0xFFFFFFUL);
+    // Split a, b and c into three 24-bit integers.
+    uint64_t a0 = a & 0xFFFFFFUL;
     uint64_t a1 = (a >> 24) | ((b & 0xFFFFUL) << 8);
     uint64_t a2 = (b >> 16) | ((c & 0xFFUL) << 16);
 
-    // Add the remaining digits of a,b and the digits of c in a3. 
+    // Add the remaining digits of c and to a3. 
     // Note that there is no restriction other than a3 > 0.
+    // Since d > 0, this is guaranteeed.
     uint64_t a3 = (c >> 8) | (uint64_t(d) << 24);
     
     // Call sqrt_rem recursively.
     uint64_t sqrt_val;
     uint64_t sqrt_rem;
 
-    eval_sqrt_rem_base_case((a2 & (0xFFFFFFUL)) | ((a3 & 0xFFUL) << 24), ((a3 >> 8) & 0xFFFFFFFFULL), a3 >> 40, 0u, sqrt_rem, sqrt_val);
-    // Compute div_rem with trick to avoid overflow when sqrt_rem has 41 bits.
+    // In this call d = 0, so we will make at most one recursive call.
+    eval_sqrt_karatsuba_base_case((a2 & 0xFFFFFFUL) | ((a3 & 0xFFUL) << 24), ((a3 >> 8) & 0xFFFFFFFFULL), a3 >> 40, 0u, sqrt_rem, sqrt_val);
+    
+    // Compute div_rem. A small trick is needed to avoid overflow when sqrt_rem has 41 bits.
     uint64_t val_prime = (sqrt_rem << 23) + (a1 >> 1);
     uint64_t twice_sqrt_val = sqrt_val;
     uint64_t q = val_prime / twice_sqrt_val;
     uint64_t u = 2 * (val_prime - twice_sqrt_val * q) + (a1 & 1);
 
-    // Update s and r.
+    // Update s. There is no need to set r since for 4 limbs
+    // the reminder is calculated at eval_sqrt_karatsuba.
     s = (sqrt_val << 24) + q;
     uint64_t lhs = (u << 24) | a0, rhs = q * q;
     if (lhs < rhs) {
       uint64_t delta = rhs - lhs;
-      r = delta + (2 * s - 1);
       s -= 1;
-    } else {
-      r = lhs - rhs;
     }
   }
 }
 
 template <class B>
-void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
-  unsigned num_digits = (x.size() - 1) / 4;
-  if (num_digits == 0) {
-    auto limbs = x.limbs();
+void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_karatsuba(B& s, B& r, const B& x) {
+  BOOST_ASSERT(B::limb_bits == 32);
+  // Implementation of Karatsuba Square root method as presented in
+  //   Paul Zimmermann. "Karatsuba Square Root". [Research Report] 
+  //     RR-3805, INRIA. 1999, pp.8
+  // and Algorithm 1.12 of
+  //   Brent, Richard P., and Paul Zimmermann. "Modern computer 
+  //     arithmetic". Vol. 18. Cambridge University Press, 2010, pp.26
+  // The details of the base case are not mentioned in the paper
+  // nor in the book, as they depend on the limbs digits and the
+  // underlying hardware. Here we optimise for 32-bit limbs.
+  unsigned long num_limbs = (x.size() - 1) / 4;
+  if (num_limbs == 0) {
+    const auto& limbs = x.limbs();
     uint64_t ss;
     uint64_t rr;
     if (x.size() == 4) {
-      eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], limbs[3], rr, ss);
+      eval_sqrt_karatsuba_base_case(limbs[0], limbs[1], limbs[2], limbs[3], rr, ss);
       s = B(ss);
       // The remainder r might not fit into a 64-bit integer, so we need to 
       // calculate the remainder here.
@@ -1656,57 +1686,57 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
       eval_multiply(temp, s);
       eval_subtract_default(r, x, temp);
     } else {
-      if (x.size() == 1) eval_sqrt_rem_base_case(limbs[0], 0UL, 0UL, 0UL, rr, ss);
-      else if (x.size() == 2) eval_sqrt_rem_base_case(limbs[0], limbs[1], 0UL, 0UL, rr, ss);
-      else /* if (x.size() == 3) */ eval_sqrt_rem_base_case(limbs[0], limbs[1], limbs[2], 0UL, rr, ss);
+      // For less than 4 limbs, the remainder fits in a 64-bit integer, so we
+      // can use the returned value.
+      if (x.size() == 1) eval_sqrt_karatsuba_base_case(limbs[0], 0UL, 0UL, 0UL, rr, ss);
+      else if (x.size() == 2) eval_sqrt_karatsuba_base_case(limbs[0], limbs[1], 0UL, 0UL, rr, ss);
+      else /* if (x.size() == 3) */ eval_sqrt_karatsuba_base_case(limbs[0], limbs[1], limbs[2], 0UL, rr, ss);
       s = B(ss);
       r = B(rr);
     }
     return;
   }
+  // Split the number into buckets of num_limbs limbs (with a3
+  // getting any remaining elements).
   B a0, a1, a2, a3;
-  a0.resize(num_digits, num_digits);
-  std::copy(x.limbs(), x.limbs() + num_digits, a0.limbs());
+  a0.resize(num_limbs, num_limbs);
+  std::copy(x.limbs(), x.limbs() + num_limbs, a0.limbs());
 
-  a1.resize(num_digits, num_digits);
-  std::copy(x.limbs() + num_digits, x.limbs() + 2 * num_digits, a1.limbs());
+  a1.resize(num_limbs, num_limbs);
+  std::copy(x.limbs() + num_limbs, x.limbs() + 2 * num_limbs, a1.limbs());
 
-  a2.resize(num_digits, num_digits);
-  std::copy(x.limbs() + 2 * num_digits, x.limbs() + 3 * num_digits, a2.limbs());
+  a2.resize(num_limbs, num_limbs);
+  std::copy(x.limbs() + 2 * num_limbs, x.limbs() + 3 * num_limbs, a2.limbs());
 
-  unsigned rem_digits = x.size() - 3 * num_digits;
+  unsigned rem_digits = x.size() - 3 * num_limbs;
   a3.resize(rem_digits, rem_digits);
-  std::copy(x.limbs() + 3 * num_digits, x.limbs() + x.size(), a3.limbs());
+  std::copy(x.limbs() + 3 * num_limbs, x.limbs() + x.size(), a3.limbs());
   
-  unsigned long ell = num_digits * x.limb_bits;
-  B v1, s1, r1;
+  // This is the exponent of the new base.
+  unsigned long ell = num_limbs * x.limb_bits;
   
-  v1 = a3;
-  eval_left_shift(v1, ell);
+  B s1, r1;
+  eval_left_shift(a3, ell);
+  eval_add(a3, a2);
+  eval_sqrt_karatsuba(s1, r1, a3);
   
-  eval_add(v1, a2);
-  
-  eval_sqrt_rem(s1, r1, v1);
-  
-  B v2, div2, rem2, s1_double;
-  v2 = r1;
-  eval_left_shift(v2, ell);
-  eval_add(v2, a1);
-  B two(2LL);
-  eval_multiply_default(s1_double, s1, two);
-  eval_divide_default(div2, v2, s1_double);
+  B div2, rem2, s1_double;
+  eval_left_shift(r1, ell);
+  eval_add(r1, a1);
+  eval_add_default(s1_double, s1, s1);
+  eval_divide_default(div2, r1, s1_double);
+  // Compute the remainder.
+  // (It would be nice if there was a function that
+  // returns both quotient and remainder in one call).
   B temp_prod;
   eval_multiply_default(temp_prod, div2, s1_double);
-  eval_subtract_default(rem2, v2, temp_prod);
-  
-  // TBD: Consider adding remainder for integers.
-  // eval_remainder(rem2, v2, s1_double);
+  eval_subtract_default(rem2, r1, temp_prod);
 
   // Evaluate s.
   eval_left_shift(s, s1, ell);
   eval_add(s, div2);
 
-  // Evaluate r := rem2 * 2^\ell + .
+  // Evaluate r := rem2 * 2^\ell + a0 - div2^2.
   B div2_squared;
   eval_multiply_default(div2_squared, div2, div2);
   eval_left_shift(r, rem2, ell);
@@ -1714,44 +1744,65 @@ void BOOST_MP_CXX14_CONSTEXPR eval_sqrt_rem(B& s, B& r, const B& x) {
   eval_subtract(r, div2_squared);
 
   if (eval_get_sign(r) < 0) {
-    B s_double, neg_one;
-    neg_one = -1LL;
-    s_double = s;
-    eval_multiply(s_double, two);
-    eval_add(s_double, neg_one);
+    B s_double;
+    eval_add_default(s_double, s, s);
+    eval_decrement(s_double);
     eval_add(r, s_double);
-    eval_add(s, neg_one);
+    eval_decrement(s);
   }
 }
 
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_newton_raphson_sqrt(B& s, B& r, const B& x) {
-  B u, xx;
-  u = x;
 
-  // Shift by that amount of limbs.
-  eval_right_shift(u, u.size() * u.limb_bits / 2 - 10);
+  // Newton-Raphson iteration for finding the square root of x.
+  // The function being iterated on is f(u) = u^2 - x.
+  // The(t+1)-th iterate is given by
+  //    u_{t+1} := 1/2 ( u_t + x/u_t)
+  
+  if (eval_is_zero(x)) {
+    s = 0ULL;
+    r = 0ULL;
+    return;
+  }
+  B u_t;
+  u_t = x;
+
+  // The closer the initial guess is to sqrt(x), the faster the
+  // algorithm converges. If the initial value is within a factor 2
+  // of the square root value, then the algorithm converges 
+  // quadratically. 
+  // A rough estimate that achieves this is for the square root 
+  // of y * a^e, is y * a^(e/2).
+  int g = eval_msb(x);
+  eval_right_shift(u_t, g / 2);
 
   int is_greater;
   do {
-    s = u;
-    xx = x;
-    eval_divide(xx, s);
-    eval_add(xx, s);
-    u = xx;
-    eval_right_shift(u, 1);
-    is_greater = u.compare(s);
+    s = u_t; // Stores u_{t-1}.
+    u_t = x;
+    eval_divide(u_t, s);
+    eval_add(u_t, s);
+    eval_right_shift(u_t, 1);
+    is_greater = u_t.compare(s);
   } while (is_greater < 0);
+
   eval_subtract_default(r, x, s);
 }
 
 template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
 {
-  eval_sqrt_rem(s, r, x);
-  return;
+  eval_sqrt_karatsuba(s, r, x);
   // eval_newton_raphson_sqrt(s, r, x);
-  // return;
+}
+
+template<class B>
+void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt_old(B& s, B& r, const B& x) {
+
+   // Old sqrt implementation. For more efficient implementations see:
+   // eval_newton_raphson_sqrt and eval_sqrt_karatsuba.
+
    //
    // This is slow bit-by-bit integer square root, see for example
    // http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Binary_numeral_system_.28base_2.29
@@ -1759,52 +1810,47 @@ void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
    // and http://hal.inria.fr/docs/00/07/21/13/PDF/RR-4475.pdf which should be implemented
    // at some point.
    //
-   typedef typename boost::multiprecision::detail::canonical<unsigned char, B>::type ui_type;
+  typedef typename boost::multiprecision::detail::canonical<unsigned char, B>::type ui_type;
 
-   s = ui_type(0u);
-   if (eval_get_sign(x) == 0)
-   {
-      r = ui_type(0u);
-      return;
-   }
-   int g = eval_msb(x);
-   if (g <= 1)
-   {
-      s = ui_type(1);
-      eval_subtract(r, x, s);
-      return;
-   }
+  s = ui_type(0u);
+  if (eval_get_sign(x) == 0) {
+    r = ui_type(0u);
+    return;
+  }
+  int g = eval_msb(x);
+  if (g <= 1) {
+    s = ui_type(1);
+    eval_subtract(r, x, s);
+    return;
+  }
 
-   B t;
-   r = x;
-   g /= 2;
-   int org_g = g;
-   eval_bit_set(s, g);
-   eval_bit_set(t, 2 * g);
-   eval_subtract(r, x, t);
-   --g;
-   if (eval_get_sign(r) == 0)
-      return;
-   int msbr = eval_msb(r);
-   do
-   {
-      if (msbr >= org_g + g + 1)
-      {
-         t = s;
-         eval_left_shift(t, g + 1);
-         eval_bit_set(t, 2 * g);
-         if (t.compare(r) <= 0)
-         {
-            BOOST_ASSERT(g >= 0);
-            eval_bit_set(s, g);
-            eval_subtract(r, t);
-            if (eval_get_sign(r) == 0)
-               return;
-            msbr = eval_msb(r);
-         }
+  B t;
+  r = x;
+  g /= 2;
+  int org_g = g;
+  eval_bit_set(s, g);
+  eval_bit_set(t, 2 * g);
+  eval_subtract(r, x, t);
+  --g;
+  if (eval_get_sign(r) == 0)
+    return;
+  int msbr = eval_msb(r);
+  do {
+    if (msbr >= org_g + g + 1) {
+      t = s;
+      eval_left_shift(t, g + 1);
+      eval_bit_set(t, 2 * g);
+      if (t.compare(r) <= 0) {
+        BOOST_ASSERT(g >= 0);
+        eval_bit_set(s, g);
+        eval_subtract(r, t);
+        if (eval_get_sign(r) == 0)
+          return;
+        msbr = eval_msb(r);
       }
-      --g;
-   } while (g >= 0);
+    }
+    --g;
+  } while (g >= 0);
 }
 
 template <class B>
