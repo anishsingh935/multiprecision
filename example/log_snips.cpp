@@ -36,7 +36,7 @@ std::string generateRandomNumber(size_t digits, Generator& gen)
 template <typename T>
 void run_time_experiments(size_t cur_digits)
 {
-    size_t                     reps = 1;
+    size_t                     reps = 20;
     std::default_random_engine generator(42);
     int                        total = 0;
     boost_gsoc2020::aggregator_type aggregator;
@@ -58,13 +58,13 @@ void run_time_experiments(size_t cur_digits)
 
 template<size_t Digits>
 void run_time_experiment_for_cpp_bin_float() {
-   run_time_experiments<boost::multiprecision::number<boost::multiprecision::backends::cpp_bin_float<Digits*10> > >(Digits*10);
+   run_time_experiments<boost::multiprecision::number<boost::multiprecision::backends::cpp_bin_float<Digits> > >(Digits);
 }
 
 template <size_t Digits>
 void run_time_experiment_for_cpp_dec_float()
 {
-   run_time_experiments<boost::multiprecision::number<boost::multiprecision::backends::cpp_dec_float<Digits * 10> > >(Digits * 10);
+   run_time_experiments<boost::multiprecision::number<boost::multiprecision::backends::cpp_dec_float<Digits> > >(Digits);
 }
 
 int main()
