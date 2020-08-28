@@ -1790,15 +1790,15 @@ void BOOST_MP_CXX14_CONSTEXPR eval_newton_raphson_sqrt(B& s, B& r, const B& x) {
   eval_subtract_default(r, x, s);
 }
 
-template <class B>
+/* template <class B>
 void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x)
 {
   eval_sqrt_karatsuba(s, r, x);
   // eval_newton_raphson_sqrt(s, r, x);
-}
+} */
 
 template<class B>
-void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt_old(B& s, B& r, const B& x) {
+void BOOST_MP_CXX14_CONSTEXPR eval_integer_sqrt(B& s, B& r, const B& x) {
 
    // Old sqrt implementation. For more efficient implementations see:
    // eval_newton_raphson_sqrt and eval_sqrt_karatsuba.

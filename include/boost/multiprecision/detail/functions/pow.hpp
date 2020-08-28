@@ -495,11 +495,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
   int eps_exponent;
   T ignore_result;
   eval_frexp(ignore_result, eps, &eps_exponent);
-  // Tolerance ~ sqrt(eps) / 100.
-  // TBD: Not quite sure how to deal with the tolerance here.
-  // Using epsilon assumes that the answer is on the order of
-  // unity. But we might be taking the logarithm of a very
-  // large argument.
+  // Tolerance ~ sqrt(eps) / 2 -  15.
   long target_tolerance_exponent = (eps_exponent / 2 - 15);
   
   T cp_ak;
