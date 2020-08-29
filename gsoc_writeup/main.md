@@ -36,7 +36,11 @@ The time complexity of this approach is linear to the number of precision bits o
 
 By choosing <img src="https://render.githubusercontent.com/render/math?math=f(x)%20%3D%20x%5E2%20-%20a">, <img src="https://render.githubusercontent.com/render/math?math=f(x)"> has its only positive root at <img src="https://render.githubusercontent.com/render/math?math=x%20%3D%20%5Csqrt%7Ba%7D">. The Newton-Raphson iteration becomes:
 
+<p align="center">
+
 <img src="https://render.githubusercontent.com/render/math?math=x_%7Bt%2B1%7D%20%3A%3D%20%5Cfrac%7B1%7D%7B2%7D%20%5Cleft(x_t%20%2B%20%5Cfrac%7Ba%7D%7Bx_t%7D%20%5Cright)%20">
+
+</p>
 
 For quadratic convergence, the initial value has to be within twice of the square root. For a value <img src="https://render.githubusercontent.com/render/math?math=a%20%3D%20y%202%5Ee">, a good initial value is <img src="https://render.githubusercontent.com/render/math?math=x_0%20%3D%20y%202%5E%7Be%2F2%7D">, which can be calculated efficiently by right shifting the number.
 
@@ -48,13 +52,21 @@ In theory, for a good initial value, the convergence rate is quadratic. However,
 
 The Karatsuba square root method is a method that recursively computes the square root for the upper half of the digits and uses the division algorithm (and the lower half of the digits) to compute the square root of the entire number. It is named like this due to its similarity with Karatsuba's multiplication algorithm that also splits the digits into four parts. The pseudocode for the algorithm (based on (Zimmerman 1998) and (Brent and Zimmerman 2010)) is given below:
 
+<p align="center">
+
 <img src="sqrt_karatsuba_pseudocode.PNG" width="650px">
+
+</p>
 
 The main implementation can be found here.
 
 One part that is not covered in the algorithm descriptions is how to solve the base case. The problem here is that we will be left with four 32-bit limbs and there is no built in algorithm to compute the square root of 128-bit integers. Continuing the splitting at the bit level at non-fixed positions will be tedious and not very efficient. Instead, we see notice that we can handle all cases as one of the following four cases:
 
+<p align="center">
+
 <img src="sqrt_base_case_visualisation.svg" height="400px">
+
+</p>
 
 The second case relies on the fact that we can fix the rounding problems in double sqrt for 64-bit integers (see code here). The third case splits into 32-bit integers which means that the recursive call can be handled by Case 2. The fourth case splits into 64-bit integers which means that the recursive call can be handled by Case 3.
 
@@ -77,11 +89,19 @@ The following correctness tests (which can be found here: TODO) were run for eac
 
 The tests where performed on the same <img src="https://render.githubusercontent.com/render/math?math=20">randomly sampled numbers. The error bars represent confidence intervals at 95% assuming each trial is i.i.d.
 
+<p align="center">
+
 <img src="sqrt_benchmark.svg" height="300px">
+
+</p>
 
 As an extension we show that Karatsuba square root is efficient for up to 100K (and even more).
 
+<p align="center">
+
 <img src="sqrt_karatsuba.svg" heigh="300px">
+
+</p>
 
 ## k-th root implementation
 
@@ -99,17 +119,29 @@ TODO
 
 **AGM-based:** Gauss introduced the arithmetic-geometric method, where two initial values <img src="https://render.githubusercontent.com/render/math?math=a_0"> and <img src="https://render.githubusercontent.com/render/math?math=b_0"> are chosen and 
 
+<p align="center">
+
 <img src="https://render.githubusercontent.com/render/math?math=a_n%20%3A%3D%20%5Cfrac%7Ba_%7Bn-1%7D%20%2B%20b_%7Bn-1%7D%7D%7B2%7D%20%5Cquad%20%5Ctext%7B%20and%20%7D%20%5Cquad%20b_n%20%3A%3D%20%5Csqrt%7Ba_%7Bn-1%7D%20b_%7Bn-1%7D%7D.">
+
+</p>
 
 For any initial values with <img src="https://render.githubusercontent.com/render/math?math=a_0%20%5Cgeq%20b_0">, the sequence converges to a finite value <img src="https://render.githubusercontent.com/render/math?math=M(a_0%2C%20b_0)">by Bolzanno-Weirstrass as <img src="https://render.githubusercontent.com/render/math?math=a_0%20%5Cleq%20a_1%20%5Cleq%20%5Cldots%20%5Cleq%20b_1%20%5Cleq%20b_0">. 
 
 Gauss proved that a sequence with <img src="https://render.githubusercontent.com/render/math?math=a_0%20%3D%201"> and <img src="https://render.githubusercontent.com/render/math?math=b_0%20%3D%20x"> converges to <img src="https://render.githubusercontent.com/render/math?math=%5Cfrac%7B%5Cpi%7D%7B2E(x)%7D">, where 
 
+<p align="center">
+
 <img src="https://render.githubusercontent.com/render/math?math=E(x)%20%3D%20%5Cint_0%5E%7B%5Cpi%2F2%7D%20%5Cfrac%7Bd%5Ctheta%7D%7B%5Csqrt%7B1%20-%20(1%20-%20x%5E2)%5Csin%5E2%20%5Ctheta%7D%7Ddx">
+
+</p>
 
 The elliptic function <img src="https://render.githubusercontent.com/render/math?math=E(x)"> satisfies <img src="https://render.githubusercontent.com/render/math?math=E(4%2Fx)%20%3D%20%5Cln(x)%20%2B%20%5Cfrac%7B4%5Cln(x)-4%7D%7Bx%5E2%7D%20%2B%20o(x%5E%7B-2%7D)">. Hence, one can evaluate <img src="https://render.githubusercontent.com/render/math?math=x"> to <img src="https://render.githubusercontent.com/render/math?math=p"> digits of precision using
 
+<p align="center">
+
 <img src="https://render.githubusercontent.com/render/math?math=%5Cln(x)%20%5Capprox%20%5Cfrac%7B%5Cpi%7D%7B2M(1%2C%204%2Fs)%7D%20-%20m%20%5Cln(2)">
+
+</p>
 
 where <img src="https://render.githubusercontent.com/render/math?math=s%20%3D%20x2%5Em%20%3E%202%5E%7Bp%2F2%7D">. This algorithm has <img src="https://render.githubusercontent.com/render/math?math=%5Cmathcal%7BO%7D(%5Clog%20p)"> operational complexity and <img src="https://render.githubusercontent.com/render/math?math=%5Cmathcal%7BO%7D(M(p)%20%5Clog%20p)">, where <img src="https://render.githubusercontent.com/render/math?math=M(p)"> is the time complexity of multiplication.
 
@@ -117,11 +149,19 @@ where <img src="https://render.githubusercontent.com/render/math?math=s%20%3D%20
 
 The tests where performed on the same <img src="https://render.githubusercontent.com/render/math?math=20">randomly sampled numbers. The error bars represent confidence intervals at 95% assuming each trial is i.i.d.
 
+<p align="center">
+
 <img src="log_timings.svg" heigh="300px">
+
+</p>
 
 For more emphasis on the newly implemented method using the Karatsuba sqrt function:
 
+<p align="center">
+
 <img src="log_agm_timings.svg" height="300px">
+
+</p>
 
 ## Basic arithmetic operations
 
