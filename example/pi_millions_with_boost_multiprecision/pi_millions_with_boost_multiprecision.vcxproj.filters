@@ -13,13 +13,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pi_millions_with_boost_multiprecision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="mpir\x64\gmp.h">
       <Filter>Source Files\mpir\x64</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\pi_millions_with_boost_multiprecision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
