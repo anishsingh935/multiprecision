@@ -105,7 +105,7 @@ As an extension we show that Karatsuba square root is efficient for up to 100K (
 
 ## k-th root implementation
 
-TODO
+When
 
 ## PI algorithms
 
@@ -115,7 +115,7 @@ TODO
 
 ### Implementations
 
-**Existing implementation:**
+**Existing implementation:** TODO
 
 **AGM-based:** Gauss introduced the arithmetic-geometric method, where two initial values <img src="https://render.githubusercontent.com/render/math?math=a_0"> and <img src="https://render.githubusercontent.com/render/math?math=b_0"> are chosen and 
 
@@ -163,6 +163,16 @@ For more emphasis on the newly implemented method using the Karatsuba sqrt funct
 
 </p>
 
+As an extension we show that the log AGM implementation performance for up to 100K (and even more).
+
+<p align="center">
+
+<p align="center">
+    <img src="log_agm_large.svg" height="300px">
+</p>
+
+
+
 ## Basic arithmetic operations
 
 TODO
@@ -172,6 +182,14 @@ TODO
 ## VC builds for MPFR and MPIR
 
 TODO
+
+
+
+## References
+
+Brent, Richard P., and Zimmermann, Paul. "Modern computer arithmetic". Vol. 18. Cambridge University Press, 2010, pp.26
+
+Zimmermann, Paul. "Karatsuba Square Root". [Research Report] RR-3805, INRIA. 1999, pp.8
 
 Future work:
 
