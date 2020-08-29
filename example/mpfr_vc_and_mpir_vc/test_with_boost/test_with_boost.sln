@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_with_boost", "test_with_boost\test_with_boost.vcxproj", "{6A1B81E4-ADF0-4F06-BE8E-D7D8A98D54A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E7AEA29-882B-4F6C-B5BB-B871AA9BAA74} = {2E7AEA29-882B-4F6C-B5BB-B871AA9BAA74}
+		{A03EE670-7862-4684-A2D5-1CF9B780E245} = {A03EE670-7862-4684-A2D5-1CF9B780E245}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpfr", "..\mpfr_vc\mpfr\mpfr.vcxproj", "{A03EE670-7862-4684-A2D5-1CF9B780E245}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E7AEA29-882B-4F6C-B5BB-B871AA9BAA74} = {2E7AEA29-882B-4F6C-B5BB-B871AA9BAA74}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpir", "..\mpir_vc\mpir\mpir.vcxproj", "{2E7AEA29-882B-4F6C-B5BB-B871AA9BAA74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A1B81E4-ADF0-4F06-BE8E-D7D8A98D54A7}.Debug|x64.ActiveCfg = Debug|x64
+		{6A1B81E4-ADF0-4F06-BE8E-D7D8A98D54A7}.Debug|x64.Build.0 = Debug|x64
+		{6A1B81E4-ADF0-4F06-BE8E-D7D8A98D54A7}.Release|x64.ActiveCfg = Release|x64
+		{6A1B81E4-ADF0-4F06-BE8E-D7D8A98D54A7}.Release|x64.Build.0 = Release|x64
+		{A03EE670-7862-4684-A2D5-1CF9B780E245}.Debug|x64.ActiveCfg = mpfr_gc_lib_debug|x64
+		{A03EE670-7862-4684-A2D5-1CF9B780E245}.Debug|x64.Build.0 = mpfr_gc_lib_debug|x64
+		{A03EE670-7862-4684-A2D5-1CF9B780E245}.Release|x64.ActiveCfg = mpfr_core2_lib_release|x64
+		{A03EE670-7862-4684-A2D5-1CF9B780E245}.Release|x64.Build.0 = mpfr_core2_lib_release|x64
+		{2E7AEA29-882B-4F6C-B5BB-B871AA9BAA74}.Debug|x64.ActiveCfg = mpir_gc_lib_debug|x64
+		{2E7AEA29-882B-4F6C-B5BB-B871AA9BAA74}.Debug|x64.Build.0 = mpir_gc_lib_debug|x64
+		{2E7AEA29-882B-4F6C-B5BB-B871AA9BAA74}.Release|x64.ActiveCfg = mpir_core2_lib_release|x64
+		{2E7AEA29-882B-4F6C-B5BB-B871AA9BAA74}.Release|x64.Build.0 = mpir_core2_lib_release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0DF99FEE-00C1-4BC2-9D50-2EDE4DA82D3A}
+	EndGlobalSection
+EndGlobal

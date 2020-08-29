@@ -7,77 +7,6 @@
 //
 
 template <class T>
-void calc_log2(T& num, unsigned digits)
-{
-   typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
-   typedef typename mpl::front<typename T::signed_types>::type                         si_type;
-
-   //
-   // String value with 1100 digits:
-   //
-   static const char* string_val = "0."
-                                   "6931471805599453094172321214581765680755001343602552541206800094933936219696947156058633269964186875"
-                                   "4200148102057068573368552023575813055703267075163507596193072757082837143519030703862389167347112335"
-                                   "0115364497955239120475172681574932065155524734139525882950453007095326366642654104239157814952043740"
-                                   "4303855008019441706416715186447128399681717845469570262716310645461502572074024816377733896385506952"
-                                   "6066834113727387372292895649354702576265209885969320196505855476470330679365443254763274495125040606"
-                                   "9438147104689946506220167720424524529612687946546193165174681392672504103802546259656869144192871608"
-                                   "2938031727143677826548775664850856740776484514644399404614226031930967354025744460703080960850474866"
-                                   "3852313818167675143866747664789088143714198549423151997354880375165861275352916610007105355824987941"
-                                   "4729509293113897155998205654392871700072180857610252368892132449713893203784393530887748259701715591"
-                                   "0708823683627589842589185353024363421436706118923678919237231467232172053401649256872747782344535347"
-                                   "6481149418642386776774406069562657379600867076257199184734022651462837904883062033061144630073719489";
-   //
-   // Check if we can just construct from string:
-   //
-   if (digits < 3640) // 3640 binary digits ~ 1100 decimal digits
-   {
-      num = string_val;
-      return;
-   }
-   //
-   // We calculate log2 from using the formula:
-   //
-   // ln(2) = 3/4 SUM[n>=0] ((-1)^n * N!^2 / (2^n(2n+1)!))
-   //
-   // Numerator and denominator are calculated separately and then
-   // divided at the end, we also precalculate the terms up to n = 5
-   // since these fit in a 32-bit integer anyway.
-   //
-   // See Gourdon, X., and Sebah, P. The logarithmic constant: log 2, Jan. 2004.
-   // Also http://www.mpfr.org/algorithms.pdf.
-   //
-   num = static_cast<ui_type>(1180509120uL);
-   T denom, next_term, temp;
-   denom        = static_cast<ui_type>(1277337600uL);
-   next_term    = static_cast<ui_type>(120uL);
-   si_type sign = -1;
-
-   ui_type limit = digits / 3 + 1;
-
-   for (ui_type n = 6; n < limit; ++n)
-   {
-      temp = static_cast<ui_type>(2);
-      eval_multiply(temp, ui_type(2 * n));
-      eval_multiply(temp, ui_type(2 * n + 1));
-      eval_multiply(num, temp);
-      eval_multiply(denom, temp);
-      sign = -sign;
-      eval_multiply(next_term, n);
-      eval_multiply(temp, next_term, next_term);
-      if (sign < 0)
-         temp.negate();
-      eval_add(num, temp);
-   }
-   eval_multiply(denom, ui_type(4));
-   eval_multiply(num, ui_type(3));
-   INSTRUMENT_BACKEND(denom);
-   INSTRUMENT_BACKEND(num);
-   eval_divide(num, denom);
-   INSTRUMENT_BACKEND(num);
-}
-
-template <class T>
 void calc_e(T& result, unsigned digits)
 {
    typedef typename mpl::front<typename T::unsigned_types>::type ui_type;
@@ -216,6 +145,104 @@ void calc_pi(T& result, unsigned digits)
    eval_divide(result, B, D);
 }
 
+template <class T>
+void calc_log2(T& num, unsigned digits) {
+  typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
+  typedef typename mpl::front<typename T::signed_types>::type                         si_type;
+
+  //
+  // String value with 1100 digits:
+  //
+  static const char* string_val = "0."
+    "6931471805599453094172321214581765680755001343602552541206800094933936219696947156058633269964186875"
+    "4200148102057068573368552023575813055703267075163507596193072757082837143519030703862389167347112335"
+    "0115364497955239120475172681574932065155524734139525882950453007095326366642654104239157814952043740"
+    "4303855008019441706416715186447128399681717845469570262716310645461502572074024816377733896385506952"
+    "6066834113727387372292895649354702576265209885969320196505855476470330679365443254763274495125040606"
+    "9438147104689946506220167720424524529612687946546193165174681392672504103802546259656869144192871608"
+    "2938031727143677826548775664850856740776484514644399404614226031930967354025744460703080960850474866"
+    "3852313818167675143866747664789088143714198549423151997354880375165861275352916610007105355824987941"
+    "4729509293113897155998205654392871700072180857610252368892132449713893203784393530887748259701715591"
+    "0708823683627589842589185353024363421436706118923678919237231467232172053401649256872747782344535347"
+    "6481149418642386776774406069562657379600867076257199184734022651462837904883062033061144630073719489";
+  //
+  // Check if we can just construct from string:
+  //
+  if (digits < 3640) // 3640 binary digits ~ 1100 decimal digits
+  {
+    num = string_val;
+    return;
+  }
+  
+  // Set a0 = 1
+  // Set b0 = 4 / (2^(m+1)) = 2^(-(m - 1))
+
+  const float n_times_factor = static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F;
+  const float lgx_over_lg_radix = -1.0F * std::log(2.0F) / std::log(static_cast<float>(std::numeric_limits<number<T> >::radix));
+
+  std::int32_t m = static_cast<std::int32_t>(n_times_factor - lgx_over_lg_radix);
+
+  // Ensure that the resulting power is non-negative.
+  // Also enforce that m >= 8.
+  m = (std::max)(m, static_cast<std::int32_t>(8));
+
+  T ak;
+  ak = 1.0;
+  // TBD: Since this is a negative binary power, there might be a way to compute
+  // this more efficiently.
+  T half;
+  half = 0.5;
+  T bk = eval_pown(half, static_cast<std::uint32_t>(m-1));
+
+  // Determine the requested precision of the upcoming iteration in units of digits10.
+  // Tolerance ~ sqrt(eps) / 100.
+  long target_tolerance_exponent = (-long(digits) / 2 - 8);
+
+  // TBD: By exploting the structure of ak, bk, it may be possible to speedup the
+  // update calculations.
+  T ak_tmp;
+  ak_tmp = 0.0;
+  for (std::int32_t k = static_cast<std::int32_t>(0); k < static_cast<std::int32_t>(64); ++k) {
+    T cp_ak = ak;
+    eval_subtract(cp_ak, bk);
+    int diff_exponent;
+    T ignore_result;
+    eval_frexp(ignore_result, cp_ak, &diff_exponent);
+
+
+    int bk_exponent;
+    eval_frexp(ignore_result, bk, &bk_exponent);
+
+    // Check for the number of significant digits to be
+    // at least half of the requested digits. If at least
+    // half of the requested digits have been achieved,
+    // then break after the upcoming iteration.
+    const bool break_after_this_iteration = ((k > static_cast<std::int32_t>(4))
+      && (diff_exponent < bk_exponent + target_tolerance_exponent));
+
+    ak_tmp = ak;
+    eval_add(ak, bk);
+    eval_divide(ak, 2.0);
+    if (break_after_this_iteration) {
+      break;
+    }
+
+    eval_multiply(bk, ak_tmp);
+    T new_bk;
+    eval_sqrt(new_bk, bk);
+    bk = new_bk;
+  }
+
+  // We are now finished with the AGM iteration for log(x).
+
+  // For any x, ln(x) = {pi / [2 * AGM(1, 4 / (x * 2^m) )]} - (m * ln2)
+  // For x = 2, we get ln(x) = {pi / [2 * AGM(1, 4 / (x * 2^m) )]} - (m * ln2)
+  // By solving for ln(2), ln(2) = {pi / [2 * (m + 1) * AGM(1, 4 / (x * 2^m) )]}
+  eval_multiply(ak, double(2 * (m + 1)));
+  calc_pi(num, digits);
+  eval_divide(num, ak);
+}
+
 template <class T, const T& (*F)(void)>
 struct constant_initializer
 {
@@ -326,7 +353,11 @@ const T& get_constant_one_over_epsilon()
 #endif
       typedef typename mpl::front<typename T::unsigned_types>::type ui_type;
       result = static_cast<ui_type>(1u);
-      eval_divide(result, std::numeric_limits<number<T> >::epsilon().backend());
+      if(std::numeric_limits<number<T> >::is_specialized)
+         eval_divide(result, std::numeric_limits<number<T> >::epsilon().backend());
+      else
+         eval_ldexp(result, result, boost::multiprecision::detail::digits2<number<T> >::value() - 1);
+      digits = boost::multiprecision::detail::digits2<number<T> >::value();
    }
 
    return result;

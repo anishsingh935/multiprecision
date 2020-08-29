@@ -1,7 +1,15 @@
 # /boost/libs/multiprecision/.gitignore
 # Use of manifest is unclear, so add to .gitignore.
 /doc/html/standalone_HTML.manifest
-example/pi_millions_with_boost_multiprecision/pi_millions_with_boost_multiprecision.vcxproj.user
-example/pi_millions_with_boost_multiprecision/x64/
-example/pi_millions_with_boost_multiprecision/.vs/pi_millions_with_boost_multiprecision/v16/.suo
 
+example/mpfr-4.1.0/mpfr-4.1.0.vcxproj.user
+example/mpfr-4.1.0/.vs/mpfr-4.1.0/v16/.suo
+example/mpfr-4.1.0/x64/Release/abort_prec_max.obj
+example/mpfr-4.1.0/x64/
+example/mpir-3.0.0/build.vc16/.vs/
+example/mpir-3.0.0/build.vc16/lib_mpir_core2/lib_mpir_core2.vcxproj.user
+example/mpir-3.0.0/build.vc16/lib_mpir_core2/x64/
+example/mpir-3.0.0/lib/
+example/pi_millions_with_boost_multiprecision/pi_millions_with_boost_multiprecision.vcxproj.user
+example/pi_millions_with_boost_multiprecision/.vs/
+example/pi_millions_with_boost_multiprecision/x64/
