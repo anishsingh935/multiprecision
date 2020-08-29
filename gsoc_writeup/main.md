@@ -5,7 +5,7 @@ This is the final report for my Google Summer of Coder 2020 project with Boost.M
 * implementation, testing and benchmarking of the:
   * square root function (around 23.5x faster than the existing implementation), 
   * logarithm function (around 35.5x faster than the existing implementation),
-  * k-th root function (improvement of TODO),
+  * k-th root function (around 340x faster than the power-based implementation for small (<256) integer values),
   * several algorithms for computing digits of <img src="https://render.githubusercontent.com/render/math?math=%5Cpi">
 * testing the implementation of existing basic arithmetic operations
 
@@ -105,11 +105,49 @@ As an extension we show that Karatsuba square root is efficient for up to 100K (
 
 ## k-th root implementation
 
-When
+When Some of the <img src="https://render.githubusercontent.com/render/math?math=%5Cpi">algorithms require taking the fourth or fifth root of a number. The general case for this is taking the <img src="https://render.githubusercontent.com/render/math?math=k">-th integer root of a number <img src="https://render.githubusercontent.com/render/math?math=x">. The current way of doing this in Boost.Multiprecision is through <img src="https://render.githubusercontent.com/render/math?math=%5Cmathrm%7Bpow%7D(x%2C%201%2Fk)"> which is not very efficient for small <img src="https://render.githubusercontent.com/render/math?math=k">.
+
+**Newton-Raphson method:** Similarly to the Newton-Raphson implementation of the square root, we define<img src="https://render.githubusercontent.com/render/math?math=f(x)%20%3D%20x%5Ek%20-%20a">, whose derivative is<img src="https://render.githubusercontent.com/render/math?math=f'(x)%20%3D%20(k-1)x">and which gives rise to the iteration method
+
+<p align="center">
+   <img src="https://render.githubusercontent.com/render/math?math=x_%7Bt%2B1%7D%20%3A%3D%20%5Cfrac%7B1%7D%7Bk%7D%20%5Cleft(%20(k-1)%20x_t%20-%20a%20%5Cright)"> 
+</p>
+
+### Performance tests
+
+Comparing with the existing implementation, the new implementation is 340x faster for 10K digits,
+
+<p align="center" >
+    <img src="kth_root_comparison.svg" height="300px">
+</p>
+
+See below the performance for various values of k,
+
+<p align="center" >
+    <img src="kth_root_for_various_k.svg" height="300px">
+</p>
+
+As an extension, the performance tests for up to 100K digits, show that the implementation is efficient for an even wider range of values.
+
+<p align="center" >
+    <img src="kth_root_large_values.svg" height="300px">
+</p>
 
 ## PI algorithms
 
-TODO
+### Implementations
+
+**Existing implementation:** The existing implementation simply has a hardcoded value for pi. 
+
+
+
+### Correctness tests
+
+The tests simply compared the digits with various publicly available collections of pi digits.
+
+### Performance tests
+
+
 
 ## Log implementation
 
@@ -172,10 +210,6 @@ As an extension we show that the log AGM implementation performance for up to 10
 </p>
 
 
-
-## Basic arithmetic operations
-
-TODO
 
 
 
