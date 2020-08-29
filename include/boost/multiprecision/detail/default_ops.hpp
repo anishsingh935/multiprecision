@@ -1973,7 +1973,7 @@ void eval_pown(FloatingPointType& result, const FloatingPointType& b, const Unsi
 
     for (local_unsigned_integral_type p_local(p); p_local != local_unsigned_integral_type(0U); p_local >>= 1U) {
       if ((static_cast<unsigned>(p_local) & 1U) != 0U) {
-        eval_multiply(result, y); // result *= y;
+        eval_multiply(result, y);
       }
       local_floating_point_type cp_y = y;
       eval_multiply(y, cp_y);
@@ -1987,10 +1987,15 @@ inline BOOST_MP_CXX14_CONSTEXPR void eval_kth_root(B& s, const B& val, A k) {
   // the function f(x) = x - val^k
   // See Algorithm 1.14 "RootInt" in "Modern Computer Arithmetic" by P. Zimmermann, R. P. Brent
 
-  if (k == 1) {
+  if (k == FP_ZERO) {
+    s = 0.0;
+    return;
+  }
+  if (k == 1.0) {
     s = val;
     return;
   }
+
   A k_minus_one = k - 1;
   B u, base;
   // Any starting value greater than kth root of val is good
@@ -2003,7 +2008,7 @@ inline BOOST_MP_CXX14_CONSTEXPR void eval_kth_root(B& s, const B& val, A k) {
   eval_scalbn(u, base, e);
   B t1, t2, s_pow_k_minus_one;
   int is_greater;
-  // TBD: These ints need to be converted to B type
+  // These ints need to be converted to B type
   // to avoid ambiguity for gmp_float types.
   B k_minus_one_b, k_b;
   k_minus_one_b = double(k_minus_one);
