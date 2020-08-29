@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pi_millions_with_boost_multiprecision.cpp" />
+    <ClInclude Include="mpir\x64\gmp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mpir\x64\gmp.h" />
+    <ClCompile Include="..\pi_millions_with_boost_multiprecision.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B074B617-033D-4DEB-B658-15BDA35FF4F0}</ProjectGuid>
@@ -71,19 +71,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\boost\modular_boost\boost\libs\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/p3;$(IncludePath)</IncludePath>
+    <IncludePath>C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/p3;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\boost\modular_boost\boost\libs\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/x64;$(IncludePath)</IncludePath>
+    <IncludePath>C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/x64;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\boost\modular_boost\boost\libs\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/p3;$(IncludePath)</IncludePath>
+    <IncludePath>C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/p3;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\boost\modular_boost\boost\libs\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/x64;$(IncludePath)</IncludePath>
+    <IncludePath>C:\boost\boost_gsoc2020\multiprecision\include;C:\boost\boost_1_73_0;$(SolutionDir)mpir/x64;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -93,10 +93,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\Dimitris\Documents\GitHub\boost\;C:\Users\Dimitris\Documents\GitHub\boost\libs\multiprecision\example\pi_millions_with_boost_multiprecision\mpir\x64</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>C:\Users\Dimitris\Documents\GitHub\boost\libs\multiprecision\example\pi_millions_with_boost_multiprecision\mpir\x64\mpir.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -107,10 +109,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\Dimitris\Documents\GitHub\boost\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -123,6 +127,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\Dimitris\Documents\GitHub\boost\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +146,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\Dimitris\Documents\Libraries\boost_1_73_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +154,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>$(ProjectDir)mpir\x64\mpir.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <StackReserveSize>41943040</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
