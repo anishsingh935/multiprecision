@@ -283,11 +283,11 @@ int main()
    std::cout << "Stress-testing cpp_bin:" << std::endl;
    sample_and_check<
        test_with_boost::float_type_mpfr<10000>,
-       test_with_boost::float_cpp_bin<10000> >(10000, 30);
+       test_with_boost::float_cpp_bin<10000> >(10000, 50);
    
    std::cout << "Stress-testing cpp_dec:" << std::endl;
    sample_and_check<
        test_with_boost::float_type_mpfr<10000>,
-       test_with_boost::float_cpp_dec<10000> >(10000, 30);
+       test_with_boost::float_cpp_dec<10000> >(10000, 50);
    return 0;
 }
