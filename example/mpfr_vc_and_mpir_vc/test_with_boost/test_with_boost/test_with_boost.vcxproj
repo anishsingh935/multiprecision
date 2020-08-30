@@ -78,13 +78,13 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)_Out\</OutDir>
     <IntDir>$(SolutionDir)_Tmp\$(Configuration)\</IntDir>
-    <IncludePath>C:\boost\boost_1_73_0;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(ProjectDir)..\..\mpfr_vc\mpfr\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(BOOST_ROOT);$(ProjectDir)..\..\mpir_vc\mpir\inc;$(ProjectDir)..\..\mpfr_vc\mpfr\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)_Out\</OutDir>
     <IntDir>$(SolutionDir)_Tmp\$(Configuration)\</IntDir>
-    <IncludePath>C:\boost\boost_1_73_0;$(ProjectDir)..\..\mpir_vc\mpir\inc;$(ProjectDir)..\..\mpfr_vc\mpfr\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(BOOST_ROOT);$(ProjectDir)..\..\mpir_vc\mpir\inc;$(ProjectDir)..\..\mpfr_vc\mpfr\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -122,6 +122,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +143,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

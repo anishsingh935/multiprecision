@@ -1,1 +1,0 @@
-C:\Users\User\Documents\Ks\PC_Software\NumericalPrograms\ExtendedNumberTypes\mpir_and_mpfr\mpir\mpir\x64\mpir_core2_lib_release\mpir_core2_lib_release.lib
