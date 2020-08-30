@@ -466,7 +466,7 @@ typename std::enable_if<should_use_log_agm<T>::value>::type eval_log(T& result, 
   T ak;
   ak = 1.0;
 
-  const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 1.67F);
+  const float n_times_factor = static_cast<float>(static_cast<float>(std::numeric_limits<number<T> >::digits10) * 3.0F);
   
   int xx_exponent;
   T ignore_xx_result;
