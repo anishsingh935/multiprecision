@@ -1,34 +1,38 @@
 ## Overview
 
-This is the final report for my Google Summer of Coder 2020 project with Boost.Multiprecision.  The aim of the project was to make sure that core arithmetic functions are efficient for numbers of up to 10K digits. This encompassed:
+This is the final report for my Google Summer of Coder 2020 project with Boost.Multiprecision.  The aim of the project was to ensure that core arithmetic functions are efficient for numbers of up to 10K digits. This encompassed:
 
 * implementation, testing and benchmarking of the:
-  * square root function (around 23.5x faster than the existing implementation), 
-  * logarithm function (around 35.5x faster than the existing implementation),
-  * k-th root function (around 340x faster than the power-based implementation for small (<256) integer values),
+  * square root function (around 23.5x faster than the existing implementation at 10K digits), 
+  * logarithm function (around 35.5x faster than the existing implementation at 10K digits),
+  * k-th root function (around 340x faster than the power-based implementation for small (<256) integer values at 10K digits),
   * several algorithms for computing digits of <img src="https://render.githubusercontent.com/render/math?math=%5Cpi">
 * testing the implementation of existing basic arithmetic operations
 
-The implementation of square root and logarithm turned out to be efficient for up to thousands of digits. 
+The implementation of square root and logarithm turned out to be efficient for up to tens of thousands of digits. 
 
-The code can be found [here](https://github.com/BoostGSoC20/multiprecision/). In case, the math does not display well, you can download this report here TODO.
+The code can be found [here](https://github.com/BoostGSoC20/multiprecision/). See the relevant sections for more specific links to implementation. 
+
+In case, the math does not display well, you can download this report here (TODO: add this once the document is complete).
 
 ## SQRT implementation
 
-The square root function is one of the most commonly used mathematical functions either as a standalone function or as a component of a more complicated ones (see <img src="https://render.githubusercontent.com/render/math?math=%5Clog">and <img src="https://render.githubusercontent.com/render/math?math=%5Cpi">computations, below).
+*code*: [Newton-Raphson iteration](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1756), [Karatsuba square root](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1663), [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp)
+
+The square root function is one of the most commonly used mathematical functions either as a standalone function or as a component of more complicated ones (see <img src="https://render.githubusercontent.com/render/math?math=%5Clog">and <img src="https://render.githubusercontent.com/render/math?math=%5Cpi"> computations, below).
 
 ### Implementations
 
-The existing implementation for floating point numbers converts the number to an integer and then perform the square root operation in the integer space. To recover the square root of the floating point number, the exponent needs to be adjusted. Hence, the descriptions of the algorithms below focus on computing the square root of an integer.  
+The existing implementation for floating point numbers converts the number to an integer and then performs the square root operation in the integer space. To recover the square root of the floating point number, only the exponent needs to be adjusted. This is why the descriptions of the algorithms below focus on computing the square root of an integer.  
 
 **Existing implementation:** The current implementation of the sqrt function uses the binary method which operates in two phases:
 
 1. Using binary search find the largest power of two <img src="https://render.githubusercontent.com/render/math?math=2%5Ei"> whose square is smaller than the given number.
-2. Go through the bits <img src="https://render.githubusercontent.com/render/math?math=i-1"> to <img src="https://render.githubusercontent.com/render/math?math=0"> and decide whether it should be a <img src="https://render.githubusercontent.com/render/math?math=1"> or a <img src="https://render.githubusercontent.com/render/math?math=0">.
+2. Go through the bits <img src="https://render.githubusercontent.com/render/math?math=i-1"> to <img src="https://render.githubusercontent.com/render/math?math=0"> and decide whether it should be a <img src="https://render.githubusercontent.com/render/math?math=1"> or a <img src="https://render.githubusercontent.com/render/math?math=0">, by checking if <img src="https://render.githubusercontent.com/render/math?math=(p%2B2%5Ei)%5E2%20%5Cleq%20a">, where <img src="https://render.githubusercontent.com/render/math?math=p"> is the suffix of the square calculated up to i.
 
-The time complexity of this approach is linear to the number of precision bits of the given number.
+Since the second check can be performed using just additions, the computation requires a number of iterations linear to the number of precision bits.
 
-**Newton's method:** Newton's method is a iterative method which can be used to find a root of a (sufficiently smooth) function <img src="https://render.githubusercontent.com/render/math?math=f">:
+**Newton-Raphson's method:** Newton's method is a iterative method which can be used to find a root of a (sufficiently smooth, see below) function <img src="https://render.githubusercontent.com/render/math?math=f">:
 
 1. Choose an initial point <img src="https://render.githubusercontent.com/render/math?math=x_0">.
 2. Set <img src="https://render.githubusercontent.com/render/math?math=x_%7Bt%2B1%7D%20%3A%3D%20x_t%20-%20%5Cfrac%7Bf(x_t)%7D%7Bf'(x_t)%7D">.
@@ -37,20 +41,19 @@ The time complexity of this approach is linear to the number of precision bits o
 By choosing <img src="https://render.githubusercontent.com/render/math?math=f(x)%20%3D%20x%5E2%20-%20a">, <img src="https://render.githubusercontent.com/render/math?math=f(x)"> has its only positive root at <img src="https://render.githubusercontent.com/render/math?math=x%20%3D%20%5Csqrt%7Ba%7D">. The Newton-Raphson iteration becomes:
 
 <p align="center">
-
 <img src="https://render.githubusercontent.com/render/math?math=x_%7Bt%2B1%7D%20%3A%3D%20%5Cfrac%7B1%7D%7B2%7D%20%5Cleft(x_t%20%2B%20%5Cfrac%7Ba%7D%7Bx_t%7D%20%5Cright)%20">
 
 </p>
 
 For quadratic convergence, the initial value has to be within twice of the square root. For a value <img src="https://render.githubusercontent.com/render/math?math=a%20%3D%20y%202%5Ee">, a good initial value is <img src="https://render.githubusercontent.com/render/math?math=x_0%20%3D%20y%202%5E%7Be%2F2%7D">, which can be calculated efficiently by right shifting the number.
 
-The implementation for Newton Raphson's method can be found here (TODO: add link to the code).
+The implementation for Newton Raphson's method can be found [here](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1756).
 
 In theory, for a good initial value, the convergence rate is quadratic. However, in practice, the algorithm has several calls to the division subroutine, making the execution slower.
 
 **Karatsuba square root:**
 
-The Karatsuba square root method is a method that recursively computes the square root for the upper half of the digits and uses the division algorithm (and the lower half of the digits) to compute the square root of the entire number. It is named like this due to its similarity with Karatsuba's multiplication algorithm that also splits the digits into four parts. The pseudocode for the algorithm (based on (Zimmerman 1998) and (Brent and Zimmerman 2010)) is given below:
+The Karatsuba square root method is a method that recursively computes the square root for the upper half of the digits and uses the division algorithm (and the lower half of the digits) to compute the square root of the entire number (see Algorithm 1). It is named like this due to its similarity with Karatsuba's multiplication algorithm that also splits the digits into four parts. The pseudocode for the algorithm (based on (Zimmerman 1998) and (Brent and Zimmerman 2010)) is given below:
 
 <p align="center">
 
@@ -58,9 +61,9 @@ The Karatsuba square root method is a method that recursively computes the squar
 
 </p>
 
-The main implementation can be found here.
+The implementation of the core can be found [here](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1663).
 
-One part that is not covered in the algorithm descriptions is how to solve the base case. The problem here is that we will be left with four 32-bit limbs and there is no built in algorithm to compute the square root of 128-bit integers. Continuing the splitting at the bit level at non-fixed positions will be tedious and not very efficient. Instead, we see notice that we can handle all cases as one of the following four cases:
+One part that was not covered in the algorithm descriptions is how to solve the base case. The problem here is that we will be left with four 32-bit limbs and there is no built-in method to compute the square root of 128-bit integers. Continuing the splitting at the bit level at non-fixed positions will be tedious and not very efficient. Instead, we see notice that we can handle all cases as one of the following four cases:
 
 <p align="center">
 
@@ -68,11 +71,11 @@ One part that is not covered in the algorithm descriptions is how to solve the b
 
 </p>
 
-The second case relies on the fact that we can fix the rounding problems in double sqrt for 64-bit integers (see code here). The third case splits into 32-bit integers which means that the recursive call can be handled by Case 2. The fourth case splits into 64-bit integers which means that the recursive call can be handled by Case 3.
+The second case relies on the fact that we can fix the rounding problems in double sqrt for 64-bit integers (see [code](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1554)). The third case splits into 32-bit integers which means that the recursive call can be handled by Case 2 (see [code](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1595)). The fourth case splits into 64-bit integers which means that the recursive call can be handled by Case 3 (see [https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1628](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1628)).
 
 ### Correctness tests
 
-The following correctness tests (which can be found here: TODO) were run for each of the implementations:
+The following correctness tests (see [here](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp)) were run for each of the implementations:
 
 * A number of randomly chosen values in<img src="https://render.githubusercontent.com/render/math?math=%5B1%2C%202%5E10000%5D">:
   * with some of which the response was compared to hardcoded values from Wolfram Alpha.
@@ -105,9 +108,11 @@ As an extension we show that Karatsuba square root is efficient for up to 100K (
 
 ## k-th root implementation
 
-When Some of the <img src="https://render.githubusercontent.com/render/math?math=%5Cpi">algorithms require taking the fourth or fifth root of a number. The general case for this is taking the <img src="https://render.githubusercontent.com/render/math?math=k">-th integer root of a number <img src="https://render.githubusercontent.com/render/math?math=x">. The current way of doing this in Boost.Multiprecision is through <img src="https://render.githubusercontent.com/render/math?math=%5Cmathrm%7Bpow%7D(x%2C%201%2Fk)"> which is not very efficient for small <img src="https://render.githubusercontent.com/render/math?math=k">.
+*code:* [Newton-Raphson](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1985) and [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/kth_root_snips.cpp)
 
-**Newton-Raphson method:** Similarly to the Newton-Raphson implementation of the square root, we define<img src="https://render.githubusercontent.com/render/math?math=f(x)%20%3D%20x%5Ek%20-%20a">, whose derivative is<img src="https://render.githubusercontent.com/render/math?math=f'(x)%20%3D%20(k-1)x">and which gives rise to the iteration method
+Some of the <img src="https://render.githubusercontent.com/render/math?math=%5Cpi"> algorithms require taking the fourth or fifth root of a number. The general case for this is taking the <img src="https://render.githubusercontent.com/render/math?math=k">-th integer root of a number <img src="https://render.githubusercontent.com/render/math?math=x">. The current way of doing this in Boost.Multiprecision is through <img src="https://render.githubusercontent.com/render/math?math=%5Cmathrm%7Bpow%7D(x%2C%201%2Fk)"> which is not very efficient for small integer <img src="https://render.githubusercontent.com/render/math?math=k">.
+
+**Newton-Raphson method:** Similarly to the Newton-Raphson implementation of the square root, we define<img src="https://render.githubusercontent.com/render/math?math=f(x)%20%3D%20x%5Ek%20-%20a">, whose derivative is<img src="https://render.githubusercontent.com/render/math?math=f'(x)%20%3D%20(k-1)x">and which gives the iteration method,
 
 <p align="center">
    <img src="https://render.githubusercontent.com/render/math?math=x_%7Bt%2B1%7D%20%3A%3D%20%5Cfrac%7B1%7D%7Bk%7D%20%5Cleft(%20(k-1)%20x_t%20-%20a%20%5Cright)"> 
@@ -132,64 +137,18 @@ As an extension, the performance tests for up to 100K digits, show that the impl
 <p align="center" >
     <img src="kth_root_large_values.svg" height="300px">
 </p>
-
-## PI algorithms
-
-### Implementations
-
-**Existing implementation:** The existing implementation simply has a hardcoded value for pi. 
-
-**New implementations:** We added the Gauss-Legendre algorithm and some of the variants introduced by the Borwein brothers:
-
-* Gauss-Legendre (GL Un), with implementation based on Algorithm 16.148 of (Arndt and Haenel, 2001).
-* Cubic Borwein (Cub Un) with implementation based on Algorithm 16.151 of (Arndt and Haenel, 2001).
-* Gauss-Legendre (the non-Schoenhage variant).
-* Quadratic Borwein (uses sqrt)
-* Cubic Borwein basic implementation (uses cbrt method, so it is not expected to benefit from any of the improvements)
-* Quartic Borwein (uses sqrt twice)
-* Quintic Borwein (uses 5-th root)
-* Nonic Borwein (uses cbrt)
-
-Method/N| GL Un | Cub Un | GL | Qd | Cub | Qr | Qn | Non |
-| --- | ---    | ---     | --- |  --- |  --- |  --- |  --- |  --- |  
-1K|0.003268s|0.003646s|0.000948s|0.002509s|0.003997s|0.001952s|0.143141s|0.006122s|
-||0.017836s|0.004957s|0.009617s|0.008635s|0.004179s|0.013524s|0.208164s|0.005892s
-5K|0.012640s|0.113406s|0.020494s|0.063762s|0.116883s|0.029694s|3.064318s|0.149207s|
-||0.255039s|0.130431s|0.268763s|0.263724s|0.126375s|0.284409s|18.019207s|0.163338s
-10K|0.047336s|0.473562s|0.064468s|0.298860s|0.433946s|0.096938s|14.747169s| 0.548498s|
-||1.094545s|0.517367s|1.091298s|0.969387s|0.485853s|1.050066s|155.949646s|0.686482s
-50K|1.075196s|10.947395s|1.115937s|5.745923s|11.148762s|2.091759s| |15.325591s
-||27.866652s|13.622281s|28.721098s|26.763367s|12.883669s|35.426968s| |17.174911s
-100K|3.919699s| |4.652693s|26.834837s| |9.370837s|
-||
-500K|97.616852s| |121.964401s
-||
-
-
-
-### Correctness tests
-
-The tests simply compared the digits with various publicly available collections of pi digits.
-
-### Performance tests
-
-
-
-<p align="center">
-    <img src="gauss_legendre_plot.svg" height="300px">
-</p>
-
-
-
 ## Log implementation
 
+*code:* [log AGM](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/functions/pow.hpp#L418), [correctness tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/test/test_log.cpp) and [performance tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/log_snips.cpp)
+
 ### Implementations
 
-**Existing implementation:** TODO
+**Existing implementation:** TODO: add a brief description for the existing implementation of log.
 
-**AGM-based:** Gauss introduced the arithmetic-geometric method, where two initial values <img src="https://render.githubusercontent.com/render/math?math=a_0"> and <img src="https://render.githubusercontent.com/render/math?math=b_0"> are chosen and 
+**AGM-based:** Gauss introduced the arithmetic-geometric method (AGM), where two initial values <img src="https://render.githubusercontent.com/render/math?math=a_0"> and <img src="https://render.githubusercontent.com/render/math?math=b_0"> are chosen and 
 
 <p align="center">
+
 
 <img src="https://render.githubusercontent.com/render/math?math=a_n%20%3A%3D%20%5Cfrac%7Ba_%7Bn-1%7D%20%2B%20b_%7Bn-1%7D%7D%7B2%7D%20%5Cquad%20%5Ctext%7B%20and%20%7D%20%5Cquad%20b_n%20%3A%3D%20%5Csqrt%7Ba_%7Bn-1%7D%20b_%7Bn-1%7D%7D.">
 
@@ -201,6 +160,7 @@ Gauss proved that a sequence with <img src="https://render.githubusercontent.com
 
 <p align="center">
 
+
 <img src="https://render.githubusercontent.com/render/math?math=E(x)%20%3D%20%5Cint_0%5E%7B%5Cpi%2F2%7D%20%5Cfrac%7Bd%5Ctheta%7D%7B%5Csqrt%7B1%20-%20(1%20-%20x%5E2)%5Csin%5E2%20%5Ctheta%7D%7Ddx">
 
 </p>
@@ -208,6 +168,7 @@ Gauss proved that a sequence with <img src="https://render.githubusercontent.com
 The elliptic function <img src="https://render.githubusercontent.com/render/math?math=E(x)"> satisfies <img src="https://render.githubusercontent.com/render/math?math=E(4%2Fx)%20%3D%20%5Cln(x)%20%2B%20%5Cfrac%7B4%5Cln(x)-4%7D%7Bx%5E2%7D%20%2B%20o(x%5E%7B-2%7D)">. Hence, one can evaluate <img src="https://render.githubusercontent.com/render/math?math=x"> to <img src="https://render.githubusercontent.com/render/math?math=p"> digits of precision using
 
 <p align="center">
+
 
 <img src="https://render.githubusercontent.com/render/math?math=%5Cln(x)%20%5Capprox%20%5Cfrac%7B%5Cpi%7D%7B2M(1%2C%204%2Fs)%7D%20-%20m%20%5Cln(2)">
 
@@ -221,24 +182,77 @@ The tests where performed on the same <img src="https://render.githubusercontent
 
 <p align="center">
 
+
 <img src="log_timings.svg" heigh="300px">
 
 </p>
 
-For more emphasis on the newly implemented method using the Karatsuba sqrt function:
+For more emphasis on the newly implemented method using the log AGM function:
 
 <p align="center">
+
 
 <img src="log_agm_timings.svg" height="300px">
 
 </p>
 
-As an extension we show that the log AGM implementation performance for up to 100K (and even more).
+As an extension we show that the log AGM implementation performance for up to 100K.
 
 <p align="center">
+
 
 <p align="center">
     <img src="log_agm_large.svg" height="300px">
+</p>
+
+
+
+## PI algorithms
+
+*code:* pi algorithms ( [GL Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Cub Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [GL](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Qd](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Cub](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Qr](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Qn](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Non](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp) ) and [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L417)
+
+### Implementations
+
+**Existing implementation:** The existing implementation simply has a hardcoded value for pi. 
+
+**New implementations:** We added the Gauss-Legendre algorithm and some of the variants introduced by the Borwein brothers:
+
+* Gauss-Legendre (GL Un), with implementation based on Algorithm 16.148 of (Arndt and Haenel, 2001).
+* Cubic Borwein (Cub Un) with implementation based on Algorithm 16.151 of (Arndt and Haenel, 2001).
+* Gauss-Legendre (GL) (the non-Schoenhage variant).
+* Quadratic Borwein (Qd) (uses sqrt)
+* Cubic Borwein (Cub) basic implementation (uses cbrt method, so it is not expected to benefit from any of the improvements)
+* Quartic Borwein (Qr) (uses sqrt twice)
+* Quintic Borwein (Qn) (uses 5-th root)
+* Nonic Borwein (Non) (uses cbrt)
+
+### Correctness tests
+
+The tests simply compared the digits with various publicly available collections of pi digits.
+
+### Performance tests
+
+Below is a table with the performance of each implementation on a set of digits. The shaded rows show the performance of the algorithms without the newest changes (efficient sqrt and kth-root). With the exception of cubic Borwein (which uses cbrt), all others show a significant improvement. The fastest method was Gauss-Legendre (with the Unleash Pi implementation). 
+
+| Method/N | GL Un      | Cub Un     | GL          | Qd         | Cub        | Qr         | Qn          | Non        |
+| -------- | ---------- | ---------- | ----------- | ---------- | ---------- | ---------- | ----------- | ---------- |
+| 1K       | 0.003268s  | 0.003646s  | 0.000948s   | 0.002509s  | 0.003997s  | 0.001952s  | 0.143141s   | 0.006122s  |
+|          | 0.017836s  | 0.004957s  | 0.009617s   | 0.008635s  | 0.004179s  | 0.013524s  | 0.208164s   | 0.005892s  |
+| 5K       | 0.012640s  | 0.113406s  | 0.020494s   | 0.063762s  | 0.116883s  | 0.029694s  | 3.064318s   | 0.149207s  |
+|          | 0.255039s  | 0.130431s  | 0.268763s   | 0.263724s  | 0.126375s  | 0.284409s  | 18.019207s  | 0.163338s  |
+| 10K      | 0.047336s  | 0.473562s  | 0.064468s   | 0.298860s  | 0.433946s  | 0.096938s  | 14.747169s  | 0.548498s  |
+|          | 1.094545s  | 0.517367s  | 1.091298s   | 0.969387s  | 0.485853s  | 1.050066s  | 155.949646s | 0.686482s  |
+| 50K      | 1.075196s  | 10.947395s | 1.115937s   | 5.745923s  | 11.148762s | 2.091759s  |             | 15.325591s |
+|          | 27.866652s | 13.622281s | 28.721098s  | 26.763367s | 12.883669s | 35.426968s |             | 17.174911s |
+| 100K     | 3.919699s  |            | 4.652693s   | 26.834837s |            | 9.370837s  |             |            |
+|          |            |            |             |            |            |            |             |            |
+| 500K     | 97.616852s |            | 121.964401s |            |            |            |             |            |
+|          |            |            |             |            |            |            |             |            |
+
+Below, we show a more detailed plot of the performance of GS Un, against various digits up to 10K.
+
+<p align="center">
+    <img src="gauss_legendre_plot.svg" height="300px">
 </p>
 
 
