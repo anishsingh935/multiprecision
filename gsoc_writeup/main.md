@@ -120,7 +120,7 @@ Some of the <img src="https://render.githubusercontent.com/render/math?math=%5Cp
 
 ### Performance tests
 
-Comparing with the existing implementation, the new implementation is 340x faster for 10K digits,
+Comparing with the existing implementation, the new implementation is 300x faster for 10K digits,
 
 <p align="center" >
     <img src="kth_root_comparison.svg" height="300px">
@@ -255,13 +255,9 @@ Below, we show a more detailed plot of the performance of GS Un, against various
     <img src="gauss_legendre_plot.svg" height="300px">
 </p>
 
-
-
-
-
 ## VC builds for MPFR and MPIR
 
-This GSoC work also created basic support for VC builds of MPIR and MPFR. The MPIR build is based on the original work of https://github.com/wbhart/mpir (GMP_VERSION version 6.0.0 and _MSC_MPIR_VERSION 3.0.0). Instructions for building and running MPIR and MPFR with Boost are the following:
+This GSoC work also created basic support for VC builds of MPIR and MPFR. The MPIR build is based on the original work of https://github.com/wbhart/mpir (GMP_VERSION version 6.0.0 and MSC_MPIR_VERSION 3.0.0). Instructions for building and running MPIR and MPFR with Boost are the following:
 
  1. Obtain a copy of [vsyasm](https://yasm.tortall.net/Download.html).
  2. Copy the file `yasm` to `C:\Program Files\yasm\`.
@@ -273,7 +269,7 @@ This GSoC work also created basic support for VC builds of MPIR and MPFR. The MP
     2. Here, custom build rules reside in files with extensions ".props" and ".targets"
     3. Copy `vsyasm.props`, `vsyasm.targets` and `vsyasm.xml` to this directory, so that VS can find the custom rules for yasm.
  5. (Make sure that you have set `BOOST_ROOT` to the root directory of the Boost version you want to run).
- 6. Open `example\mpfr_vc_and_mpir_vc\test_with_boost\test_with_boost.sln` and run.
+ 6. Open `example\mpfr_vc_and_mpir_vc\test_with_boost\test_with_boost.sln` ([here](https://github.com/BoostGSoC20/multiprecision/tree/develop/example/mpfr_vc_and_mpir_vc/test_with_boost)) and run.
 
 
 
