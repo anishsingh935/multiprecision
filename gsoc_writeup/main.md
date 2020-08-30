@@ -3,22 +3,22 @@
 This is the final report for my Google Summer of Code 2020 project with Boost.Multiprecision.  The aim of the project was to ensure that core arithmetic functions are efficient for numbers of up to 10K digits. This encompassed:
 
 * implementation, testing and benchmarking of the:
-  * square root function (around >20x faster than the existing implementation at 10K digits), 
-  * logarithm function (around 30x faster than the existing implementation at 10K digits),
-  * k-th root function (around 300x faster than the power-based implementation for small (<1K) integer values at 10K digits),
+  * square root function, 
+  * k-th root function (where k is an integer),
+  * logarithm function,
   * several algorithms for computing digits of <img src="https://render.githubusercontent.com/render/math?math=%5Cpi">.
 * testing the implementation of existing basic arithmetic operations
 
-The implementation of square root and logarithm turned out to be efficient for up to tens of thousands of digits. 
+I implemented the following algorithms (more specific links to my implementations are also given at the subtitle of each section):
 
-The code can be found [here](https://github.com/BoostGSoC20/multiprecision/). More specific links to implementation are given at the subtitle of each section. For convenience, these are also gathered here:
+* For the square root function, I implemented [Newton-Raphson iteration](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1756) and [Karatsuba square root](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1663). The performance (and correctness) [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp) indicated that Karatsuba square root implementation is >20x faster than the existing implementation at 10K digits.
+* For the k-th root function, I implemented the [Newton-Raphson iteration](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1985), where performance (and correctness) [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/kth_root_snips.cpp) showed that it is >300x faster than the power-based implementation for small (<1K) integer values at 10K digits.
+* For the log function, I implemented the [log AGM](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/functions/pow.hpp#L418) method, where [performance tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/log_snips.cpp) (and [correctness tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/test_log_agm.cpp)) showed that it is >30x faster than the existing implementation at 10K digits.
+* For pi computation, I implemented several algorithms ( [GL Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L87), [Cub Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L142), [GL](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L381), [Qd](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L196), [Cub](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L228), [Qr](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L258), [Qn](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L288), [Non](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L324) ) with the trivial [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L417).
 
-* SQRT implementation: [Newton-Raphson iteration](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1756), [Karatsuba square root](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1663), [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp)
-* k-th root implementation: [Newton-Raphson iteration](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1985) and [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/kth_root_snips.cpp)
-* log implementation: [log AGM](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/functions/pow.hpp#L418), [correctness tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/test_log_agm.cpp) and [performance tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/log_snips.cpp)
-* pi computation: algorithms ( [GL Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Cub Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [GL](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Qd](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Cub](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Qr](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Qn](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Non](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp) ) and [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L417)
+The above implementations turned out to be quite efficient for up to tens of thousands (and even more) of digits. 
 
-In case, the math does not display well, you can download this report [here](https://github.com/BoostGSoC20/multiprecision/tree/develop/gsoc_writeup/main.pdf).
+In case the math does not display well, you can download this report [here](https://github.com/BoostGSoC20/multiprecision/tree/develop/gsoc_writeup/main.pdf).
 
 ## SQRT implementation
 
@@ -65,7 +65,7 @@ The Karatsuba square root method is a method that recursively computes the squar
 
 The implementation of the core part can be found [here](https://github.com/BoostGSoC20/multiprecision/blob/develop/include/boost/multiprecision/detail/default_ops.hpp#L1663).
 
-The other part which is not covered in the algorithm descriptions is how to solve the base case. The problem here is that we will be left with four (because of line 5) 32-bit limbs and there is no built-in method to compute the square root of 128-bit integers. Continuing the splitting at the bit level at non-fixed positions will be tedious and not very efficient. Instead, we see notice that we can handle all cases as one of the following four cases:
+The other part which is not covered in the algorithm descriptions is how to solve the base case. The problem here is that we will be left with four (because of line 5) 32-bit limbs and there is no built-in method to compute the square root of 128-bit integers. Continuing the splitting at the bit level at non-fixed positions will be tedious and not very efficient. However, I noticed that it is possible instead to handle all cases as one of the following four:
 
 <p align="center">
    <img src="sqrt_base_case_visualisation.svg" height="400px">
@@ -77,7 +77,7 @@ The second case relies on the fact that we can fix the rounding problems in doub
 
 The following correctness tests (see [here](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp)) were run for each of the implementations:
 
-* A number of randomly chosen values in<img src="https://render.githubusercontent.com/render/math?math=%5B1%2C%202%5E10000%5D">:
+* A number of randomly chosen values in <img src="https://render.githubusercontent.com/render/math?math=%5B1%2C%2010%5E%7B10000%7D%5D">:
   * with some of which the response was compared to hardcoded values from Wolfram Alpha.
   * with some of which the response was verified using the following integer square root check (requiring only multiplications): <img src="https://render.githubusercontent.com/render/math?math=x"> is the square of <img src="https://render.githubusercontent.com/render/math?math=a">iff <img src="https://render.githubusercontent.com/render/math?math=(x%2B1)%5E2%20%3E%20a"> and <img src="https://render.githubusercontent.com/render/math?math=x%5E2%20%5Cleq%20a">. 
 * A number of edge cases (containing <img src="https://render.githubusercontent.com/render/math?math=0">, <img src="https://render.githubusercontent.com/render/math?math=1">, powers of two)
@@ -90,7 +90,7 @@ The following correctness tests (see [here](https://github.com/BoostGSoC20/multi
 
 ### Performance tests
 
-The tests where performed on the same <img src="https://render.githubusercontent.com/render/math?math=20">randomly sampled numbers. The error bars represent confidence intervals at 95% assuming each trial is i.i.d.
+The tests where performed on the same 20 randomly sampled numbers. The error bars represent confidence intervals at 95% assuming each trial is i.i.d.
 
 <p align="center">
    <img src="sqrt_benchmark.svg" height="300px">
@@ -179,7 +179,7 @@ The following correctness tests were run (see [here](https://github.com/BoostGSo
 
 ### Performance tests
 
-The tests where performed on the same <img src="https://render.githubusercontent.com/render/math?math=20">randomly sampled numbers. The error bars represent confidence intervals at 95% assuming each trial is i.i.d.
+The tests where performed on the same 20 randomly sampled numbers. The error bars represent confidence intervals at 95% assuming each trial is i.i.d.
 
 <p align="center">
    <img src="log_timings.svg" heigh="300px">
@@ -201,7 +201,7 @@ As an extension we show that the log AGM implementation performance for up to 10
 
 ## PI algorithms
 
-*code:* pi algorithms ( [GL Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Cub Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [GL](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Qd](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Cub](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Qr](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Qn](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp), [Non](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/sqrt_snips.cpp) ) and [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L417)
+*code:* pi algorithms ( [GL Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L87), [Cub Un](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L142), [GL](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L381), [Qd](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L196), [Cub](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L228), [Qr](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L258), [Qn](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L288), [Non](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L324) ) and [tests](https://github.com/BoostGSoC20/multiprecision/blob/develop/example/pi_millions_with_boost_multiprecision.cpp#L417)
 
 ### Implementations
 
@@ -209,14 +209,14 @@ As an extension we show that the log AGM implementation performance for up to 10
 
 **New implementations:** We added the Gauss-Legendre algorithm and some of the variants introduced by the Borwein brothers:
 
-* Gauss-Legendre (GL Un), with implementation based on Algorithm 16.148 of (Arndt and Haenel, 2001).
-* Cubic Borwein (Cub Un) with implementation based on Algorithm 16.151 of (Arndt and Haenel, 2001).
+* Gauss-Legendre (GL Un), with implementation based on Algorithm 16.148 of (Arndt and Haenel, 2001) (mentor's implementation).
+* Cubic Borwein (Cub Un) with implementation based on Algorithm 16.151 of (Arndt and Haenel, 2001) (mentor's implementation).
 * Gauss-Legendre (GL) (the non-Schoenhage variant).
-* Quadratic Borwein (Qd) (uses sqrt)
-* Cubic Borwein (Cub) basic implementation (uses cbrt method, so it is not expected to benefit from any of the improvements)
-* Quartic Borwein (Qr) (uses sqrt twice)
-* Quintic Borwein (Qn) (uses 5-th root)
-* Nonic Borwein (Non) (uses cbrt)
+* Quadratic Borwein (Qd) (uses sqrt) based on Algorithm 2.1 on p.46 of (Borwein and Borwein, 1987).
+* Cubic Borwein (Cub) basic implementation (uses cbrt method, so it is not expected to benefit from any of the improvements) based on p.47 of (Borwein et al. 1994).
+* Quartic Borwein (Qr) (uses sqrt twice) based on Algorithm 5.3 on p.170 of (Borwein and Borwein 1987).
+* Quintic Borwein (Qn) (uses 5-th root) based on (Borwein and Borwein, 1989).
+* Nonic Borwein (Non) (uses cbrt) based on (Bailey et al. 1997).
 
 ### Correctness tests
 
@@ -275,6 +275,10 @@ Arndt, Jörg, and Christoph Haenel. *Pi-unleashed*. Springer Science & Business 
 Brent, Richard P., and Paul Zimmermann. *Modern computer arithmetic*. Vol. 18. Cambridge University Press, 2010, pp.26
 
 Borwein, Jonathan M., and Peter B. Borwein. *Pi and the AGM: a study in the analytic number theory and computational complexity*. Wiley-Interscience, 1987.
+
+Borwein, J.M.; Borwein, P.B. *Approximating pi with Ramanujan's solvable modular equations*. Rocky Mountain J. Math. 19 (1989), no. 1,
+
+Borwein, Jonathan M., Peter B. Borwein, and Frank G. Garvan.  *Some cubic modular identities of Ramanujan.* Transactions  of the American Mathematical Society (1994): 35-47.
 
 Muller, Jean-Michel. *Elementary functions: algorithms and implementations*. Birkhũser Boston, 2006.
 
