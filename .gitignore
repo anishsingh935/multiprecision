@@ -12,3 +12,10 @@ example/mpir-3.0.0/lib/
 example/pi_millions_with_boost_multiprecision/pi_millions_with_boost_multiprecision.vcxproj.user
 example/pi_millions_with_boost_multiprecision/.vs/
 example/pi_millions_with_boost_multiprecision/x64/
+example/mpfr_vc_and_mpir_vc/mpir_vc/.vs/
+example/mpfr_vc_and_mpir_vc/mpir_vc/_Tmp/
+example/mpfr_vc_and_mpir_vc/mpir_vc/_Out/
+example/mpfr_vc_and_mpir_vc/test_with_boost/.vs/
+example/mpfr_vc_and_mpir_vc/test_with_boost/_Tmp/
+example/mpfr_vc_and_mpir_vc/test_with_boost/_Out/
+
