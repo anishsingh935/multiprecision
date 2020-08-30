@@ -256,8 +256,8 @@ T quintic_borwein_for_pi()
    {
       T x_n = 5 / s_n - 1;
       T y_n = sqr(x_n - 1) + 7;
-      // T z_n = kth_root(x_n / 2 * (y_n + sqrt(sqr(y_n) - 4 * cube(x_n))), 5);
-      T z_n = pow(x_n / 2 * (y_n + sqrt(sqr(y_n) - 4 * cube(x_n))), inverse_five);
+      T z_n = kth_root(x_n / 2 * (y_n + sqrt(sqr(y_n) - 4 * cube(x_n))), 5);
+      // T z_n = pow(x_n / 2 * (y_n + sqrt(sqr(y_n) - 4 * cube(x_n))), inverse_five);
       s_n2 = sqr(s_n);
       a_n  = s_n2 * a_n - pow_five * ((s_n2 - 5) / 2 + sqrt(s_n * (s_n2 - 2 * s_n + 5)));
       s_n  = 25 / (sqr(z_n + x_n / z_n + 1) * s_n);
@@ -416,7 +416,7 @@ void run_time_experiments(size_t digits)
 
 int main()
 {
-   const unsigned int digits = 50000;
+   const unsigned int digits = 10000;
    
    pi::millions::detail::run_experiment<digits, pi::millions::detail::gauss_legendre_pi_unleashed>("Base pi");
    pi::millions::detail::run_experiment<digits, pi::millions::detail::cubic_borwein_pi_unleashed>("Base cubic");
@@ -430,4 +430,6 @@ int main()
    // pi::millions::detail::run_experiment<pi::millions::detail::chudnovsky_for_pi>("Chudnovsky pi");
    
    RUN_ALL_TIMED_EXPERIMENTS(float_type, pi::millions::detail::gauss_legendre_pi_unleashed);
+
+   return 0;
 }
