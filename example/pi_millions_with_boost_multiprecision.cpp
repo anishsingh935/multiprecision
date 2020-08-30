@@ -34,7 +34,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>
-#include <boost/multiprecision/gmp.hpp>
+// #include <boost/multiprecision/gmp.hpp>
 
 // 0: cpp_bin
 // 1: cpp_dec
@@ -60,8 +60,20 @@ using float_type =
 
 namespace pi { namespace millions { namespace detail {
 
+template <typename T>
+inline T sqr(const T& a)
+{
+   return a * a;
+}
+
+template <typename T>
+inline T cube(const T& a)
+{
+   return a * a * a;
+}
+
 /**
-// \func template<typename float_type> const float_type& pi()
+// \func template<typename float_type> float_type gauss_legendre_pi_unleashed()
 //
 // \desc Compute pi using a quadratically convergent Gauss AGM,
 //       in the Schoenhage variant. This is a well-known algorithm.
@@ -69,10 +81,6 @@ namespace pi { namespace millions { namespace detail {
 //       see "Algorithm 16.148" in Chapter 16 on page 236 from
 //       the book "Pi Unleashed" by J. Arndt and C. Haenel
 //       (Springer Verlag, Heidelberg, 2001).
-//       The parameter print_progress (= true),
-//       will print calculation progress to std::cout.
-//       Book reference for "Pi Unleashed":
-//       https://www.springer.com/de/book/9783642567353
 //
 */
 template <typename T>
@@ -123,15 +131,13 @@ T gauss_legendre_pi_unleashed()
    return val_pi;
 }
 
-// *****************************************************************************
-// Function    : const mp_cpp& mp_cpp::calculate_pi_borwein_cubic(const bool b_trace, std::ostream& os)
+/**
+// \func template<typename float_type> float_type cubic_borwein_pi_unleashed()
 //
-// Description : Compute pi using a cubically convergent iteration scheme.
-//               See the book "Pi Unleashed", algorithm 16.151, page 237.
-//               If the input b_trace = true, then the calculation progress
-//               will be output to the output stream os.
+// \desc Compute pi using a cubically convergent iteration scheme.
+//       See the book "Pi Unleashed", algorithm 16.151, page 237.
 //
-// *****************************************************************************
+*/
 template <typename T>
 T cubic_borwein_pi_unleashed()
 {
@@ -176,6 +182,16 @@ T cubic_borwein_pi_unleashed()
    return val_pi;
 }
 
+/**
+// \func template<typename float_type> float_type& quadratic_borwein_for_pi()
+//
+// \desc Compute pi using a quadratically convergent iteration scheme.
+//       See Algorithm 2.1 on p.46 of
+//          Borwein, Jonathan M., and Peter B. Borwein. "Pi and the AGM: a study in 
+//              the analytic number theory and computational complexity". 
+//              Wiley-Interscience, 1987.
+//
+*/
 template <typename T>
 T quadratic_borwein_for_pi()
 {
@@ -198,6 +214,16 @@ T quadratic_borwein_for_pi()
    return p_n;
 }
 
+/**
+// \func template<typename float_type> float_type& cubic_borwein_for_pi()
+//
+// \desc Compute pi using a cubically convergent iteration scheme.
+//       See p.47 of
+//          Borwein, Jonathan M., Peter B. Borwein, and Frank G. Garvan. 
+//             "Some cubic modular identities of Ramanujan." Transactions 
+//             of the American Mathematical Society (1994): 35-47.
+//
+*/
 template <typename T>
 T cubic_borwein_for_pi()
 {
@@ -218,6 +244,16 @@ T cubic_borwein_for_pi()
    return 1 / a_n;
 }
 
+/**
+// \func template<typename float_type> float_type& quartic_borwein_for_pi()
+//
+// \desc Compute pi using a quartically convergent iteration scheme.
+//       See Algorithm 5.3 on p.170 of
+//          Borwein, Jonathan M., and Peter B. Borwein. "Pi and the AGM: a study in 
+//              the analytic number theory and computational complexity". 
+//              Wiley-Interscience, 1987.
+//
+*/
 template <typename T>
 T quartic_borwein_for_pi()
 {
@@ -239,6 +275,15 @@ T quartic_borwein_for_pi()
    return 1 / a_n;
 }
 
+/**
+// \func template<typename float_type> float_type& quintic_borwein_for_pi()
+//
+// \desc Compute pi using a quintically convergent iteration scheme.
+//       See Algorithm 2 on p.170 of
+//          Borwein, J.M.; Borwein, P.B. "Approximating $\pi$ with Ramanujan's
+//             solvable modular equations". Rocky Mountain J. Math. 19 (1989), no. 1
+//
+*/
 template <typename T>
 T quintic_borwein_for_pi()
 {
@@ -266,6 +311,15 @@ T quintic_borwein_for_pi()
    return 1 / a_n;
 }
 
+/**
+// \func template<typename float_type> float_type& nonic_borwein_for_pi()
+//
+// \desc Compute pi using a nonically convergent iteration scheme.
+//       See 
+//          Bailey, David H., et al. "The quest for pi." The Mathematical
+//             Intelligencer 19 (1997): 50-56.
+//
+*/
 template <typename T>
 T nonic_borwein_for_pi()
 {
@@ -293,6 +347,16 @@ T nonic_borwein_for_pi()
    return 1 / a_n;
 }
 
+/**
+// \func template<typename float_type> float_type& quintic_borwein_for_pi()
+//
+// \desc Compute pi using Chudnovsky's algorithm.
+//       See
+//          Chudnovsky, David; Chudnovsky, Gregory (1988), "Approximation 
+//             and complex multiplication according to ramanujan", Ramanujan 
+//             revisited: proceedings of the centenary conference
+//
+*/
 template <typename T>
 T chudnovsky_for_pi()
 {
@@ -311,18 +375,6 @@ T chudnovsky_for_pi()
    }
    T sqrt_10005(sqrt(10005));
    return 426880 * sqrt_10005 / s;
-}
-
-template <typename T>
-inline T sqr(const T& a)
-{
-   return a * a;
-}
-
-template <typename T>
-inline T cube(const T& a)
-{
-   return a * a * a;
 }
 
 template <typename T>
