@@ -18,4 +18,5 @@ example/mpfr_vc_and_mpir_vc/mpir_vc/_Out/
 example/mpfr_vc_and_mpir_vc/test_with_boost/.vs/
 example/mpfr_vc_and_mpir_vc/test_with_boost/_Tmp/
 example/mpfr_vc_and_mpir_vc/test_with_boost/_Out/
-
+example/mpfr_vc_and_mpir_vc/mpir_vc/mpir/src/x64/
+example/mpfr_vc_and_mpir_vc/mpir_vc/mpir/src/mpn/x86_64w/
