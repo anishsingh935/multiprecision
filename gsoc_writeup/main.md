@@ -139,6 +139,34 @@ As an extension, the performance tests for up to 100K digits, show that the impl
 
 **Existing implementation:** The existing implementation simply has a hardcoded value for pi. 
 
+**New implementations:** We added the Gauss-Legendre algorithm and some of the variants introduced by the Borwein brothers:
+
+* Gauss-Legendre (GL Un), with implementation based on Algorithm 16.148 of (Arndt and Haenel, 2001).
+* Cubic Borwein (Cub Un) with implementation based on Algorithm 16.151 of (Arndt and Haenel, 2001).
+* Gauss-Legendre (the non-Schoenhage variant).
+* Quadratic Borwein (uses sqrt)
+* Cubic Borwein basic implementation (uses cbrt method, so it is not expected to benefit from any of the improvements)
+* Quartic Borwein (uses sqrt twice)
+* Quintic Borwein (uses 5-th root)
+* Nonic Borwein (uses cbrt)
+
+Method/N| GL Un | Cub Un | GL | Qd | Cub | Qr | Qn | Non |
+| --   | --   | --   | --   | --   | --   | --   | --   | --   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+|      |      |      |      |      |      |      |      |      |
+1K|0.003268s|0.003646s|0.000948s|0.002509s|0.003997s|0.001952s|0.143141s|0.006122s|
+||0.017836s|0.004957s|0.009617s|0.008635s|0.004179s|0.013524s|0.208164s|0.005892s
+5K|0.012640s|0.113406s|0.020494s|0.063762s|0.116883s|0.029694s|3.064318s|0.149207s|
+||0.255039s|0.130431s|0.268763s|0.263724s|0.126375s|0.284409s|18.019207s|0.163338s
+10K|0.047336s|0.473562s|0.064468s|0.298860s|0.433946s|0.096938s|14.747169s| 0.548498s|
+||1.094545s|0.517367s|1.091298s|0.969387s|0.485853s|1.050066s|155.949646s|0.686482s
+50K|1.075196s|10.947395s|1.115937s|5.745923s|11.148762s|2.091759s| |15.325591s
+||27.866652s|13.622281s|28.721098s|26.763367s|12.883669s|35.426968s| |17.174911s
+100K|3.919699s| |4.652693s|26.834837s| |9.370837s|
+||
+500K|97.616852s| |121.964401s
+||
+
 
 
 ### Correctness tests
@@ -146,6 +174,12 @@ As an extension, the performance tests for up to 100K digits, show that the impl
 The tests simply compared the digits with various publicly available collections of pi digits.
 
 ### Performance tests
+
+
+
+<p align="center">
+    <img src="gauss_legendre_plot.svg" height="300px">
+</p>
 
 
 
@@ -222,6 +256,8 @@ TODO
 ## References
 
 Brent, Richard P., and Zimmermann, Paul. "Modern computer arithmetic". Vol. 18. Cambridge University Press, 2010, pp.26
+
+Arndt, Jörg, and Haenel, Christoph. *Pi-unleashed*. Springer Science & Business Media, 2001.
 
 Zimmermann, Paul. "Karatsuba Square Root". [Research Report] RR-3805, INRIA. 1999, pp.8
 
