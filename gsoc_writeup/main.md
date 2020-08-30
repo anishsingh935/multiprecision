@@ -1,12 +1,12 @@
 ## Overview
 
-This is the final report for my Google Summer of Coder 2020 project with Boost.Multiprecision.  The aim of the project was to ensure that core arithmetic functions are efficient for numbers of up to 10K digits. This encompassed:
+This is the final report for my Google Summer of Code 2020 project with Boost.Multiprecision.  The aim of the project was to ensure that core arithmetic functions are efficient for numbers of up to 10K digits. This encompassed:
 
 * implementation, testing and benchmarking of the:
-  * square root function (around 23.5x faster than the existing implementation at 10K digits), 
-  * logarithm function (around 35.5x faster than the existing implementation at 10K digits),
-  * k-th root function (around 340x faster than the power-based implementation for small (<256) integer values at 10K digits),
-  * several algorithms for computing digits of <img src="https://render.githubusercontent.com/render/math?math=%5Cpi">
+  * square root function (around 20x faster than the existing implementation at 10K digits), 
+  * logarithm function (around 30x faster than the existing implementation at 10K digits),
+  * k-th root function (around 300x faster than the power-based implementation for small (<256) integer values at 10K digits),
+  * several algorithms for computing digits of <img src="https://render.githubusercontent.com/render/math?math=%5Cpi">.
 * testing the implementation of existing basic arithmetic operations
 
 The implementation of square root and logarithm turned out to be efficient for up to tens of thousands of digits. 
@@ -261,7 +261,19 @@ Below, we show a more detailed plot of the performance of GS Un, against various
 
 ## VC builds for MPFR and MPIR
 
-TODO
+This GSoC work also created basic support for VC builds of MPIR and MPFR. The MPIR build is based on the original work of https://github.com/wbhart/mpir (GMP_VERSION version 6.0.0 and _MSC_MPIR_VERSION 3.0.0). Instructions for building and running MPIR and MPFR with Boost are the following:
+
+ 1. Obtain a copy of [vsyasm](https://yasm.tortall.net/Download.html).
+ 2. Copy the file `yasm` to `C:\Program Files\yasm\`.
+ 3. Set a user variable `YASMPATH=<path to YASM assembler>` (e.g. `C:\Program Files\yasm\`).
+ 4. Ensure that path you have selected matches that in `example\mpfr_vc_and_mpir_vc\mpir_vc\yasm\vsyasm.props`.
+ 5. Supply a custom build rule to Visual Studio 2019:
+    1. Identify a directory such as:
+       `C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\BuildCustomizations`
+    2. Here, custom build rules reside in files with extensions ".props" and ".targets"
+    3. Copy `vsyasm.props`, `vsyasm.targets` and `vsyasm.xml` to this directory, so that VS can find the custom rules for yasm.
+ 5. (Make sure that you have set `BOOST_ROOT` to the root directory of the Boost version you want to run).
+ 6. Open `example\mpfr_vc_and_mpir_vc\test_with_boost\test_with_boost.sln` and run.
 
 
 
